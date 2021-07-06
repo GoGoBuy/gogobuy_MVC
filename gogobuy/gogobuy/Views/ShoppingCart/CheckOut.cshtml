@@ -1,0 +1,267 @@
+﻿
+@{
+    ViewBag.Title = "CheckOut";
+}
+
+
+
+
+<div class="container px-3 my-5 clearfix">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="padding: 20px;">
+            <li class="breadcrumb-item"><a href="#">首頁</a></li>
+            <li class="breadcrumb-item"><a href="#">購物車</a></li>
+            <li class="breadcrumb-item active" aria-current="page">結帳頁面</li>
+        </ol>
+    </nav>
+    <!-- Shopping cart table -->
+    <div class="card">
+        <div class="card-header">
+            <h2>購物車</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered m-0">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <!-- Set columns width -->
+                            <th class="text-center py-3 px-4" style="min-width: 150px;">商品名稱</th>
+                            <th class="text-center py-3 px-4" style="min-width: 150px;">備註資訊</th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">價格</th>
+                            <th class="text-center py-3 px-4" style="width: 140px;">數量</th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">小計</th>
+                            <!-- <th class="text-center" style="width: 95px;"><a class="btn btn-sm btn-outline-danger" href="#">清空</a></th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-4">
+                                <div class="media align-items-center">
+                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403023.png"
+                                         class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                    <div class="media-body">
+                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 1</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
+                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
+                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="p-4">
+                                <div class="media align-items-center">
+                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403027.png"
+                                         class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                    <div class="media-body">
+                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 2</a>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
+                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
+                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="p-4">
+                                <div class="media align-items-center">
+                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403030.png"
+                                         class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                    <div class="media-body">
+                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 3</a>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
+                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
+                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <table class="table " style="border: 0px;background-color: #C4C4C4;">
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-lg btn-primary mt-2"
+                                style="background-color: aliceblue; color: black;">
+                            收件人資訊
+                        </button>
+                    </td>
+                    <td>
+                        <div style="font-size: large;line-height: 3;text-align: left;">金X五</div>
+                    </td>
+                    <td>
+                        <div style="font-size: large;line-height: 3;text-align: center;">0911456789</div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- <table style="background-color: blueviolet;">
+              <tr>
+                <td>
+                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                      style="background-color: aliceblue; color: black;">寄送資訊</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-primary mt-2"
+                  style="background-color: aliceblue; color: black;">7-11</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-primary mt-2"
+                    style="background-color: aliceblue; color: black;">全家</button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-lg btn-primary mt-2"
+                    style="background-color: aliceblue; color: black;">宅配</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-size: large;line-height: 3;text-align: left;">金X五</div>
+                </td>
+                <td>
+                  <div style="font-size: large;line-height: 3;text-align: center;">0911456789</div>
+                </td>
+              </tr>
+            </table> -->
+
+            <table class="table " style="border: 0px;background-color: #C4C4C4;" ">
+                <tr>
+                    <td>
+                        <div class="bs-example">
+                            <ul class="list-inline list-group list-group-horizontal">
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        寄送資訊
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        7-11
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        全家
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        萊爾富
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        宅配
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col" style="font-size: large;line-height: 3;">
+                                    7-11台南成大店
+                                </div>
+                                <div class="col" style="font-size: large;line-height: 3;">
+                                    台南市北區勝利路138號
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- 付款資訊 -->
+            <table class="table " style="border: 0px; background-color: #C4C4C4;">
+                <tr>
+                    <td>
+                        <div class="bs-example">
+                            <ul class="list-inline list-group list-group-horizontal">
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        付款資訊
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        貨到付款
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-lg btn-primary mt-2"
+                                            style="background-color: aliceblue; color: black;">
+                                        信用卡
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col" style="font-size: large;line-height: 3;">
+                                    XXXX商業銀行
+                                </div>
+                                <div class="col" style="font-size: large;line-height: 3;">
+                                    ****-****-****-1234
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+
+
+            <!-- / Shopping cart table -->
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+                <div class="mt-4">
+                    <label class="text-muted font-weight-normal m-0">商品總計</label>
+                    <div class="text-large"><strong>$1164.65</strong></div>
+                </div>
+
+                <div class="mt-4">
+                    <label class="text-muted font-weight-normal m-0">運費總計</label>
+                    <div class="text-large"><strong>$60</strong></div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="text-right mt-4">
+                        <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3" onclick="location.href='~/Shopping/ShoppingCart'">返回購物車</button>
+                        <button type="button" class="btn btn-lg btn-primary mt-2" onclick="location.href='FIGMA_P3F.html'">完成訂單</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="float-end">
+
+                    </div> -->
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "SellerManagement";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <style>
+
+        .sm-img {
+            width: 185px;
+            height: 135px;
+        }
+
+        thead {
+            border-bottom: 2px black solid;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        tbody > tr {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        span {
+            font-size: 0.8rem;
+            color: #898282;
+        }
+
+        .setting-icon {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+
+    <div class="table-responsive-sm">
+        <table class="table table-borderless table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col"><input type="checkbox"></th>
+                    <th scope="col">圖片</th>
+                    <th scope="col">商品名稱/商品編號</th>
+                    <th scope="col">價格</th>
+                    <th scope="col">數量</th>
+                    <th scope="col">上架日期</th>
+                    <th scope="col">管理</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"><input type="checkbox"></th>
+                    <td><img src="~/Content/img/buyer_seller/8edb5c27-6852-4a84-adc3-667465bc61a7.jpg" class="sm-img"></td>
+                    <td>
+                        義大利進口高級法國製波羅麵包
+                        <span>(1234567890)</span>
+                    </td>
+                    <td>$900</td>
+                    <td>100</td>
+                    <td>2021/06/15</td>
+                    <td><a href="~/BuyerSeller/SellListDetails"><img src="~/Content/img/buyer_seller/settings.png" class="setting-icon"></a></td>
+                </tr>
+                <tr>
+                    <th scope="row"><input type="checkbox"></th>
+                    <td><img src="~/Content/img/buyer_seller/8edb5c27-6852-4a84-adc3-667465bc61a7.jpg" class="sm-img"></td>
+                    <td>
+                        義大利進口高級法國製波羅麵包
+                        <span>(1234567890)</span>
+                    </td>
+                    <td>$900</td>
+                    <td>100</td>
+                    <td>2021/06/15</td>
+                    <td><a href="~/BuyerSeller/SellListDetails"><img src="~/Content/img/buyer_seller/settings.png" class="setting-icon"></a></td>
+                </tr>
+                <tr>
+                    <th scope="row"><input type="checkbox"></th>
+                    <td><img src="~/Content/img/buyer_seller/8edb5c27-6852-4a84-adc3-667465bc61a7.jpg" class="sm-img"></td>
+                    <td>
+                        義大利進口高級法國製波羅麵包
+                        <span>(1234567890)</span>
+                    </td>
+                    <td>$900</td>
+                    <td>100</td>
+                    <td>2021/06/15</td>
+                    <td><a href="~/BuyerSeller/SellListDetails"><img src="~/Content/img/buyer_seller/settings.png" class="setting-icon"></a></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>

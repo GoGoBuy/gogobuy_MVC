@@ -1,0 +1,547 @@
+﻿
+@{
+    ViewBag.Title = "SellSearchResult";
+}
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GoGoBuy</title>
+
+    <link href="~/Content/css/Search_css/SearchResult_Style.css" rel="stylesheet" />
+
+
+    @*<script type="text/javascript">
+        $('input').popup();
+    </script>*@
+
+    <style></style>
+
+</head>
+<body>
+    <!-- Navigation -->
+    <!-- 暫定，可修改 -->
+    
+    <!-- Navigation -->
+    <!-- Search bar start -->
+    <!-- Search bar end -->
+    <!-- write codes here 寫在這，這是中間 -->
+
+    <div class="container">
+        <div class="row">
+            <!-- 搜尋結果頁面 start-->
+            <div class="col-md-12">
+                <div class="grid search">
+                    <div class="grid-body">
+                        <div class="row">
+                            <!-- 篩選條區塊 start-->
+                            <div class="col-md-3">
+                                <h2 class="grid-title">
+                                    <i class="fa fa-filter"></i>
+                                    篩選條件
+                                </h2>
+                                <hr>
+
+                                <!-- 篩選條件區塊-分類清單 start -->
+                                <h4>分類清單:</h4>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="icheck">
+                                        分類清單
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="icheck">
+                                        分類清單
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="icheck">
+                                        分類清單
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="icheck">
+                                        分類清單
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="icheck">
+                                        分類清單
+                                    </label>
+                                </div>
+                                <!-- 篩選條件區塊-分類清單 end -->
+                                <!-- <div class="padding"></div> -->
+                                <!-- 篩選條件區塊-上架日期 start -->
+                                <h4 style="margin-top: 20px;">按照日期:</h4>
+                                <p style="font-size: large;">從</p>
+
+                                <form style="font-size: large;">
+                                    <input type="datetime-local" id="ordertime" name="ordertime">
+                                </form>
+                                <p style="font-size: large;">到</p>
+
+
+                                <form style="font-size: large;">
+                                    <input type="datetime-local" id="ordertime" name="ordertime">
+                                </form>
+
+                                <!-- 篩選條件區塊-上架日期 end -->
+
+                                <div class="padding"></div>
+
+                                <!-- 篩選條件區塊-價錢範圍 start -->
+                                <h4 style="margin-top: 20px;">按照價格:</h4>
+
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="價格最低" aria-label="價格最低">
+                                    <span class="input-group-text">~</span>
+                                    <input type="text" class="form-control" placeholder="價格最高" aria-label="價格最高">
+                                </div>
+                                <!--<form>
+                                    <div data-role="rangeslider">-->
+                                        <!-- <label for="range-1a">Rangeslider:</label> -->
+                                        <!--<input type="range"
+                                               name="range-1a"
+                                               id="range-1a"
+                                               min="100"
+                                               max="1000"
+                                               value="350"
+                                               data-popup-enabled="true"
+                                               data-show-value="true">-->
+                                        <!-- <label for="range-1b">Rangeslider:</label> -->
+                                        <!--<input type="range"
+                                               name="range-1b"
+                                               id="range-1b"
+                                               min="100"
+                                               max="1000"
+                                               value="750"
+                                               data-popup-enabled="true"
+                                               data-show-value="true">
+                                    </div>
+                                </form>-->
+
+                                <!-- 篩選條件區塊-價錢範圍 end -->
+                            </div>
+                            <!-- 篩選條區塊 end-->
+                            <!-- 搜尋結果區塊 start -->
+                            <div class="col-md-9">
+                                <h2>
+                                    <i class="fa fa-file-o"></i>
+                                    搜尋結果
+                                </h2>
+                                <hr>
+                                <!-- 搜尋輸入 start -->
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="請輸入搜尋關鍵字" style="margin-top: 5px;">
+
+                                    <span class="dropdown" style="margin-left: 3px; margin-right: 3px; margin-top: 8px;">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            切換搜尋模式
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="text-align: center;">
+                                            <li><a class="dropdown-item" href="#">願望商品</a></li>
+                                            <li><a class="dropdown-item" href="#">販售商品</a></li>
+                                            <li><a class="dropdown-item" href="#">會員帳號</a></li>
+                                            <li><a class="dropdown-item" href="#">商品地區</a></li>
+                                        </ul>
+                                    </span>
+
+
+                                    <span class="input-group-btn" style="margin-top: 8px">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+
+
+                                </div>
+
+                                <!-- <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                      切換搜尋模式
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                      <li><a class="dropdown-item" href="#">願望商品</a></li>
+                                      <li><a class="dropdown-item" href="#">販售商品</a></li>
+                                      <li><a class="dropdown-item" href="#">會員帳號</a></li>
+                                      <li><a class="dropdown-item" href="#">商品地區</a></li>
+                                    </ul>
+                                </div> -->
+                                <!--搜尋輸入 end -->
+                                <p>顯示所有相關搜尋結果 "XXXXXX商品"</p>
+
+                                <div class="padding"></div>
+
+                                <div class="row">
+                                    <!-- 搜尋排序 start -->
+                                    <!-- <div class="col-sm-6">
+                                        <div class="btn-group">
+
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option value="0" selected="selected">排序方式</option>
+                                                <option value="1">商品名稱</option>
+                                                <option value="2">上架日期</option>
+                                                <option value="3">價格高低</option>
+                                                <option value="4">評價高低</option>
+
+                                            </select>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-sm-6">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                排序依照 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" style="text-align: center;">
+                                                <li>商品名稱</li>
+                                                <li>上架日期</li>
+                                                <li>價格高低</li>
+                                                <li>評價高低</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-- 搜尋排序 end -->
+                                    <!-- 條列或九宮格顯示 start -->
+
+                                    <div class="col-md-6 text-right">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default active">
+                                                <i class="fa fa-list"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default">
+                                                <i class="fa fa-th"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 條列或九宮格顯示 end -->
+
+                                </div>
+
+                                <!-- 搜尋清單 start -->
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822281.png" alt=""></td>
+                                                <td class="product" style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：350元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-half-o"></i>
+                                                    </span>
+
+                                                </td>
+                                                <!-- <td class="price text-right">350元</td> -->
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+                                                <!-- <button type="button" class="btn btn-secondary">測試分隔</button> -->
+
+                                            </tr>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822291.png" alt=""></td>
+                                                <td class="product " style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right" style="margin-top: 10px;">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：650元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                </td>
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822317.png" alt=""></td>
+                                                <td class="product" style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right" style="margin-top: 10px;">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：1230元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-half-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                </td>
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822426.png" alt=""></td>
+                                                <td class="product" style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right" style="margin-top: 10px;">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：777元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                </td>
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822381.png" alt=""></td>
+                                                <td class="product" style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right" style="margin-top: 10px;">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：1567元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </span>
+                                                </td>
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822461.png" alt=""></td>
+                                                <td class="product" style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right" style="margin-top: 10px;">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：2345元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-half-o"></i>
+                                                    </span>
+                                                </td>
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822488.png" alt=""></td>
+                                                <td class="product" style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right" style="margin-top: 10px;">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：970元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </span>
+                                                </td>
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="number text-center"></td>
+                                                <td class="image"><img src="https://image.flaticon.com/icons/png/128/4822/4822418.png" alt=""></td>
+                                                <td class="product" style="margin-top: 10px;">
+                                                    <strong style="font-size: 17px;">商品名稱</strong>
+                                                </td>
+                                                <td class="text-right" style="margin-top: 10px;">
+                                                    <strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dicta quod nemo cupiditate voluptas optio cumque similique. Optio, dolorum quam!</strong>
+                                                    <br>
+                                                    <span class="date">
+                                                        上架日期：2021/09/01
+                                                    </span>
+                                                    <br>
+                                                    <span class="price">
+                                                        價格：1350元
+                                                    </span>
+                                                    <br>
+                                                    <span class="rate">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-half-o"></i>
+                                                    </span>
+                                                </td>
+
+                                                <td class="button text-right">
+                                                    <div class="btn-group-vertical">
+                                                        <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                        <button type="button" class="btn btn-primary">加入購物車</button>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- 搜尋清單 end -->
+                                <!-- 切換頁面 start -->
+                                <div class="text-align-center">
+                                    <nav aria-label="Page navigation example" class="pagination-buttom">
+                                        <ul class="pagination">
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">上一頁</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">1</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">2</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">3</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">下一頁</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <!-- 切換頁面 end -->
+                            </div>
+                            <!-- 搜尋結果區塊 end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 搜尋結果頁面 end-->
+        </div>
+    </div>
+
+    <!-- write codes here 寫在這，這是中間 -->
+    <!--- Footer -->
+    <!-- 暫定，可以改～ -->
+    
+   
+    <!-- Footer -->
+</body>
+

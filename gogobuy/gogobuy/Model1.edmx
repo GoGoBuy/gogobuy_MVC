@@ -1,0 +1,793 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="gogobuydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tCollection">
+          <Key>
+            <PropertyRef Name="fCollectID" />
+          </Key>
+          <Property Name="fCollectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fProductID" Type="int" />
+          <Property Name="fMemberID" Type="int" />
+        </EntityType>
+        <EntityType Name="tMembership">
+          <Key>
+            <PropertyRef Name="fMemberID" />
+          </Key>
+          <Property Name="fMemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fFirstName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fLastName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="fEmail" Type="nvarchar" MaxLength="30" />
+          <Property Name="fPhone" Type="nvarchar" MaxLength="30" />
+          <Property Name="fDateOfBirth" Type="date" />
+          <Property Name="fGender" Type="bit" />
+          <Property Name="fEmailVerified" Type="bit" />
+          <Property Name="fPassword" Type="char" MaxLength="64" />
+          <Property Name="fSalt" Type="char" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="tOrder">
+          <Key>
+            <PropertyRef Name="fOrderID" />
+          </Key>
+          <Property Name="fOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fPrice" Type="money" />
+          <Property Name="fResCount" Type="int" />
+          <Property Name="fOrderDate" Type="date" />
+          <Property Name="fSellerID" Type="int" />
+          <Property Name="fBuyerID" Type="int" />
+          <Property Name="fOrderAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="fOrderPhone" Type="nvarchar" MaxLength="30" />
+          <Property Name="fBuyerName" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="tOrderDetails">
+          <Key>
+            <PropertyRef Name="fDetailID" />
+          </Key>
+          <Property Name="fDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fOrderID" Type="int" />
+          <Property Name="fProductID" Type="int" />
+          <Property Name="fQuantity" Type="int" />
+        </EntityType>
+        <EntityType Name="tProduct">
+          <Key>
+            <PropertyRef Name="fProductID" />
+          </Key>
+          <Property Name="fProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fCategory" Type="nvarchar" MaxLength="30" />
+          <Property Name="fProductName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fPrice" Type="money" />
+          <Property Name="fQuantity" Type="int" />
+          <Property Name="fImgPath" Type="nvarchar" MaxLength="30" />
+          <Property Name="fDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="fMemberID" Type="int" />
+          <Property Name="fProductLocation" Type="nvarchar" MaxLength="30" />
+          <Property Name="fArrivalTime" Type="nvarchar" MaxLength="30" />
+          <Property Name="fUpdateTime" Type="date" />
+        </EntityType>
+        <EntityType Name="tProductDetails">
+          <Key>
+            <PropertyRef Name="fPDetails" />
+          </Key>
+          <Property Name="fPDetails" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fPName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fProductID" Type="int" />
+        </EntityType>
+        <EntityType Name="tShopping">
+          <Key>
+            <PropertyRef Name="fCartID" />
+          </Key>
+          <Property Name="fCartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fMemberID" Type="int" />
+        </EntityType>
+        <EntityType Name="tShoppingDetails">
+          <Key>
+            <PropertyRef Name="fSDtails" />
+          </Key>
+          <Property Name="fSDtails" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fProductID" Type="int" />
+          <Property Name="fQuantity" Type="int" />
+          <Property Name="fCartID" Type="int" />
+        </EntityType>
+        <EntityType Name="tWishProduct">
+          <Key>
+            <PropertyRef Name="fProductID" />
+          </Key>
+          <Property Name="fProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fCategory" Type="nvarchar" MaxLength="30" />
+          <Property Name="fProductName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fPrice" Type="money" />
+          <Property Name="fQuantity" Type="int" />
+          <Property Name="fImgPath" Type="nvarchar" MaxLength="30" />
+          <Property Name="fDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="fMemberID" Type="int" />
+          <Property Name="fCity" Type="nvarchar" MaxLength="30" />
+          <Property Name="fArrivalTime" Type="date" />
+          <Property Name="fCommission" Type="money" />
+          <Property Name="fUpdateTime" Type="date" />
+        </EntityType>
+        <Association Name="FK_tCollection_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tCollection" Type="Self.tCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tCollection">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tCollection_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tCollection" Type="Self.tCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tCollection">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="fSellerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tMembership1">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="fBuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetails_tOrder">
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="0..1" />
+          <End Role="tOrderDetails" Type="Self.tOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tOrder">
+              <PropertyRef Name="fOrderID" />
+            </Principal>
+            <Dependent Role="tOrderDetails">
+              <PropertyRef Name="fOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetails_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tOrderDetails" Type="Self.tOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tOrderDetails">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProduct_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tProduct">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProductDetails_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tProductDetails" Type="Self.tProductDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tProductDetails">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tShopping_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tShopping" Type="Self.tShopping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tShopping">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tShoppingDetails_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tShoppingDetails" Type="Self.tShoppingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tShoppingDetails">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tShoppingDetails_tShopping">
+          <End Role="tShopping" Type="Self.tShopping" Multiplicity="0..1" />
+          <End Role="tShoppingDetails" Type="Self.tShoppingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tShopping">
+              <PropertyRef Name="fCartID" />
+            </Principal>
+            <Dependent Role="tShoppingDetails">
+              <PropertyRef Name="fCartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tWishProduct_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tWishProduct" Type="Self.tWishProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tWishProduct">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gogobuydbModelStoreContainer">
+          <EntitySet Name="tCollection" EntityType="Self.tCollection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tMembership" EntityType="Self.tMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tOrder" EntityType="Self.tOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tOrderDetails" EntityType="Self.tOrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tProduct" EntityType="Self.tProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tProductDetails" EntityType="Self.tProductDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tShopping" EntityType="Self.tShopping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tShoppingDetails" EntityType="Self.tShoppingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tWishProduct" EntityType="Self.tWishProduct" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tCollection_tMembership" Association="Self.FK_tCollection_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tCollection" EntitySet="tCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tCollection_tProduct" Association="Self.FK_tCollection_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tCollection" EntitySet="tCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tMembership" Association="Self.FK_tOrder_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tMembership1" Association="Self.FK_tOrder_tMembership1">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetails_tOrder" Association="Self.FK_tOrderDetails_tOrder">
+            <End Role="tOrder" EntitySet="tOrder" />
+            <End Role="tOrderDetails" EntitySet="tOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetails_tProduct" Association="Self.FK_tOrderDetails_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tOrderDetails" EntitySet="tOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProduct_tMembership" Association="Self.FK_tProduct_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tProduct" EntitySet="tProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProductDetails_tProduct" Association="Self.FK_tProductDetails_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tProductDetails" EntitySet="tProductDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tShopping_tMembership" Association="Self.FK_tShopping_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tShopping" EntitySet="tShopping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tShoppingDetails_tProduct" Association="Self.FK_tShoppingDetails_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tShoppingDetails" EntitySet="tShoppingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tShoppingDetails_tShopping" Association="Self.FK_tShoppingDetails_tShopping">
+            <End Role="tShopping" EntitySet="tShopping" />
+            <End Role="tShoppingDetails" EntitySet="tShoppingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tWishProduct_tMembership" Association="Self.FK_tWishProduct_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tWishProduct" EntitySet="tWishProduct" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="gogobuydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tCollection">
+          <Key>
+            <PropertyRef Name="fCollectID" />
+          </Key>
+          <Property Name="fCollectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fProductID" Type="Int32" />
+          <Property Name="fMemberID" Type="Int32" />
+          <NavigationProperty Name="tMembership" Relationship="Self.FK_tCollection_tMembership" FromRole="tCollection" ToRole="tMembership" />
+          <NavigationProperty Name="tProduct" Relationship="Self.FK_tCollection_tProduct" FromRole="tCollection" ToRole="tProduct" />
+        </EntityType>
+        <EntityType Name="tMembership">
+          <Key>
+            <PropertyRef Name="fMemberID" />
+          </Key>
+          <Property Name="fMemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fFirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fLastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="fEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fDateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="fGender" Type="Boolean" />
+          <Property Name="fEmailVerified" Type="Boolean" />
+          <Property Name="fPassword" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="fSalt" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tCollection" Relationship="Self.FK_tCollection_tMembership" FromRole="tMembership" ToRole="tCollection" />
+          <NavigationProperty Name="tOrder" Relationship="Self.FK_tOrder_tMembership" FromRole="tMembership" ToRole="tOrder" />
+          <NavigationProperty Name="tOrder1" Relationship="Self.FK_tOrder_tMembership1" FromRole="tMembership" ToRole="tOrder" />
+          <NavigationProperty Name="tProduct" Relationship="Self.FK_tProduct_tMembership" FromRole="tMembership" ToRole="tProduct" />
+          <NavigationProperty Name="tShopping" Relationship="Self.FK_tShopping_tMembership" FromRole="tMembership" ToRole="tShopping" />
+          <NavigationProperty Name="tWishProduct" Relationship="Self.FK_tWishProduct_tMembership" FromRole="tMembership" ToRole="tWishProduct" />
+        </EntityType>
+        <EntityType Name="tOrder">
+          <Key>
+            <PropertyRef Name="fOrderID" />
+          </Key>
+          <Property Name="fOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="fResCount" Type="Int32" />
+          <Property Name="fOrderDate" Type="DateTime" Precision="0" />
+          <Property Name="fSellerID" Type="Int32" />
+          <Property Name="fBuyerID" Type="Int32" />
+          <Property Name="fOrderAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fOrderPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fBuyerName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tMembership" Relationship="Self.FK_tOrder_tMembership" FromRole="tOrder" ToRole="tMembership" />
+          <NavigationProperty Name="tMembership1" Relationship="Self.FK_tOrder_tMembership1" FromRole="tOrder" ToRole="tMembership" />
+          <NavigationProperty Name="tOrderDetails" Relationship="Self.FK_tOrderDetails_tOrder" FromRole="tOrder" ToRole="tOrderDetails" />
+        </EntityType>
+        <EntityType Name="tOrderDetails">
+          <Key>
+            <PropertyRef Name="fDetailID" />
+          </Key>
+          <Property Name="fDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fOrderID" Type="Int32" />
+          <Property Name="fProductID" Type="Int32" />
+          <Property Name="fQuantity" Type="Int32" />
+          <NavigationProperty Name="tOrder" Relationship="Self.FK_tOrderDetails_tOrder" FromRole="tOrderDetails" ToRole="tOrder" />
+          <NavigationProperty Name="tProduct" Relationship="Self.FK_tOrderDetails_tProduct" FromRole="tOrderDetails" ToRole="tProduct" />
+        </EntityType>
+        <EntityType Name="tProduct">
+          <Key>
+            <PropertyRef Name="fProductID" />
+          </Key>
+          <Property Name="fProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fCategory" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fProductName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="fQuantity" Type="Int32" />
+          <Property Name="fImgPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fMemberID" Type="Int32" />
+          <Property Name="fProductLocation" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fArrivalTime" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fUpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tCollection" Relationship="Self.FK_tCollection_tProduct" FromRole="tProduct" ToRole="tCollection" />
+          <NavigationProperty Name="tMembership" Relationship="Self.FK_tProduct_tMembership" FromRole="tProduct" ToRole="tMembership" />
+          <NavigationProperty Name="tOrderDetails" Relationship="Self.FK_tOrderDetails_tProduct" FromRole="tProduct" ToRole="tOrderDetails" />
+          <NavigationProperty Name="tProductDetails" Relationship="Self.FK_tProductDetails_tProduct" FromRole="tProduct" ToRole="tProductDetails" />
+          <NavigationProperty Name="tShoppingDetails" Relationship="Self.FK_tShoppingDetails_tProduct" FromRole="tProduct" ToRole="tShoppingDetails" />
+        </EntityType>
+        <EntityType Name="tProductDetails">
+          <Key>
+            <PropertyRef Name="fPDetails" />
+          </Key>
+          <Property Name="fPDetails" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fPName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fProductID" Type="Int32" />
+          <NavigationProperty Name="tProduct" Relationship="Self.FK_tProductDetails_tProduct" FromRole="tProductDetails" ToRole="tProduct" />
+        </EntityType>
+        <EntityType Name="tShopping">
+          <Key>
+            <PropertyRef Name="fCartID" />
+          </Key>
+          <Property Name="fCartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fMemberID" Type="Int32" />
+          <NavigationProperty Name="tMembership" Relationship="Self.FK_tShopping_tMembership" FromRole="tShopping" ToRole="tMembership" />
+          <NavigationProperty Name="tShoppingDetails" Relationship="Self.FK_tShoppingDetails_tShopping" FromRole="tShopping" ToRole="tShoppingDetails" />
+        </EntityType>
+        <EntityType Name="tShoppingDetails">
+          <Key>
+            <PropertyRef Name="fSDtails" />
+          </Key>
+          <Property Name="fSDtails" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fProductID" Type="Int32" />
+          <Property Name="fQuantity" Type="Int32" />
+          <Property Name="fCartID" Type="Int32" />
+          <NavigationProperty Name="tProduct" Relationship="Self.FK_tShoppingDetails_tProduct" FromRole="tShoppingDetails" ToRole="tProduct" />
+          <NavigationProperty Name="tShopping" Relationship="Self.FK_tShoppingDetails_tShopping" FromRole="tShoppingDetails" ToRole="tShopping" />
+        </EntityType>
+        <EntityType Name="tWishProduct">
+          <Key>
+            <PropertyRef Name="fProductID" />
+          </Key>
+          <Property Name="fProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fCategory" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fProductName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="fQuantity" Type="Int32" />
+          <Property Name="fImgPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fMemberID" Type="Int32" />
+          <Property Name="fCity" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fArrivalTime" Type="DateTime" Precision="0" />
+          <Property Name="fCommission" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="fUpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tMembership" Relationship="Self.FK_tWishProduct_tMembership" FromRole="tWishProduct" ToRole="tMembership" />
+        </EntityType>
+        <Association Name="FK_tCollection_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tCollection" Type="Self.tCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tCollection">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tCollection_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tCollection" Type="Self.tCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tCollection">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="fSellerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrder_tMembership1">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tOrder">
+              <PropertyRef Name="fBuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProduct_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tProduct">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tShopping_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tShopping" Type="Self.tShopping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tShopping">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tWishProduct_tMembership">
+          <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
+          <End Role="tWishProduct" Type="Self.tWishProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tMembership">
+              <PropertyRef Name="fMemberID" />
+            </Principal>
+            <Dependent Role="tWishProduct">
+              <PropertyRef Name="fMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetails_tOrder">
+          <End Role="tOrder" Type="Self.tOrder" Multiplicity="0..1" />
+          <End Role="tOrderDetails" Type="Self.tOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tOrder">
+              <PropertyRef Name="fOrderID" />
+            </Principal>
+            <Dependent Role="tOrderDetails">
+              <PropertyRef Name="fOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tOrderDetails_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tOrderDetails" Type="Self.tOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tOrderDetails">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tProductDetails_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tProductDetails" Type="Self.tProductDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tProductDetails">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tShoppingDetails_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tShoppingDetails" Type="Self.tShoppingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tShoppingDetails">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tShoppingDetails_tShopping">
+          <End Role="tShopping" Type="Self.tShopping" Multiplicity="0..1" />
+          <End Role="tShoppingDetails" Type="Self.tShoppingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tShopping">
+              <PropertyRef Name="fCartID" />
+            </Principal>
+            <Dependent Role="tShoppingDetails">
+              <PropertyRef Name="fCartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gogobuydbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tCollection" EntityType="Self.tCollection" />
+          <EntitySet Name="tMembership" EntityType="Self.tMembership" />
+          <EntitySet Name="tOrder" EntityType="Self.tOrder" />
+          <EntitySet Name="tOrderDetails" EntityType="Self.tOrderDetails" />
+          <EntitySet Name="tProduct" EntityType="Self.tProduct" />
+          <EntitySet Name="tProductDetails" EntityType="Self.tProductDetails" />
+          <EntitySet Name="tShopping" EntityType="Self.tShopping" />
+          <EntitySet Name="tShoppingDetails" EntityType="Self.tShoppingDetails" />
+          <EntitySet Name="tWishProduct" EntityType="Self.tWishProduct" />
+          <AssociationSet Name="FK_tCollection_tMembership" Association="Self.FK_tCollection_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tCollection" EntitySet="tCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tCollection_tProduct" Association="Self.FK_tCollection_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tCollection" EntitySet="tCollection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tMembership" Association="Self.FK_tOrder_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrder_tMembership1" Association="Self.FK_tOrder_tMembership1">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tOrder" EntitySet="tOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProduct_tMembership" Association="Self.FK_tProduct_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tProduct" EntitySet="tProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tShopping_tMembership" Association="Self.FK_tShopping_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tShopping" EntitySet="tShopping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tWishProduct_tMembership" Association="Self.FK_tWishProduct_tMembership">
+            <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tWishProduct" EntitySet="tWishProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetails_tOrder" Association="Self.FK_tOrderDetails_tOrder">
+            <End Role="tOrder" EntitySet="tOrder" />
+            <End Role="tOrderDetails" EntitySet="tOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tOrderDetails_tProduct" Association="Self.FK_tOrderDetails_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tOrderDetails" EntitySet="tOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tProductDetails_tProduct" Association="Self.FK_tProductDetails_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tProductDetails" EntitySet="tProductDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tShoppingDetails_tProduct" Association="Self.FK_tShoppingDetails_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tShoppingDetails" EntitySet="tShoppingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tShoppingDetails_tShopping" Association="Self.FK_tShoppingDetails_tShopping">
+            <End Role="tShopping" EntitySet="tShopping" />
+            <End Role="tShoppingDetails" EntitySet="tShoppingDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="gogobuydbModelStoreContainer" CdmEntityContainer="gogobuydbEntities">
+          <EntitySetMapping Name="tCollection">
+            <EntityTypeMapping TypeName="gogobuydbModel.tCollection">
+              <MappingFragment StoreEntitySet="tCollection">
+                <ScalarProperty Name="fCollectID" ColumnName="fCollectID" />
+                <ScalarProperty Name="fProductID" ColumnName="fProductID" />
+                <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tMembership">
+            <EntityTypeMapping TypeName="gogobuydbModel.tMembership">
+              <MappingFragment StoreEntitySet="tMembership">
+                <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+                <ScalarProperty Name="fFirstName" ColumnName="fFirstName" />
+                <ScalarProperty Name="fLastName" ColumnName="fLastName" />
+                <ScalarProperty Name="fAddress" ColumnName="fAddress" />
+                <ScalarProperty Name="fEmail" ColumnName="fEmail" />
+                <ScalarProperty Name="fPhone" ColumnName="fPhone" />
+                <ScalarProperty Name="fDateOfBirth" ColumnName="fDateOfBirth" />
+                <ScalarProperty Name="fGender" ColumnName="fGender" />
+                <ScalarProperty Name="fEmailVerified" ColumnName="fEmailVerified" />
+                <ScalarProperty Name="fPassword" ColumnName="fPassword" />
+                <ScalarProperty Name="fSalt" ColumnName="fSalt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tOrder">
+            <EntityTypeMapping TypeName="gogobuydbModel.tOrder">
+              <MappingFragment StoreEntitySet="tOrder">
+                <ScalarProperty Name="fOrderID" ColumnName="fOrderID" />
+                <ScalarProperty Name="fPrice" ColumnName="fPrice" />
+                <ScalarProperty Name="fResCount" ColumnName="fResCount" />
+                <ScalarProperty Name="fOrderDate" ColumnName="fOrderDate" />
+                <ScalarProperty Name="fSellerID" ColumnName="fSellerID" />
+                <ScalarProperty Name="fBuyerID" ColumnName="fBuyerID" />
+                <ScalarProperty Name="fOrderAddress" ColumnName="fOrderAddress" />
+                <ScalarProperty Name="fOrderPhone" ColumnName="fOrderPhone" />
+                <ScalarProperty Name="fBuyerName" ColumnName="fBuyerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tOrderDetails">
+            <EntityTypeMapping TypeName="gogobuydbModel.tOrderDetails">
+              <MappingFragment StoreEntitySet="tOrderDetails">
+                <ScalarProperty Name="fDetailID" ColumnName="fDetailID" />
+                <ScalarProperty Name="fOrderID" ColumnName="fOrderID" />
+                <ScalarProperty Name="fProductID" ColumnName="fProductID" />
+                <ScalarProperty Name="fQuantity" ColumnName="fQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tProduct">
+            <EntityTypeMapping TypeName="gogobuydbModel.tProduct">
+              <MappingFragment StoreEntitySet="tProduct">
+                <ScalarProperty Name="fProductID" ColumnName="fProductID" />
+                <ScalarProperty Name="fCategory" ColumnName="fCategory" />
+                <ScalarProperty Name="fProductName" ColumnName="fProductName" />
+                <ScalarProperty Name="fPrice" ColumnName="fPrice" />
+                <ScalarProperty Name="fQuantity" ColumnName="fQuantity" />
+                <ScalarProperty Name="fImgPath" ColumnName="fImgPath" />
+                <ScalarProperty Name="fDescription" ColumnName="fDescription" />
+                <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+                <ScalarProperty Name="fProductLocation" ColumnName="fProductLocation" />
+                <ScalarProperty Name="fArrivalTime" ColumnName="fArrivalTime" />
+                <ScalarProperty Name="fUpdateTime" ColumnName="fUpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tProductDetails">
+            <EntityTypeMapping TypeName="gogobuydbModel.tProductDetails">
+              <MappingFragment StoreEntitySet="tProductDetails">
+                <ScalarProperty Name="fPDetails" ColumnName="fPDetails" />
+                <ScalarProperty Name="fPName" ColumnName="fPName" />
+                <ScalarProperty Name="fProductID" ColumnName="fProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tShopping">
+            <EntityTypeMapping TypeName="gogobuydbModel.tShopping">
+              <MappingFragment StoreEntitySet="tShopping">
+                <ScalarProperty Name="fCartID" ColumnName="fCartID" />
+                <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tShoppingDetails">
+            <EntityTypeMapping TypeName="gogobuydbModel.tShoppingDetails">
+              <MappingFragment StoreEntitySet="tShoppingDetails">
+                <ScalarProperty Name="fSDtails" ColumnName="fSDtails" />
+                <ScalarProperty Name="fProductID" ColumnName="fProductID" />
+                <ScalarProperty Name="fQuantity" ColumnName="fQuantity" />
+                <ScalarProperty Name="fCartID" ColumnName="fCartID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tWishProduct">
+            <EntityTypeMapping TypeName="gogobuydbModel.tWishProduct">
+              <MappingFragment StoreEntitySet="tWishProduct">
+                <ScalarProperty Name="fProductID" ColumnName="fProductID" />
+                <ScalarProperty Name="fCategory" ColumnName="fCategory" />
+                <ScalarProperty Name="fProductName" ColumnName="fProductName" />
+                <ScalarProperty Name="fPrice" ColumnName="fPrice" />
+                <ScalarProperty Name="fQuantity" ColumnName="fQuantity" />
+                <ScalarProperty Name="fImgPath" ColumnName="fImgPath" />
+                <ScalarProperty Name="fDescription" ColumnName="fDescription" />
+                <ScalarProperty Name="fMemberID" ColumnName="fMemberID" />
+                <ScalarProperty Name="fCity" ColumnName="fCity" />
+                <ScalarProperty Name="fArrivalTime" ColumnName="fArrivalTime" />
+                <ScalarProperty Name="fCommission" ColumnName="fCommission" />
+                <ScalarProperty Name="fUpdateTime" ColumnName="fUpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

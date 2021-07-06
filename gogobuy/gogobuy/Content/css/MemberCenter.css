@@ -1,0 +1,163 @@
+﻿/* form */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.25rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.max-w-640 {
+    max-width: 640px;
+}
+
+.btn1 {
+    background-color: #12cbc4;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.5s;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+}
+
+.ui-li-icon {
+    height: 18px;
+    width: 18px;
+}
+
+.my-account {
+    position: relative;
+    padding: 30px 0;
+}
+
+.tab-content {
+    padding: 30px;
+    background: #ffffff;
+}
+
+.button {
+    width: 250px;
+    background: #ffffff;
+}
+
+/* form */
+
+
+/* sidebar */
+.sidebar {
+    width: 250px;
+    height: 60%;
+    left: 0;
+    color: white;
+    background: #F0A6A6;
+}
+
+    .sidebar .text {
+        color: gainsboro;
+        font-size: 25px;
+        font-weight: 600;
+        line-height: 65px;
+        text-align: center;
+        background: #F0A6A6;
+        letter-spacing: 1px;
+    }
+
+.navul {
+    background: #F0A6A6;
+    height: 90%;
+    width: 100%;
+    list-style: none;
+    line-height: 60px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.418);
+}
+
+    .navul li a {
+        position: relative;
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        padding-left: 20px;
+        font-weight: 500;
+        display: block;
+        width: 100%;
+        border-left: 2px solid transparent;
+    }
+
+    .navul a:hover {
+        color: wheat;
+        border-left-color: wheat;
+    }
+
+
+    .navul ul {
+        position: static;
+        display: none;
+    }
+
+    .navul .BB-show.show {
+        display: block;
+    }
+
+    .navul .Account-show.show1 {
+        display: block;
+    }
+
+    .navul ul li {
+        line-height: 42px;
+        border-bottom: none;
+    }
+
+        .navul ul li a {
+            font-size: 17px;
+            color: white;
+            padding-left: 80px;
+        }
+
+    .navul li a span {
+        position: absolute;
+        top: 30%;
+        right: 40px;
+        transform: translateY(-50%);
+        height: 20px;
+    }
+
+    .navul li a:hover span {
+        transform: translateY(130%) rotate(-180deg);
+    }
+
+.BB-show {
+    list-style: none;
+}
+
+.Account-show {
+    list-style: none;
+}
+
+/* sidebar */
+.max-w-640 {
+    max-width: 1080px;
+}
+
+.btn-cart {
+    background-color: #1272cb;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.5s;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+}
+
+.wishlist-page .table td {
+    font-size: 16px;
+    vertical-align: middle;
+}

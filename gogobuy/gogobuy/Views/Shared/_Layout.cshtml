@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container bg-light">
+            <a class="navbar-brand" href="~/Home/index">回首頁</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background: #A1FFA1">
+                <span class="navbar-toggler-icon" style=""></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0 me-auto">
+                    <li class="nav-item">
+                        @if (Session["SK_LOGINED_USER_EMAIL"] == null)
+                        {
+                            <a class="nav-link" href="~/Home/Login">會員中心</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" href="~/Member/MemberCenter">會員中心</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (Session["SK_LOGINED_USER_EMAIL"] == null)
+                        {
+                            <a class="nav-link" href="~/Home/Login">願望清單</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" href="~/BuyerSeller/BuyerManagement">願望清單</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @if (Session["SK_LOGINED_USER_EMAIL"] == null)
+                        {
+                            <a class="nav-link" href="~/Home/Login">販售清單</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" href="~/BuyerSeller/SellerManagement">販售清單</a>
+
+                        }
+                    </li>
+                </ul>
+                @if (Session["SK_LOGINED_USER_EMAIL"] == null)
+                {
+                    <ul class='navbar-nav mb-2 mb-lg-0'><li class='nav-item'><a class='nav-link' href='~/Home/Login'>登入</a></li><li class=''><div class='nav-link'>/</div></li><li class='nav-item'><a class='nav-link' href='~/Home/Register'>註冊</a></li></ul>
+                }
+                else
+                {
+                    <ul class='navbar-nav mb-2 mb-lg-0'><li class=''><div class="nav-link">歡迎您加入!</div></li><li class=''><div class='nav-link'>/</div></li><li class='nav-item'><a class='nav-link' href='~/Home/LoginOutCheck'>登出</a></li></ul>
+                }
+            </div>
+        </div>
+    </nav>
+    <header>
+        <div class="container bg-light" ;>
+            <div class="row">
+                <div class="col-md-2 overflow-hidden">
+                    <img src="~/Content/img/index/GOGOBUY_LOGO.png" style="height: 60px;" />
+                    <span class="fs-3">gogobuy</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mb-3" style="">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">想搜?</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">販售商品</a></li>
+                            <li><a class="dropdown-item" href="#">願望商品</a></li>
+                        </ul>
+                        <input type="text" class="form-control" style="max-width:100%;" aria-label="Text input with dropdown button">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"><img src="~/Content/img/index/loupe.png" style="width:60%;" /></button>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex justify-content-evenly">
+                    <a href="~/Collect/Collection"><img src="~/Content/img/index/收藏鈕.PNG" class="border border-primary border-3 rounded rounded-3" style="width:98px; height:49px;" /></a>
+                    <a href="~/ShoppingCart/ShoppingCart"><img src="~/Content/img/index/購物車鈕.PNG" class="border border-primary border-3 rounded rounded-3" style="width:124px; height:49px;" /></a>
+                    <a href="~/Chatroom/Chatroom"><img src="~/Content/img/index/聊天室鈕.PNG" class="border border-primary border-3 rounded rounded-3" style="width:72px; height:49px;" /></a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    @*中心區塊*@
+    <div class="container">
+        @RenderBody()
+        <hr />
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <div class="row" style="background: #EBEBEB;">
+                <div class="col-md-3">
+                    <h4>聯絡方式</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <img src="~/Content/img/index/address.png" style="height:20px" class="mx-2" />123 E Store, Los Angeles, USA
+                        </li>
+                        <li>
+                            <img src="~/Content/img/index/envelope.png" style="height:20px" class="mx-2" />email.example.com
+                        </li>
+                        <li>
+                            <img src="~/Content/img/index/call.png" style="height:20px" class="mx-2" />+123-456-7890
+                        </li>
+                    </ul>
+                    <a href="~/ContactUs/ContactUs" class="h5 mx-2">線上聯絡我們</a>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="mb-3">追蹤我們</h4>
+                    <a href="#"><img src="~/Content/img/index/facebook.png" style="height:40px" class="mx-2" /></a>
+                    <a href="#"><img src="~/Content/img/index/twitter.png" style="height:40px" class="mx-2" /></a>
+                    <a href="#"><img src="~/Content/img/index/youtube.png" style="height:40px" class="mx-2" /></a>
+                </div>
+                <div class="col-md-3">
+                    <h4>關於我們</h4>
+                    <ul class="list-unstyled">
+                        <li class="my-2"><a href="#">>>關於我們</a></li>
+                        <li class="my-2"><a href="#">>>隱私政策</a></li>
+                        <li class="my-2"><a href="~/FAQ/FAQ">>>問與答(FAQ)</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>策略</h4>
+                    <ul class="list-unstyled">
+                        <li class="my-2"><a href="#">>>付款政策</a></li>
+                        <li class="my-2"><a href="#">>>運輸政策</a></li>
+                        <li class="my-2"><a href="#">>>退貨政策</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--<script src="~/Scripts/jquery-3.6.0.js"></script>-->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <link href="~/Content/css/MemberCenter.css" rel="stylesheet" />
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

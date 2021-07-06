@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="23c46c646474494ea32be35f6784fb43" Name="Diagram1">
+        <EntityTypeShape EntityType="gogobuydbModel.tCollection" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tMembership" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tOrder" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tOrderDetails" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tProduct" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tProductDetails" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tShopping" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tShoppingDetails" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gogobuydbModel.tWishProduct" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
+        <AssociationConnector Association="gogobuydbModel.FK_tCollection_tMembership" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tCollection_tProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tOrder_tMembership" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tOrder_tMembership1" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tProduct_tMembership" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tShopping_tMembership" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tWishProduct_tMembership" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tOrderDetails_tOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tOrderDetails_tProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tProductDetails_tProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tShoppingDetails_tProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="gogobuydbModel.FK_tShoppingDetails_tShopping" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

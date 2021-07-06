@@ -1,0 +1,38 @@
+﻿@model gogobuy.Models.tLogin
+@{
+    ViewBag.Title = "Login";
+}
+
+<article>
+    <h5 class="mx-5 my-5">首頁 / 登入</h5>
+    <div class="" style="display:flex; align-items: center; margin-bottom:60px;">
+        <div class="col-md-6 text-center mx-auto border border-2 border-primary" style="background: #D6E2FF; border-radius: 23px; ">
+            <form action="~/Home/Login" method="post" class="" style="padding:60px;">
+                <div class="form-floating my-2">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" style="max-width:100%;" name="txtAccount">
+                    <label for="floatingInput" class="">Email</label>
+                </div>
+                <div class="form-floating my-2 mt-4">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" style="max-width:100%;" name="txtPassword">
+                    <label for="floatingPassword" class="">密碼 / Password</label>
+                </div>
+
+                <div class="form-check text-start mt-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        記住這台電腦
+                    </label>
+                </div>
+                <div class="text-danger fw-bold fs-5">
+                    <span>@ViewBag.Msg</span>
+                </div>
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-primary btn-lg" type="submit">登入</button>
+                </div>
+                <hr class="mt-3 mb-5" />
+                <div class="mt-2 fs-5 fw-bold">還沒註冊過嗎?? 歡迎加入! <a href="~/Home/Register">(註冊)</a></div>
+            </form>
+        </div>
+    </div>
+</article>
+
