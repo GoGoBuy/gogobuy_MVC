@@ -48,6 +48,10 @@ namespace gogobuy.Controllers
         #endregion
         public ActionResult MemberCenter()
         {
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
         public ActionResult OrderlistBuy()
