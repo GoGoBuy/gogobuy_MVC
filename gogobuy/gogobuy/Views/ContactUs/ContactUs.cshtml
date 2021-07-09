@@ -3,7 +3,23 @@
     ViewBag.Title = "ContactUs";
 }
 
-<h2>ContactUs</h2>
+<style>
+    .iframe-rwd {
+        position: relative;
+        padding-bottom: 350px;
+        padding-top: 30px;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .iframe-rwd iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1050px;
+            height: 400px;
+    }
+</style>
 
 <body>
     <div class="container">
@@ -32,7 +48,7 @@
                         <textarea name="內容" class="form-control" style="background-color: #ecf0f1;" rows="5"
                                   placeholder="內容"></textarea>
                     </div>
-                    <div class="container">
+                    <div class="container" style="padding-top:30px;">
                         <button class="btn btn-outline-secondary "
                                 style="margin-top: 30px;width:190px;height:60px; font-size: large;float:right" type="submit">
                             提交
@@ -45,7 +61,7 @@
                     </div>
                 </form>
             </div>
-            <div class="card" style="width: 16rem;height: ;margin-top: 50px;margin-left:40px;background-color: #ecf0f1;">
+            <div class="card" style="width: 16rem;margin-top: 40px;margin-left:40px;background-color: #ecf0f1;">
                 <img style=" height: 200px;"
                      src="https://media.istockphoto.com/photos/contact-us-sign-on-a-wooden-desk-picture-id1091858450?k=6&m=1091858450&s=612x612&w=0&h=ipl1LmUiPUopt_q_RSuXHzjNsnquVyg9uPBJ5JruTQE="
                      class="card-img-top" alt="...">
@@ -75,9 +91,11 @@
             }
         </script> -->
         <!-- <script src="https://maps.googleapis.com/maps/api/js?key=zaSyDuN0fQjvdZ1Q4b4gcvvCXGJP8oPQ_ps7w&callback=initMap" async defer></script> -->
-        <div>
+        <div class="iframe-rwd" style="text-align:center;">
+
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7345.3693456526935!2d120.21258182317945!3d22.9986200898605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x841674ff51b45187!2z5oiQ5aSn5YWJ5b6p5qCh5Y2A!5e0!3m2!1szh-TW!2stw!4v1625153210362!5m2!1szh-TW!2stw"
-                    width="1170" height="400" style="border:0;margin-left: 0px;padding-right:15px" allowfullscreen="" loading="lazy"></iframe>
+                    width="900" height="400" style="border:0;margin-left: 0px;padding-right:15px; margin:0 auto;" allowfullscreen="" loading="lazy"></iframe>
+
         </div>
     </div>
 </body>
