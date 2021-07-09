@@ -29,6 +29,10 @@ namespace gogobuy
         public string fOrderAddress { get; set; }
         public string fOrderPhone { get; set; }
         public string fBuyerName { get; set; }
+        public string fOrderStatus { get; set; }
+        public string fOrderUUID { get; set; }
+        public string fOrderPayWay { get; set; }
+        public string fOrderNote { get; set; }
     
         public virtual tMembership tMembership { get; set; }
         public virtual tMembership tMembership1 { get; set; }

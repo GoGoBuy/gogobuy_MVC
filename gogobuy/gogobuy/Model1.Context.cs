@@ -34,5 +34,6 @@ namespace gogobuy
         public virtual DbSet<tShopping> tShopping { get; set; }
         public virtual DbSet<tShoppingDetails> tShoppingDetails { get; set; }
         public virtual DbSet<tWishProduct> tWishProduct { get; set; }
+        public virtual DbSet<tProductImage> tProductImage { get; set; }
     }
 }

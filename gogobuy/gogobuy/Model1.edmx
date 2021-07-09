@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="gogobuydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="gogobuydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tCollection">
           <Key>
             <PropertyRef Name="fCollectID" />
@@ -42,6 +42,10 @@
           <Property Name="fOrderAddress" Type="nvarchar" MaxLength="50" />
           <Property Name="fOrderPhone" Type="nvarchar" MaxLength="30" />
           <Property Name="fBuyerName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fOrderStatus" Type="nvarchar" MaxLength="10" />
+          <Property Name="fOrderUUID" Type="char" MaxLength="13" />
+          <Property Name="fOrderPayWay" Type="nvarchar" MaxLength="10" />
+          <Property Name="fOrderNote" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tOrderDetails">
           <Key>
@@ -58,15 +62,16 @@
           </Key>
           <Property Name="fProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="fCategory" Type="nvarchar" MaxLength="30" />
-          <Property Name="fProductName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fProductName" Type="nvarchar" MaxLength="50" />
           <Property Name="fPrice" Type="money" />
           <Property Name="fQuantity" Type="int" />
           <Property Name="fImgPath" Type="nvarchar" MaxLength="30" />
-          <Property Name="fDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="fDescription" Type="nvarchar" MaxLength="500" />
           <Property Name="fMemberID" Type="int" />
           <Property Name="fProductLocation" Type="nvarchar" MaxLength="30" />
           <Property Name="fArrivalTime" Type="nvarchar" MaxLength="30" />
           <Property Name="fUpdateTime" Type="date" />
+          <Property Name="fIsWish" Type="bit" />
         </EntityType>
         <EntityType Name="tProductDetails">
           <Key>
@@ -74,6 +79,14 @@
           </Key>
           <Property Name="fPDetails" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="fPName" Type="nvarchar" MaxLength="30" />
+          <Property Name="fProductID" Type="int" />
+        </EntityType>
+        <EntityType Name="tProductImage">
+          <Key>
+            <PropertyRef Name="fImageID" />
+          </Key>
+          <Property Name="fImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fImgPath" Type="nvarchar" MaxLength="30" />
           <Property Name="fProductID" Type="int" />
         </EntityType>
         <EntityType Name="tShopping">
@@ -205,6 +218,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tProductImage_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tProductImage" Type="Self.tProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tProductImage">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tShopping_tMembership">
           <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
           <End Role="tShopping" Type="Self.tShopping" Multiplicity="*" />
@@ -260,6 +285,7 @@
           <EntitySet Name="tOrderDetails" EntityType="Self.tOrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProduct" EntityType="Self.tProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tProductDetails" EntityType="Self.tProductDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tProductImage" EntityType="Self.tProductImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tShopping" EntityType="Self.tShopping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tShoppingDetails" EntityType="Self.tShoppingDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tWishProduct" EntityType="Self.tWishProduct" Schema="dbo" store:Type="Tables" />
@@ -295,6 +321,10 @@
             <End Role="tProduct" EntitySet="tProduct" />
             <End Role="tProductDetails" EntitySet="tProductDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_tProductImage_tProduct" Association="Self.FK_tProductImage_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tProductImage" EntitySet="tProductImage" />
+          </AssociationSet>
           <AssociationSet Name="FK_tShopping_tMembership" Association="Self.FK_tShopping_tMembership">
             <End Role="tMembership" EntitySet="tMembership" />
             <End Role="tShopping" EntitySet="tShopping" />
@@ -312,8 +342,7 @@
             <End Role="tWishProduct" EntitySet="tWishProduct" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="gogobuydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -365,6 +394,10 @@
           <NavigationProperty Name="tMembership" Relationship="Self.FK_tOrder_tMembership" FromRole="tOrder" ToRole="tMembership" />
           <NavigationProperty Name="tMembership1" Relationship="Self.FK_tOrder_tMembership1" FromRole="tOrder" ToRole="tMembership" />
           <NavigationProperty Name="tOrderDetails" Relationship="Self.FK_tOrderDetails_tOrder" FromRole="tOrder" ToRole="tOrderDetails" />
+          <Property Name="fOrderStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fOrderUUID" Type="String" MaxLength="13" FixedLength="true" Unicode="false" />
+          <Property Name="fOrderPayWay" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fOrderNote" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tOrderDetails">
           <Key>
@@ -383,11 +416,11 @@
           </Key>
           <Property Name="fProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="fCategory" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="fProductName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="fQuantity" Type="Int32" />
           <Property Name="fImgPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="fDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="fMemberID" Type="Int32" />
           <Property Name="fProductLocation" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="fArrivalTime" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -397,6 +430,8 @@
           <NavigationProperty Name="tOrderDetails" Relationship="Self.FK_tOrderDetails_tProduct" FromRole="tProduct" ToRole="tOrderDetails" />
           <NavigationProperty Name="tProductDetails" Relationship="Self.FK_tProductDetails_tProduct" FromRole="tProduct" ToRole="tProductDetails" />
           <NavigationProperty Name="tShoppingDetails" Relationship="Self.FK_tShoppingDetails_tProduct" FromRole="tProduct" ToRole="tShoppingDetails" />
+          <Property Name="fIsWish" Type="Boolean" />
+          <NavigationProperty Name="tProductImage" Relationship="gogobuydbModel.FK_tProductImage_tProduct" FromRole="tProduct" ToRole="tProductImage" />
         </EntityType>
         <EntityType Name="tProductDetails">
           <Key>
@@ -647,7 +682,33 @@
             <End Role="tShopping" EntitySet="tShopping" />
             <End Role="tShoppingDetails" EntitySet="tShoppingDetails" />
           </AssociationSet>
+          <EntitySet Name="tProductImage" EntityType="gogobuydbModel.tProductImage" />
+          <AssociationSet Name="FK_tProductImage_tProduct" Association="gogobuydbModel.FK_tProductImage_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tProductImage" EntitySet="tProductImage" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tProductImage">
+          <Key>
+            <PropertyRef Name="fImageID" />
+          </Key>
+          <Property Name="fImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fImgPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fProductID" Type="Int32" />
+          <NavigationProperty Name="tProduct" Relationship="gogobuydbModel.FK_tProductImage_tProduct" FromRole="tProductImage" ToRole="tProduct" />
+        </EntityType>
+        <Association Name="FK_tProductImage_tProduct">
+          <End Type="gogobuydbModel.tProduct" Role="tProduct" Multiplicity="0..1" />
+          <End Type="gogobuydbModel.tProductImage" Role="tProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tProductImage">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -683,6 +744,10 @@
           <EntitySetMapping Name="tOrder">
             <EntityTypeMapping TypeName="gogobuydbModel.tOrder">
               <MappingFragment StoreEntitySet="tOrder">
+                <ScalarProperty Name="fOrderNote" ColumnName="fOrderNote" />
+                <ScalarProperty Name="fOrderPayWay" ColumnName="fOrderPayWay" />
+                <ScalarProperty Name="fOrderUUID" ColumnName="fOrderUUID" />
+                <ScalarProperty Name="fOrderStatus" ColumnName="fOrderStatus" />
                 <ScalarProperty Name="fOrderID" ColumnName="fOrderID" />
                 <ScalarProperty Name="fPrice" ColumnName="fPrice" />
                 <ScalarProperty Name="fResCount" ColumnName="fResCount" />
@@ -708,6 +773,7 @@
           <EntitySetMapping Name="tProduct">
             <EntityTypeMapping TypeName="gogobuydbModel.tProduct">
               <MappingFragment StoreEntitySet="tProduct">
+                <ScalarProperty Name="fIsWish" ColumnName="fIsWish" />
                 <ScalarProperty Name="fProductID" ColumnName="fProductID" />
                 <ScalarProperty Name="fCategory" ColumnName="fCategory" />
                 <ScalarProperty Name="fProductName" ColumnName="fProductName" />
@@ -764,6 +830,15 @@
                 <ScalarProperty Name="fArrivalTime" ColumnName="fArrivalTime" />
                 <ScalarProperty Name="fCommission" ColumnName="fCommission" />
                 <ScalarProperty Name="fUpdateTime" ColumnName="fUpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tProductImage">
+            <EntityTypeMapping TypeName="gogobuydbModel.tProductImage">
+              <MappingFragment StoreEntitySet="tProductImage">
+                <ScalarProperty Name="fProductID" ColumnName="fProductID" />
+                <ScalarProperty Name="fImgPath" ColumnName="fImgPath" />
+                <ScalarProperty Name="fImageID" ColumnName="fImageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
