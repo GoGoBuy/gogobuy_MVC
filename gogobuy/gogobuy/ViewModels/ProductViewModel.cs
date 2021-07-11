@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace gogobuy.ViewModels
+{
+    public class ProductViewModel
+    {
+      public ProductViewModel()
+        {
+            this.product = new tProduct();
+        }
+        public tProduct product { get; set; }
+        public int fProductID { get; set; }
+        public string fProductName { get; set; }
+        public string fImgPath { get; set; }
+        public decimal? fPrice { get; set; }
+        public string fProductLocation { get; set; }
+    }
+}
