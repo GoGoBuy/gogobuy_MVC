@@ -1,6 +1,13 @@
-﻿
+﻿@model List<tProduct>
 @{
     ViewBag.Title = "Index";
+}
+@if (TempData["message"] != null)
+{
+<script type="text/javascript">
+        var message = @Html.Raw(Json.Encode(TempData["message"]));
+        alert(message);
+</script>
 }
 
 @*跑馬燈區塊*@
@@ -51,55 +58,55 @@
     <h4 class="my-3 mx-5">分類：</h4>
     <div class="row text-center d-flex justify-content-between">
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory1" class="link-success">
                 <img src="~/Content/img/index/smartphone.png" style="width:100%; max-width: 50px; " />
                 <div class="h5">手機周邊</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory2" class="link-success">
                 <img src="~/Content/img/index/pc.png" style="width:100%; max-width: 50px; " />
                 <div class="h5">3C產品</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4  border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory3" class="link-success">
                 <img src="~/Content/img/index/shopping-bag.png" style="width: 100%; max-width: 50px; " />
                 <div class="h5">生活居家</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory4" class="link-success">
                 <img src="~/Content/img/index/male-clothes.png" style="width: 100%; max-width: 50px; " />
                 <div class="h5">服飾飾品</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory5" class="link-success">
                 <img src="~/Content/img/index/snack.png" style="width: 100%; max-width: 50px; " />
                 <div class="h5">名產食品</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory6" class="link-success">
                 <img src="~/Content/img/index/book.png" style="width: 100%; max-width: 50px; " />
                 <div class="h5">文創書籍</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory7" class="link-success">
                 <img src="~/Content/img/index/cd-player.png" style="width: 100%; max-width: 50px; " />
                 <div class="h5">影音周邊</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory8" class="link-success">
                 <img src="~/Content/img/index/vase.png" style="width: 100%; max-width: 50px; " />
                 <div class="h5">古董古玩</div>
             </a>
         </div>
         <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
-            <a href="#" class="link-success">
+            <a href="~/Home/SelectCategory9" class="link-success">
                 <img src="~/Content/img/index/megaphone.png" style="width: 100%; max-width: 50px; " />
                 <div class="h5">其他</div>
             </a>
@@ -112,86 +119,28 @@
 <section class="container" style="background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #CFFFCC;">
     <h4 class="my-3 mx-5">販售熱門商品：</h4>
     <div class="row text-center d-flex justify-content-between">
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">價格$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
+        @{
+            int count = 1;
+            foreach (tProduct c in Model)
+            {
+                if (count <= 8)
+                {
+                    <form class="col-md-3 col-sm-4 col-6 border border-success rounded" method="post" action="~/Home/AddCollection">
+                        <input type="text" name="ProductID" value="@c.fProductID" hidden />
+                        <a href="~/Details/ProductDetails?fProductID=@c.fProductID" class="link-success">
+                            <img src="~/Content/img/Product/@c.fImgPath" style="width:90%;" />
+                            <div class="h5">@c.fProductName</div>
+                        </a>
+                        <div class="row align-items-center">
+                            <div class="col-md-8 fs-4">價格：@c.fPrice</div>
+                            <div class="col-md-4"><button type="submit"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:30px;" /></button></div>
+                        </div>
+                    </form>
+                }
+                count++;
+            }
+        }
+
 
     </div>
 </section>
@@ -200,86 +149,27 @@
 <section class="container" style="background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #CFFFCC;">
     <h4 class="my-3 mx-5">最新請願商品：</h4>
     <div class="row text-center d-flex justify-content-between">
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-4 col-6 border border-success rounded">
-            <a href="#" class="link-success">
-                <img src="~/Content/img/index/尚待補圖中.png" style="width:90%;" />
-                <div class="h5">商品名稱</div>
-            </a>
-            <div class="row align-items-center">
-                <div class="col-md-8">收購價$1000</div>
-                <div class="col-md-4"><a href="#"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" /></a></div>
-            </div>
-        </div>
+        @{
+            int count2 = 1;
+            foreach (tProduct c in Model)
+            {
+                if (count2 > 8)
+                {
+                <form class="col-md-3 col-sm-4 col-6 border border-success rounded" method="post" action="~/Home/AddCollection">
+                    <input type="text" name="ProductID" value="@c.fProductID" hidden />
+                    <a href="~/Details/BucketListDetails?fProductID=@c.fProductID" class="link-success">
+                        <img src="~/Content/img/Product/@c.fImgPath" style="width:90%;" />
+                        <div class="h5">@c.fProductName</div>
+                    </a>
+                    <div class="row align-items-center">
+                        <div class="col-md-8 fs-4">收購價：@c.fPrice</div>
+                        <div class="col-md-4"><button type="submit"><img src="~/Content/img/index/heart.png" style="width:100%; max-width:30px;" /></button></div>
+                    </div>
+                </form>
+                }
+                count2++;
+            }
+        }
     </div>
 </section>
 <img src="~/Content/img/index/b_ornament_121_0M.png" style="width:100%;" />
