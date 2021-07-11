@@ -201,8 +201,8 @@
     <Content Include="Content\css\MemberCenter.css" />
     <Content Include="Content\img\BucketListDetails\BUNNIE.jpg" />
     <Content Include="Content\img\buyer_seller\8edb5c27-6852-4a84-adc3-667465bc61a7.jpg" />
-    <Content Include="Content\img\buyer_seller\add-image-line-icon-outline-260nw-751009576.jpg" />
     <Content Include="Content\img\buyer_seller\settings.png" />
+    <Content Include="Content\img\buyer_seller\upload.png" />
     <Content Include="Content\img\img_memberCenter\check-list.png" />
     <Content Include="Content\img\img_memberCenter\credit-card.png" />
     <Content Include="Content\img\img_memberCenter\exit.png" />
@@ -529,6 +529,7 @@
     <Compile Include="tWishProduct.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -564,6 +565,8 @@
     <Content Include="Views\Member\UpdatePassword.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\ContactUs\ContactUs.cshtml" />
+    <Content Include="Views\BuyerSeller\ProductList.cshtml" />
+    <Content Include="Views\BuyerSeller\WishProductList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

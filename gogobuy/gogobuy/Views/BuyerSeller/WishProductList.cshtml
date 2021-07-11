@@ -1,0 +1,130 @@
+﻿@using gogobuy.ViewModels;
+@model List<ProductViewModel>
+@{
+    ViewBag.Title = "WishProductList";
+}
+<head>
+    <style>
+        .item {
+            width: 98%;
+            height: 60%;
+            margin: 0 auto;
+        }
+
+            .item > img {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                width: 100%;
+                height: 100%;
+            }
+
+        .item-name {
+            display: -webkit-box;
+            width: 95%;
+            height: 38px;
+            margin: 0 auto;
+            font-size: 0.95rem;
+            line-height: 1.2rem;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .price {
+            font-size: 0.95rem;
+            padding: 3px 0;
+        }
+
+        div .col-md-2 {
+            height: 300px;
+        }
+    </style>
+</head>
+@*分類區塊*@
+<section class="container my-5" style="background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #9fff99;">
+    <h4 class="my-3 mx-5">分類：</h4>
+    <div class="row text-center d-flex justify-content-between">
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "手機周邊"})" class="link-success">
+                <img src="~/Content/img/index/smartphone.png" style="width:100%; max-width: 50px; " />
+                <div class="h5">手機周邊</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "3C產品"})" class="link-success">
+                <img src="~/Content/img/index/pc.png" style="width:100%; max-width: 50px; " />
+                <div class="h5">3C產品</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4  border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "生活居家"})" class="link-success">
+                <img src="~/Content/img/index/shopping-bag.png" style="width: 100%; max-width: 50px; " />
+                <div class="h5">生活居家</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "服飾飾品"})" class="link-success">
+                <img src="~/Content/img/index/male-clothes.png" style="width: 100%; max-width: 50px; " />
+                <div class="h5">服飾飾品</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "名產食品"})" class="link-success">
+                <img src="~/Content/img/index/snack.png" style="width: 100%; max-width: 50px; " />
+                <div class="h5">名產食品</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "文創書籍"})" class="link-success">
+                <img src="~/Content/img/index/book.png" style="width: 100%; max-width: 50px; " />
+                <div class="h5">文創書籍</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "影音周邊"})" class="link-success">
+                <img src="~/Content/img/index/cd-player.png" style="width: 100%; max-width: 50px; " />
+                <div class="h5">影音周邊</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "古董古玩"})" class="link-success">
+                <img src="~/Content/img/index/vase.png" style="width: 100%; max-width: 50px; " />
+                <div class="h5">古董古玩</div>
+            </a>
+        </div>
+        <div class="col-md-1 col-sm-4 col-4 border border-success rounded">
+            <a href="@Url.Action("WishProductList", new { category = "其他"})" class="link-success">
+                <img src="~/Content/img/index/megaphone.png" style="width: 100%; max-width: 50px; " />
+                <div class="h5">其他</div>
+            </a>
+        </div>
+    </div>
+</section>
+@*分類區塊*@
+<img src="~/Content/img/index/b_ornament_121_0M.png" style="width:100%;" />
+<section class="container" style="background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #CFFFCC;">
+    <h4 class="my-3 mx-5">販售商品總覽：</h4>
+    <div class="row text-center d-flex justify-content-between">
+        @{
+            foreach (var p in Model)
+            {
+                <div class="col-md-2 col-sm-3 col-6 border border-success rounded">
+                    <a href="#" class="link-success">
+                        <div class="item">
+                            <img src="~/Content/img/Product/@p.fImgPath" />
+                        </div>
+                        <div class="item-name">@p.fProductName</div>
+                    </a>
+                    <div class="d-flex align-items-center justify-content-between price">
+                        價格$@String.Format("{0:0.00}", p.fPrice)
+                        <img src="~/Content/img/index/heart.png" style="width:100%; max-width:50px;" />
+                    </div>
+                    <div class="d-flex align-content-end justify-content-end">
+                        <small>@p.fProductLocation</small>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+<img src="~/Content/img/index/b_ornament_121_0M.png" style="width:100%;" />
