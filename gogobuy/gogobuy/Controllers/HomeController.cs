@@ -152,26 +152,7 @@ namespace gogobuy.Controllers
             Session[CDictionary.SK_LOGINED_USER_ID] = null;
             return RedirectToAction("Index");
         }
-        public ActionResult SelectKeyWord()
-        {
-            string keyword = Request.Form["txtKeyWord"];
-            if (keyword == "" || keyword == null)
-            {
-                return RedirectToAction("SellSearchResult", "SearchResult", null);
-                //string sql = "select * from tProduct;";
-                //List<tProduct> list = SelectProductBySQL(sql,null);
-                //return RedirectToAction("SellSearchResult", "SearchResult", list);
-            }
-            else
-            {
-                string sql = $"select * from tProduct where fProductName like @K_FPRODUCTNAME";
-                List<SqlParameter> paras = new List<SqlParameter>();
-                paras.Add(new SqlParameter("K_FPRODUCTNAME", "%"+keyword+"%"));
-                List<tProduct> list = SelectProductBySQL(sql, paras);
-                return RedirectToAction("SellSearchResult", "SearchResult", list);
-            }
-
-        }
+        
         List<tProduct> SelectProductBySQL(string sql, List<SqlParameter> paras)
         {
             SqlConnection con = new SqlConnection();
@@ -244,61 +225,6 @@ namespace gogobuy.Controllers
             con.Close();
             TempData["message"] = "已加入收藏~!";
             return RedirectToAction("Index");
-        }
-
-        public ActionResult SelectCategory1()
-        {
-            string sql = $"select * from tProduct where fCategory='手機周邊';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory2()
-        {
-            string sql = $"select * from tProduct where fCategory='3C產品';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory3()
-        {
-            string sql = $"select * from tProduct where fCategory='生活居家';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory4()
-        {
-            string sql = $"select * from tProduct where fCategory='服飾飾品';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory5()
-        {
-            string sql = $"select * from tProduct where fCategory='名產食品';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory6()
-        {
-            string sql = $"select * from tProduct where fCategory='文創書籍';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory7()
-        {
-            string sql = $"select * from tProduct where fCategory='影音周邊';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory8()
-        {
-            string sql = $"select * from tProduct where fCategory='古董古玩';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
-        }
-        public ActionResult SelectCategory9()
-        {
-            string sql = $"select * from tProduct where fCategory='其他';";
-            List<tProduct> list = SelectProductBySQL(sql, null);
-            return RedirectToAction("SellSearchResult", "SearchResult", list);
         }
     }
 }
