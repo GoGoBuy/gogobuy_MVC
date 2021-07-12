@@ -21,7 +21,9 @@
 
     <link href="~/Content/css/Search_css/SearchResult_Style.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.6.0.js"></script>
-    <style></style>
+
+
+
 
     <script>
         $(function () {
@@ -45,13 +47,19 @@
             });
 
         });
+
+
+
+
+
+
     </script>
 
 
 </head>
 <body>
-    
-    
+
+
 
     <div class="container">
         <div class="row">
@@ -140,19 +148,20 @@
                                 <h4 style="margin-top: 20px;">按照日期:</h4>
                                 <p style="font-size: large;">從</p>
 
-                                <form style="font-size: large;">
-                                    <input type="datetime-local" id="ordertime" name="ordertime">
-                                </form>
-                                <p style="font-size: large;">到</p>
+                                    <form style="font-size: large;">
+                                        <input type="datetime-local" id="ordertime" name="ordertime">
+                                    </form>
+                                
+                                <p style="font-size: large; margin-top: 10px">到</p>
 
 
-                                <form style="font-size: large;">
-                                    <input type="datetime-local" id="ordertime" name="ordertime">
-                                </form>
+                                    <form style="font-size: large;">
+                                        <input type="datetime-local" id="ordertime" name="ordertime">
+                                    </form>
 
 
-
-
+                                
+                                
 
 
                                 <!-- 篩選條件區塊-上架日期 end -->
@@ -163,10 +172,10 @@
                                 <h4 style="margin-top: 20px;">按照價格:</h4>
 
                                 @*<div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="價格最低" aria-label="價格最低">
-                                    <span class="input-group-text">~</span>
-                                    <input type="text" class="form-control" placeholder="價格最高" aria-label="價格最高">
-                                </div>*@
+                                        <input type="text" class="form-control" placeholder="價格最低" aria-label="價格最低">
+                                        <span class="input-group-text">~</span>
+                                        <input type="text" class="form-control" placeholder="價格最高" aria-label="價格最高">
+                                    </div>*@
 
                                 <select id="sort" style="font-size:large">
                                     <option data-price="0:@Int32.MaxValue" value="all">全部價格</option>
@@ -181,11 +190,11 @@
 
 
                                 @*@using (Html.BeginForm())
-                                {
-                                    @Html.TextBox("txtPrice1", "", new { placeholder = "請輸入最低價格" })
+                                    {
+                                        @Html.TextBox("txtPrice1", "", new { placeholder = "請輸入最低價格" })
 
-                                    @Html.TextBox("txtPrice2", "", new { placeholder = "請輸入最高價格" })
-                                }*@
+                                        @Html.TextBox("txtPrice2", "", new { placeholder = "請輸入最高價格" })
+                                    }*@
 
 
 
@@ -260,7 +269,7 @@
 
 
 
-                                <p>顯示所有相關搜尋結果 "XXXXXX商品"</p>
+                                <p></p>
 
                                 <div class="padding"></div>
 
@@ -332,11 +341,15 @@
                                                                 @{
                                                                     if (item.fImgPath == null)
                                                                     {
-                                                                        <img src="~/Content/img/SearchResults/沒有圖片.jpg" width="300" height="300" />
+                                                                        <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
+                                                                            <img src="~/Content/img/SearchResults/沒有圖片.jpg" width="300" height="300" />
+                                                                        </a>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <img src="~/Content/img/Product/@item.fImgPath" width="300" height="300" />
+                                                                        <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
+                                                                            <img src="~/Content/img/Product/@item.fImgPath" width="300" height="300" />
+                                                                        </a>
                                                                     }
 
 
@@ -375,9 +388,41 @@
                                                             <!-- <td class="price text-right">350元</td> -->
 
                                                             <td class="button text-right">
+
                                                                 <div class="btn-group-vertical">
-                                                                    <button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
-                                                                    <button type="button" class="btn btn-primary">加入購物車</button>
+
+
+                                                                    <input type="text" name="ProductID" value="@item.fProductID" hidden />
+
+                                                                    @*<button type="submit" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+
+                                                                        <button type="submit" class="btn btn-primary">加入購物車</button>*@
+
+                                                                    @*@Html.ActionLink("加入收藏", "AddCollection", "SearchResult", new { ProductID = item.fProductID }, new { @class = "btn btn-success" })*@
+
+
+
+                                                                    @*<a class="btn btn-info" href="@Url.Action("AddCollection", "Home", new {ProductID = item.fProductID})">加到追蹤中</a>*@
+
+
+                                                                    <form class="" method="post" action="~/Home/AddCollection">
+                                                                        <input type="text" name="ProductID" value="@item.fProductID" hidden />
+                                                                        @*<a href="~/Details/SellListDetails?fProductID=@item.fProductID" class="link-success"> </a>*@
+
+                                                                        <button type="submit" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
+                                                                    </form>
+
+                                                                    <form class="" method="post" action="~/Home/AddCollection">
+                                                                        <input type="text" name="ProductID" value="@item.fProductID" hidden />
+                                                                        <a href="~/Details/SellListDetails?fProductID=@item.fProductID" class="link-success"> </a>
+
+                                                                        <button type="submit" class="btn btn-primary" style="margin-bottom:5px">加入購物車</button>
+                                                                    </form>
+
+
+
+
+
                                                                 </div>
                                                             </td>
                                                             <!-- <button type="button" class="btn btn-secondary">測試分隔</button> -->
@@ -437,4 +482,6 @@
     <!-- 暫定，可以改～ -->
     <!-- Footer -->
 </body>
+
+
 
