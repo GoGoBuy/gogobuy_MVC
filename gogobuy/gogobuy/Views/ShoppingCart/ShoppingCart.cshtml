@@ -128,8 +128,10 @@
             type: 'post',
             async: true,
             success: function (data) {
-                if (data == "success")
+                if (data == "success") {
                     $('tr.cart-item').remove();
+                    $('strong').text("$0");
+                }
             }
         })
         }
