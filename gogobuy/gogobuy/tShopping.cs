@@ -22,9 +22,12 @@ namespace gogobuy
     
         public int fCartID { get; set; }
         public Nullable<int> fMemberID { get; set; }
+        public Nullable<int> fProductID { get; set; }
+        public Nullable<int> fQuantity { get; set; }
     
         public virtual tMembership tMembership { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tShoppingDetails> tShoppingDetails { get; set; }
+        public virtual tProduct tProduct { get; set; }
     }
 }

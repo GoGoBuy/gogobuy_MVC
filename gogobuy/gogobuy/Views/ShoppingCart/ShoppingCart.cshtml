@@ -1,4 +1,5 @@
-﻿
+﻿@using gogobuy.ViewModels;
+@model List<CartViewModel>
 @{
     ViewBag.Title = "ShoppingCart";
 }
@@ -28,60 +29,68 @@
                             <th class="text-right py-3 px-4" style="width: 100px;">價格</th>
                             <th class="text-center py-3 px-4" style="width: 140px;">數量</th>
                             <th class="text-right py-3 px-4" style="width: 100px;">小計</th>
-                            <th class="text-center" style="width: 95px;"><a class="btn btn-sm btn-outline-danger" href="#">清空</a></th>
+                            <th class="text-center" style="width: 95px;"><a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", "ShoppingCart", new {})">清空</a></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @{
+                            //int count = 0;
+                            decimal? sum = 0;
+                            foreach (var item in Model)
+                            {
+                                //count++;
+                                decimal? total = item.fPrice * item.fQuantity;
+                                sum += total;
+                                <tr>
+                                    <td class="p-4">
+                                        <div class="media align-items-center">
+                                            <img src="~/Content/img/Product/@item.fImgPath" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                            <div class="media-body">
+                                                <a href="#" class="d-block text-dark" style="text-align: center;">@item.fProductName</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">@item.fDescription</td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
+                                    <td class="align-middle p-4"><input type="text" class="form-control text-center" value="@item.fQuantity"></td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
+                                    <td class="text-center align-middle px-0"><a class="remove-from-cart" href="@Url.Action("Delete", "ShoppingCart", new { id =item.fCartID })" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
+                                </tr>
+                            }
+                        }
+                        @*<tr>
+                                <td class="p-4">
+                                    <div class="media align-items-center">
+                                        <img src="https://image.flaticon.com/icons/png/256/4403/4403027.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                        <div class="media-body">
+                                            <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 2</a>
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403023.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 1</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-                            <td class="text-center align-middle px-0"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
-                        </tr>
+                                </td>
+                                <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
+                                <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
+                                <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
+                                <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
+                                <td class="text-center align-middle px-0"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
+                            </tr>
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403027.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 2</a>
+                            <tr>
+                                <td class="p-4">
+                                    <div class="media align-items-center">
+                                        <img src="https://image.flaticon.com/icons/png/256/4403/4403030.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                        <div class="media-body">
+                                            <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 3</a>
 
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-                            <td class="text-center align-middle px-0"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
-                        </tr>
-
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403030.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 3</a>
-
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-                            <td class="text-center align-middle px-0"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
-                        </tr>
+                                </td>
+                                <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
+                                <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
+                                <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
+                                <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
+                                <td class="text-center align-middle px-0"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
+                            </tr>*@
 
                     </tbody>
                 </table>
@@ -91,7 +100,7 @@
             <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
                 <div class="mt-4">
                     <label class="text-muted font-weight-normal m-0">商品總計</label>
-                    <div class="text-large"><strong>$1164.65</strong></div>
+                    <div class="text-large"><strong>$@String.Format("{0:0}", sum)</strong></div>
                 </div>
                 <div class="d-flex">
 

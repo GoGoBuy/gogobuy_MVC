@@ -28,6 +28,7 @@
         <AssociationConnector Association="gogobuydbModel.FK_tShoppingDetails_tShopping" ManuallyRouted="false" />
         <EntityTypeShape EntityType="gogobuydbModel.tProductImage" Width="1.5" PointX="5.25" PointY="17.25" />
         <AssociationConnector Association="gogobuydbModel.FK_tProductImage_tProduct" />
+        <AssociationConnector Association="gogobuydbModel.FK_tShopping_tProduct" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

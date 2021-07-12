@@ -11,8 +11,7 @@ namespace gogobuy
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tMembership
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,26 +24,19 @@ namespace gogobuy
             this.tShopping = new HashSet<tShopping>();
             this.tWishProduct = new HashSet<tWishProduct>();
         }
-
+    
         public int fMemberID { get; set; }
-        [Required(ErrorMessage = "姓為必填欄位")]
         public string fFirstName { get; set; }
-        [Required(ErrorMessage = "名為必填欄位")]
         public string fLastName { get; set; }
         public string fAddress { get; set; }
-        [Required(ErrorMessage = "Email為必填欄位")]
         public string fEmail { get; set; }
-        [Required(ErrorMessage = "密碼為必填欄位")]
-        public string fPassword { get; set; }
-        [Required(ErrorMessage = "電話為必填欄位")]
         public string fPhone { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> fDateOfBirth { get; set; }
         public Nullable<bool> fGender { get; set; }
         public Nullable<bool> fEmailVerified { get; set; }
+        public string fPassword { get; set; }
         public string fSalt { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tCollection> tCollection { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
