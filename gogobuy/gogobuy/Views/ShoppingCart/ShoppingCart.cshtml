@@ -29,7 +29,7 @@
                             <th class="text-right py-3 px-4" style="width: 100px;">價格</th>
                             <th class="text-center py-3 px-4" style="width: 140px;">數量</th>
                             <th class="text-right py-3 px-4" style="width: 100px;">小計</th>
-                            <th class="text-center" style="width: 95px;"><a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", "ShoppingCart", new {})">清空</a></th>
+                            <th class="text-center" style="width: 95px;"><button class="btn btn-sm btn-outline-danger" id="clear">清空</button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,7 @@
                                 //count++;
                                 decimal? total = item.fPrice * item.fQuantity;
                                 sum += total;
-                                <tr>
+                                <tr class="cart-item">
                                     <td class="p-4">
                                         <div class="media align-items-center">
                                             <img src="~/Content/img/Product/@item.fImgPath" class="d-block ui-w-40 ui-bordered mr-4" alt="">
@@ -119,3 +119,20 @@
     </div>
 </div>
 
+<script>
+
+    $(document).ready(function () {
+        $("#clear").click(function () {
+            $.ajax({
+            url: "@Url.Action("DeleteAll", "ShoppingCart")",
+            type: 'post',
+            async: true,
+            success: function (data) {
+                if (data == "success")
+                    $('tr.cart-item').remove();
+            }
+        })
+        }
+        );
+    });
+</script>

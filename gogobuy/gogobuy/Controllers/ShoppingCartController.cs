@@ -11,16 +11,30 @@ namespace gogobuy.Controllers
     public class ShoppingCartController : Controller
     {
         // GET: ShoppingCart
-        public ActionResult DeleteAll(int id)
+        public ActionResult DeleteAll()
         {
-            gogobuydbEntities shopitem = new gogobuydbEntities();
-            tShopping items = shopitem.tShopping.FirstOrDefault();
-            if (items != null)
+            // 驗證使用者有無登入
+            if(Session[CDictionary.SK_LOGINED_USER_ID] == null)
+                    return Json("fail");
+            try
+                {
+                gogobuydbEntities db = new gogobuydbEntities();
+                // 抓取使用者ID
+                int memberID = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+                // 清空裡面有使用者ID的購物車
+                var shopData = db.tShopping.Where(s => s.fMemberID == memberID).ToList();
+                if (shopData.Count > 0)
+                {
+                    db.tShopping.RemoveRange(shopData);
+                    db.SaveChanges();
+                    return Json("success");
+                }
+                return Json("noData");
+            }catch
             {
-                shopitem.tShopping.Remove(items);
-                shopitem.SaveChanges();
+                return Json("fail");
             }
-            return RedirectToAction("ShoppingCart");
+            
         }
         public ActionResult Delete(int id)
         {
