@@ -72,9 +72,16 @@ namespace gogobuy.Controllers
         }
         public ActionResult ProductList(string category)
         {
+            int userId = -1;
+            bool isLike = false;
+            
+            if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
+                userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+
             List<ProductViewModel> products = new List<ProductViewModel>();
             var db = new gogobuydbEntities();
             IEnumerable<tProduct> table;
+
             if (string.IsNullOrEmpty(category))
             {
                 table = db.tProduct.Where(p => p.fIsWish == false)
@@ -84,21 +91,35 @@ namespace gogobuy.Controllers
                 table = db.tProduct.Where(p => p.fIsWish == false && p.fCategory == category)
                 .Select(p => p);
             }
+
             foreach (var p in table)
             {
+                if (userId != -1)
+                {
+                    var collection = db.tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == p.fProductID);
+                    if (collection != null)
+                        isLike = true;
+                }
                 products.Add(new ProductViewModel
                 {
                     fProductID = p.fProductID,
                     fProductName = p.fProductName,
                     fImgPath = p.fImgPath,
                     fPrice = p.fPrice,
-                    fProductLocation = p.fProductLocation
+                    fProductLocation = p.fProductLocation,
+                    isLike = isLike
                 });
             }
             return View(products);
         }
         public ActionResult WishProductList(string category)
         {
+            int userId = -1;
+            bool isLike = false;
+
+            if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
+                userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+
             List<ProductViewModel> products = new List<ProductViewModel>();
             var db = new gogobuydbEntities();
             IEnumerable<tProduct> table;
@@ -114,13 +135,21 @@ namespace gogobuy.Controllers
             }
             foreach (var p in table)
             {
+                if (userId != -1)
+                {
+                    var collection = db.tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == p.fProductID);
+                    if (collection != null)
+                        isLike = true;
+                }
+
                 products.Add(new ProductViewModel
                 {
                     fProductID = p.fProductID,
                     fProductName = p.fProductName,
                     fImgPath = p.fImgPath,
                     fPrice = p.fPrice,
-                    fProductLocation = p.fProductLocation
+                    fProductLocation = p.fProductLocation,
+                    isLike = isLike
                 });
             }
             return View(products);
