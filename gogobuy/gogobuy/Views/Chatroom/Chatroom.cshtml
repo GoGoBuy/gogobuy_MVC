@@ -14,12 +14,15 @@
 
     <!-- Chat Room Javascript (SignalR)-->
     <script src="~/Scripts/mpw-chat.js"></script>
+
+    <script src="~/Scripts/SignalR.Update.js"></script>
+
 }
 
 <style type="text/css">
     #txaChat {
         height: 237px;
-        width: 750px;
+        width: 860px;
     }
 
     #txaUsers {
@@ -30,43 +33,89 @@
     #txbMessage {
         width: 600px;
     }
-
-    
 </style>
 
 <br />
 
 <h2>聊天室</h2>
 
-<h4>(開啟兩個chatroom測試聊天)</h4>
+@*<h4>(開啟兩個chatroom測試聊天)</h4>*@
 
-<div class="col-md-8 bg-white">
-    <div class="chat-box bg-white">
 
-        @*聊天室姓名:&nbsp;*@
 
-        <div class="input-group">
-            <input class="form-control border no-shadow no-rounded" placeholder="請登入帳號" id="txbUserName" type="text">
-            <span class="input-group-btn">
-                <button class="btn btn-success no-rounded" id="btnJoin" type="button" value="Send" style="margin-left:5px; margin-top:2px">登入</button>
-            </span>
+    <div class="col-md-8 bg-white">
+        <div class="chat-box bg-white">
+
+            @*聊天室姓名:&nbsp;*@
+
+            <div class="input-group">
+                <input class="form-control border no-shadow no-rounded" placeholder="請登入帳號" id="txbUserName" type="text" hidden value="@ViewBag.UserName">
+                @*<span><h3>聊天室</h3></span>*@
+                <span class="input-group-btn">
+                    <button class="btn btn-success no-rounded" id="btnJoin" type="button" value="Send" style="margin-left:5px; margin-top:2px">開始交談</button>
+                </span>
+            </div>
+
+            <br />
+
+            <textarea id="txaChat" rows="1" readonly="readonly" class="border no-shadow no-rounded"></textarea>
+            @*<textarea id="txaUsers" name="S2" readonly="readonly" rows="2" class="border no-shadow no-rounded"></textarea>*@
+
+
         </div>
 
         <br />
 
-        <textarea id="txaChat" rows="1" readonly="readonly" class="border no-shadow no-rounded"></textarea>
-        <textarea id="txaUsers" name="S2" readonly="readonly" rows="2" class="border no-shadow no-rounded"></textarea>
-    </div>
-
-    <br />
-
-    <div class="chat-box bg-white">
-        <div class="input-group">
-            <input class="form-control border no-shadow no-rounded" placeholder="請輸入訊息" id="txbMessage" type="text">
-            <span class="input-group-btn">
-                <button class="btn btn-success no-rounded" id="btnSend" type="button" value="Send" style="margin-left:5px; margin-top:2px">送出</button>
-            </span>
+        <div class="chat-box bg-white">
+            <div class="input-group">
+                <input class="form-control border no-shadow no-rounded" placeholder="請輸入訊息" id="txbMessage" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-success no-rounded" id="btnSend" type="button" value="Send" style="margin-left:5px; margin-top:2px">送出</button>
+                </span>
+            </div>
         </div>
+
+
+        <br />
+
+
+        <table id="DataTable">
+            <thead>
+                <tr>
+                    <th data-name="ProductKey">商品代號</th>
+                    <th data-name="ProductAlternatekey">商品名稱</th>
+                    <th data-name="EnglishProductName">成交價格</th>
+                    <th data-name="Color">商品備註</th>
+                </tr>
+            </thead>
+            <tbody id="TableBody">
+                <tr class="tr1">
+                    <td>1</td>
+                    <td><input type="text" name="ProductAlternatekey" value="無敵泰迪熊" /></td>
+                    <td><input type="text" name="EnglishProductName" value="1000.00" /></td>
+                    <td><input type="text" name="Color" value="N/A" /></td>
+                </tr>
+                <tr class="tr2">
+                    <td>2</td>
+                    <td><input type="text" name="ProductAlternatekey" value="忠犬小萊姆" /></td>
+                    <td><input type="text" name="EnglishProductName" value="2500.00" /></td>
+                    <td><input type="text" name="Color" value="N/A" /></td>
+                </tr>
+                <tr class="tr3">
+                    <td>3</td>
+                    <td><input type="text" name="ProductAlternatekey" value="野心大蟹堡" /></td>
+                    <td><input type="text" name="EnglishProductName" value="3500.00" /></td>
+                    <td><input type="text" name="Color" value="N/A" /></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br />
+
+        <span class="input-group-btn">
+            <button class="btn btn-success no-rounded" id="btnSend" type="button" value="Send" style="margin-left:5px; margin-top:2px">確認訂單</button>
+        </span>
+
+
     </div>
 
-</div>
