@@ -13,8 +13,8 @@
     <script src="~/signalr/hubs"></script>
 
     <!-- Chat Room Javascript (SignalR)-->
-    <script src="~/Scripts/mpw-chat.js"></script>
-
+    @*<script src="~/Scripts/mpw-chat.js"></script>*@
+    <script src="~/Scripts/gogobuy-chat.js"></script>
     <script src="~/Scripts/SignalR.Update.js"></script>
 
 }
@@ -22,7 +22,7 @@
 <style type="text/css">
     #txaChat {
         height: 237px;
-        width: 860px;
+        width: 750px;
     }
 
     #txaUsers {
@@ -59,7 +59,7 @@
             <br />
 
             <textarea id="txaChat" rows="1" readonly="readonly" class="border no-shadow no-rounded"></textarea>
-            @*<textarea id="txaUsers" name="S2" readonly="readonly" rows="2" class="border no-shadow no-rounded"></textarea>*@
+            <textarea id="txaUsers" name="S2" readonly="readonly" rows="2" class="border no-shadow no-rounded"></textarea>
 
 
         </div>
