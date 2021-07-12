@@ -23,5 +23,14 @@ namespace gogobuy.Controllers
             ViewBag.UserName = user.fFirstName + user.fLastName;
             return View();
         }
+
+
+
+        public ActionResult Update()
+        {
+            return View();
+        }
     }
+
+    
 }
