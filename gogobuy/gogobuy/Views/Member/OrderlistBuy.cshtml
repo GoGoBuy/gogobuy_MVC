@@ -1,329 +1,346 @@
-﻿
+﻿@model List<gogobuy.ViewModels.OrderlistBuyViewModel>
 @{
     ViewBag.Title = "OrderlistBuy";
 }
+    
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        //TUNA
+        //$(document).ready(function () {
+        //    for (int i = 1; i <= count; i++)
+        //    {
+        //        string temp1 = "#show" + count.ToString();
+        //        string temp2 = "#hide" + count.ToString();
+
+        //        $(temp1).click(function () {
+        //            $("#multiCollapseExample1").show();
+        //        });
+        //        $(temp2).click(function () {
+        //            $("#multiCollapseExample1").hide();
+        //        });
+        //    }
+
+        //});
+        function showGiveId(showId, showDetail) {
+            $(document).ready(function () {
+                $('#' + showId.toString()).click(function () {
+                    $('#' + showDetail.toString()).show();
+                });
+            });
+        }
+        function hideGiveId(hideId, hideDetail) {
+            $(document).ready(function () {
+                $('#' + hideId.toString()).click(function () {
+                    $('#' + hideDetail.toString()).hide();
+                });
+            });
+        }
+
+        //$(document).ready(function () {
+        //    $("#show1").click(function () {
+        //        $("#multiCollapseExample1").show();
+        //    });
+        //});
+
+        //$(document).ready(function () {
+        //    $("#hide1").click(function () {
+        //        $("#multiCollapseExample1").hide();
+        //    });
+        //});
+
+
+        //$(document).ready(function () {
+        //    $("#show2").click(function () {
+        //        $("#multiCollapseExample2").show();
+        //    });
+        //});
+
+        //$(document).ready(function () {
+        //    $("#hide2").click(function () {
+        //        $("#multiCollapseExample2").hide();
+        //    });
+        //});
+
+        //$(document).ready(function () {
+        //    $("#show3").click(function () {
+        //        $("#multiCollapseExample3").show();
+        //    });
+        //});
+
+        //$(document).ready(function () {
+        //    $("#hide3").click(function () {
+        //        $("#multiCollapseExample3").hide();
+        //    });
+        //});
+    </script>
+    @*<span onchange="showGiveId(@showXP,@detailP);hideGiveId(@hideXP,@detailP)"></span>*@
 </head>
-<div style="height: 50px; width: 100%; background: white;"></div>
-<div class="container">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="~/Home/index">首頁</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="~/Member/MemberCenter">會員中心</a></li>
-        </ol>
-    </nav>
-
-</div>
-
-<div style="height: 50px; width: 100%; background: white;"></div>
-
-
-<div id="contain">
-    <div class="my-account">
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="col-md-6 sidebar">
-                    <div class="text" style="color: rgb(95, 83, 83);">Member Center</div>
-                    <ul class="navul">
-                        <li>
-                            <a href="~/Member/SwitchToBuyAndShop" style="color: rgb(95, 83, 83);">
-                                <img src="~/Content/img/img_memberCenter/stock-market.png" alt="icon"
-                                     class="ui-li-icon">買賣家專區
-                            </a>
-                        <li class="navulli">
-                            <a href="#" style="color: rgb(95, 83, 83);" class="Account-btn">
-                                <img src="~/Content/img/img_memberCenter/user-setting.png" alt="icon" class="ui-li-icon">帳戶資料
-                                <span><i class="fas fa-sort-down first"></i></span>
-                            </a>
-                            <ul class="Account-show">
-                                <p>
-                                    <a href="~/Member/EditProfile" style="color: rgb(122, 111, 111);">
-                                        <img src="~/Content/img/img_memberCenter/user.png" alt="icon"
-                                             class="ui-li-icon">資料修改
+        <div style="height: 50px; width: 100%; background: white;"></div>
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="~/Home/Index">首頁</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="~/Member/MemberCenter">會員中心</a></li>
+                </ol>
+            </nav>
+        </div>
+        <div style="height: 50px; width: 100%; background: white;"></div>
+        <div id="contain">
+            <div class="my-account">
+                <div class="container-fluid">
+                    <div class="row">
+                        <nav class="col-md-6 sidebar">
+                            <div class="text" style="color: rgb(95, 83, 83);">Member Center</div>
+                            <ul class="navul">
+                                <li>
+                                    <a href="~/Member/SwitchToBuyAndShop" style="color: rgb(95, 83, 83);">
+                                        <img src="~/Content/img/img_memberCenter/stock-market.png" alt="icon"
+                                             class="ui-li-icon">買賣家專區
                                     </a>
-                                </p>
-                                <p>
-                                    <a href="~/Member/UpdatePassword" style="color: rgb(122, 111, 111);">
-                                        <img src="~/Content/img/img_memberCenter/password.png" alt="icon"
-                                             class="ui-li-icon">密碼修改
+                                <li class="navulli">
+                                    <a href="#" style="color: rgb(95, 83, 83);" class="Account-btn">
+                                        <img src="~/Content/img/img_memberCenter/user-setting.png" alt="icon" class="ui-li-icon">帳戶資料
+                                        <span><i class="fas fa-sort-down first"></i></span>
                                     </a>
-                                </p>
+                                    <ul class="Account-show">
+                                        <p>
+                                            <a href="~/Member/EditProfile" style="color: rgb(122, 111, 111);">
+                                                <img src="~/Content/img/img_memberCenter/user.png" alt="icon"
+                                                     class="ui-li-icon">資料修改
+                                            </a>
+                                        </p>
+                                        <p>
+                                            <a href="~/Member/UpdatePassword" style="color: rgb(122, 111, 111);">
+                                                <img src="~/Content/img/img_memberCenter/password.png" alt="icon"
+                                                     class="ui-li-icon">密碼修改
+                                            </a>
+                                        </p>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#" style="color: rgb(95, 83, 83);" class="BB-btn">
+                                        <img src="~/Content/img/img_memberCenter/price-list.png" alt="icon" class="ui-li-icon">訂單查詢
+                                        <span><i class="fas fa-sort-down second"></i></span>
+                                    </a>
+                                    <ul class="BB-show">
+                                        <p>
+                                            <a href="~/Member/OrderlistBuy" style="color: rgb(122, 111, 111);">
+                                                <img src="~/Content/img/img_memberCenter/check-list.png" alt="icon"
+                                                     class="ui-li-icon">購買查詢
+                                            </a>
+                                        </p>
+                                        <p>
+                                            <a href="~/Member/OrderlistSell" style="color: rgb(122, 111, 111);">
+                                                <img src="~/Content/img/img_memberCenter/shop.png" alt="icon"
+                                                     class="ui-li-icon">販售查詢
+                                            </a>
+                                        </p>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="~/Home/LoginOutCheck" style="color: rgb(95, 83, 83);">
+                                        <img src="~/Content/img/img_memberCenter/exit.png" alt="icon" class="ui-li-icon">登出
+                                    </a>
+                                </li>
                             </ul>
-                        </li>
+                        </nav>
 
-                        <li>
-                            <a href="#" style="color: rgb(95, 83, 83);" class="BB-btn">
-                                <img src="~/Content/img/img_memberCenter/price-list.png" alt="icon" class="ui-li-icon">訂單查詢
-                                <span><i class="fas fa-sort-down second"></i></span>
-                            </a>
-                            <ul class="BB-show">
-                                <p>
-                                    <a href="~/Member/OrderlistBuy" style="color: rgb(122, 111, 111);">
-                                        <img src="~/Content/img/img_memberCenter/check-list.png" alt="icon"
-                                             class="ui-li-icon">買家查詢
-                                    </a>
-                                </p>
-                                <p>
-                                    <a href="~/Member/OrderlistSell" style="color: rgb(122, 111, 111);">
-                                        <img src="~/Content/img/img_memberCenter/shop.png" alt="icon"
-                                             class="ui-li-icon">賣家查詢
-                                    </a>
-                                </p>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="~/Home/index" style="color: rgb(95, 83, 83);">
-                                <img src="~/Content/img/img_memberCenter/exit.png" alt="icon" class="ui-li-icon">登出
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="col-md-6 offset-md-2">
-                    <div class="tab-content justify-content-center" id="v-pills-account-details" role="tabpanel"
-                         aria-labelledby="v-pills-account-details-tab">
-                        <section class="person show active">
-                            <h2 class="mb-2 text-center pb-4">買家查詢</h2>
-                            <div class="container text-center table-responsive">
-                                <p class="mb-4 text-center"></p>
-                                <table class="table  table-bordered">
-                                    <thead>
-                                        <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                            <th>訂單<br>編號</th>
-                                            <th>訂購<br>日期</th>
-                                            <th>訂單<br>狀態</th>
-                                            <th>傭金<br>總額</th>
-                                            <th>消費<br>總額</th>
-                                            <th>付款<br>方式</th>
-                                            <th>收貨<br>確認</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="align-middle">
-                                            <td style="border-color: black;">20181105313752</td>
-                                            <td style="border-color: black;">2018/11/05</td>
-                                            <td style="border-color: black;">訂單<br>成立</td>
-                                            <td style="border-color: black;">$200</td>
-                                            <td style="border-color: black;">$4,397</td>
-                                            <td style="border-color: black;">貨到<br>付款</td>
-                                            <td style="border-color: black;">完成<br>收貨</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p>
-                                    <a data-bs-toggle="collapse" href="#collapseContent">明細收合</a>
-
-                                </p>
-                                <div class="collapse" id="collapseContent">
-                                    <div class="card card-body">
-                                        <table class="table  table-bordered">
+                        <div class="col-md-7 offset-md-1">
+                            <div class="tab-content justify-content-center" id="v-pills-account-details" role="tabpanel"
+                                 aria-labelledby="v-pills-account-details-tab">
+                                <section class="person show active">
+                                    <h2 class="mb-2 text-center pb-4">購買查詢</h2>
+                                    <div class="container text-center table-responsive">
+                                        <p class="mb-4 text-center"></p>
+                                        @*<table class="table  table-bordered">
                                             <thead>
                                                 <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                                    <th>商品<br>名稱</th>
-                                                    <th>商品<br>單價</th>
-                                                    <th>數量</th>
-                                                    <th>傭金</th>
-                                                    <th>收貨<br>確認</th>
+                                                    <th>訂單<br>編號</th>
+                                                    <th>訂購<br>日期</th>
+                                                    <th>訂單<br>狀態</th>
+                                                    <th>消費<br>總額</th>
+                                                    <th>付款<br>方式</th>
+                                                    <th>狀態</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr class="align-middle">
-                                                    <td style="border-color: black;">Kingston 8GB DDR3L 1600 品牌專用筆記型記憶體(低電壓1.35V)(KCP3L16SD8/8FR)(商品ID：DRAL06-A900794EQ-000)</td>
-                                                    <td style="border-color: black;">$1,799</td>
-                                                    <td style="border-color: black;">2</td>
-                                                    <td style="border-color: black;">$100</td>
-                                                    <td style="border-color: black;">完成<br>收貨</td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr class="align-middle">
-                                                    <td style="border-color: black;">
-                                                        【Transcend 創見】128GB JetFlash700 USB3.1隨身碟-經典黑
-                                                        (商品ID：DSABKR-A900A4HBU-000)
-                                                    </td>
-                                                    <td style="border-color: black;">$599</td>
-                                                    <td style="border-color: black;">1</td>
-                                                    <td style="border-color: black;">$100</td>
-                                                    <td style="border-color: black;">完成<br>收貨</td>
+                                                    <td style="border-color: black;">20181105313753</td>
+                                                    <td style="border-color: black;">2018/11/06</td>
+                                                    <td style="border-color: black;">訂單<br>成立</td>
+                                                    <td style="border-color: black;"></td>
+                                                    <td style="border-color: black;">貨到<br>付款</td>
+                                                    <td style="border-color: black;"><button>已收貨</button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <p>
+                                            <button id="show1">看明細</button>
+                                            <button id="hide1">收明細</button>
+                                        </p>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                                    <div class="card card-body">
+                                                        <table class="table  table-bordered">
+                                                            <thead>
+                                                                <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
+                                                                    <th>商品<br>名稱</th>
+                                                                    <th>商品<br>單價</th>
+                                                                    <th>數量</th>
+                                                                    <th>傭金</th>
+                                                                    <th>收貨<br>確認</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="align-middle">
+                                                                    <td style="border-color: black;">Kingston 8GB DDR3L 1600 品牌專用筆記型記憶體(低電壓1.35V)(KCP3L16SD8/8FR)(商品ID：DRAL06-A900794EQ-000)</td>
+                                                                    <td style="border-color: black;">$1,799</td>
+                                                                    <td style="border-color: black;">2</td>
+                                                                    <td style="border-color: black;">$100</td>
+                                                                    <td style="border-color: black;">完成<br>收貨</td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tbody>
+                                                                <tr class="align-middle">
+                                                                    <td style="border-color: black;">
+                                                                        【Transcend 創見】128GB JetFlash700 USB3.1隨身碟-經典黑
+                                                                        (商品ID：DSABKR-A900A4HBU-000)
+                                                                    </td>
+                                                                    <td style="border-color: black;">$599</td>
+                                                                    <td style="border-color: black;">1</td>
+                                                                    <td style="border-color: black;">$100</td>
+                                                                    <td style="border-color: black;">完成<br>收貨</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
                                     </div>
-                                </div>
+                                </section>
+
+
+
+
+                                <p>[[[ 以下為測試資料]]]</p>
+                                @{
+                                    int count = 0;
+                                    foreach (var item in Model)
+                                    {
+                                        string showX = "show" + count.ToString();
+                                        string hideX = "hide" + count.ToString();
+                                        string showXP = "\"show" + count.ToString() + "\"";
+                                        string hideXP = "\"hide" + count.ToString() + "\"";
+                                        string detail = "detail" + count.ToString();
+                                        string detailP = "\"detail" + count.ToString() + "\"";
+                                        @*<p> @item.fPrice </p>
+                                        <p> @item.fOrderPayWay </p>
+
+                                            foreach(var item2 in item.lsttProductlist)
+                                            {
+                                        <p> @item2.fProductName </p>
+                                            }*@
+                                        <section class="person show active">
+                                            <div class="container text-center table-responsive">
+                                                <p class="mb-4 text-center"></p>
+                                                <table class="table  table-bordered">
+                                                    <thead>
+                                                        <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
+                                                            <th>訂單<br>編號</th>
+                                                            <th>訂購<br>日期</th>
+                                                            <th>訂單<br>狀態</th>
+                                                            <th>消費<br>總額</th>
+                                                            <th>付款<br>方式</th>
+                                                            <th>狀態</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="align-middle">
+                                                            <td style="border-color: black;">@item.fOrderUUID</td>
+                                                            <td style="border-color: black;">@item.fOrderDate</td>
+                                                            <td style="border-color: black;">@item.fOrderStatus</td>
+                                                            <td style="border-color: black;">@item.fPrice</td>
+                                                            <td style="border-color: black;">@item.fOrderPayWay</td>
+                                                            <td style="border-color: black;"><button>已收貨</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <p>
+                                                    <button id="@showX" onclick="showGiveId(@showXP,@detailP)">看明細</button>
+                                                    <button id="@hideX" onclick="hideGiveId(@hideXP,@detailP)">收明細</button>
+                                                </p>
+                                                <div class="collapse" id="@detail">
+                                                    <div class="card card-body">
+                                                        <table class="table  table-bordered">
+                                                            <thead>
+                                                                <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
+                                                                    <th>商品<br>名稱</th>
+                                                                    <th>商品<br>單價</th>
+                                                                    <th>數量</th>
+                                                                    <th>收貨<br>確認</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="align-middle">
+                                                                    <td style="border-color: black;">Kingston 8GB DDR3L 1600 品牌專用筆記型記憶體(低電壓1.35V)(KCP3L16SD8/8FR)(商品ID：DRAL06-A900794EQ-000)</td>
+                                                                    <td style="border-color: black;">$1,799</td>
+                                                                    <td style="border-color: black;">2</td>
+                                                                    <td style="border-color: black;">完成<br>收貨</td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tbody>
+                                                                <tr class="align-middle">
+                                                                    <td style="border-color: black;">
+                                                                        【Transcend 創見】128GB JetFlash700 USB3.1隨身碟-經典黑
+                                                                        (商品ID：DSABKR-A900A4HBU-000)
+                                                                    </td>
+                                                                    <td style="border-color: black;">$599</td>
+                                                                    <td style="border-color: black;">1</td>
+                                                                    <td style="border-color: black;">完成<br>收貨</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        count++;
+                                    }
+                                }
                             </div>
-                        </section>
-
-
-                        <section class="person show active">
-                            <div class="container text-center table-responsive">
-                                <p class="mb-4 text-center"></p>
-                                <table class="table  table-bordered">
-                                    <thead>
-                                        <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                            <th>訂單<br>編號</th>
-                                            <th>訂購<br>日期</th>
-                                            <th>訂單<br>狀態</th>
-                                            <th>傭金<br>總額</th>
-                                            <th>消費<br>總額</th>
-                                            <th>付款<br>方式</th>
-                                            <th>收貨<br>確認</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="align-middle">
-                                            <td style="border-color: black;">20181105313753</td>
-                                            <td style="border-color: black;">2018/11/06</td>
-                                            <td style="border-color: black;">訂單<br>成立</td>
-                                            <td style="border-color: black;">$200</td>
-                                            <td style="border-color: black;">$4,397</td>
-                                            <td style="border-color: black;">貨到<br>付款</td>
-                                            <td style="border-color: black;">完成<br>收貨</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p>
-                                    <a data-bs-toggle="collapse" href="#collapseContent1">明細收合</a>
-
-                                </p>
-                                <div class="collapse" id="collapseContent1">
-                                    <div class="card card-body">
-                                        <table class="table  table-bordered">
-                                            <thead>
-                                                <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                                    <th>商品<br>名稱</th>
-                                                    <th>商品<br>單價</th>
-                                                    <th>數量</th>
-                                                    <th>傭金</th>
-                                                    <th>收貨<br>確認</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="align-middle">
-                                                    <td style="border-color: black;">Kingston 8GB DDR3L 1600 品牌專用筆記型記憶體(低電壓1.35V)(KCP3L16SD8/8FR)(商品ID：DRAL06-A900794EQ-000)</td>
-                                                    <td style="border-color: black;">$1,799</td>
-                                                    <td style="border-color: black;">2</td>
-                                                    <td style="border-color: black;">$100</td>
-                                                    <td style="border-color: black;">完成<br>收貨</td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr class="align-middle">
-                                                    <td style="border-color: black;">
-                                                        【Transcend 創見】128GB JetFlash700 USB3.1隨身碟-經典黑
-                                                        (商品ID：DSABKR-A900A4HBU-000)
-                                                    </td>
-                                                    <td style="border-color: black;">$599</td>
-                                                    <td style="border-color: black;">1</td>
-                                                    <td style="border-color: black;">$100</td>
-                                                    <td style="border-color: black;">完成<br>收貨</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-
-
-
-                        <section class="person show active">
-                            <div class="container text-center table-responsive">
-                                <p class="mb-4 text-center"></p>
-                                <table class="table  table-bordered">
-                                    <thead>
-                                        <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                            <th>訂單<br>編號</th>
-                                            <th>訂購<br>日期</th>
-                                            <th>訂單<br>狀態</th>
-                                            <th>傭金<br>總額</th>
-                                            <th>消費<br>總額</th>
-                                            <th>付款<br>方式</th>
-                                            <th>收貨<br>確認</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="align-middle">
-                                            <td style="border-color: black;">20181105313754</td>
-                                            <td style="border-color: black;">2018/11/07</td>
-                                            <td style="border-color: black;">訂單<br>成立</td>
-                                            <td style="border-color: black;">$200</td>
-                                            <td style="border-color: black;">$4,397</td>
-                                            <td style="border-color: black;">貨到<br>付款</td>
-                                            <td style="border-color: black;">完成<br>收貨</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p>
-                                    <a data-bs-toggle="collapse" href="#collapseContent2">明細收合</a>
-                                </p>
-                                <div class="collapse" id="collapseContent2">
-                                    <div class="card card-body">
-                                        <table class="table  table-bordered">
-                                            <thead>
-                                                <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                                    <th>商品<br>名稱</th>
-                                                    <th>商品<br>單價</th>
-                                                    <th>數量</th>
-                                                    <th>傭金</th>
-                                                    <th>收貨<br>確認</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="align-middle">
-                                                    <td style="border-color: black;">Kingston 8GB DDR3L 1600 品牌專用筆記型記憶體(低電壓1.35V)(KCP3L16SD8/8FR)(商品ID：DRAL06-A900794EQ-000)</td>
-                                                    <td style="border-color: black;">$1,799</td>
-                                                    <td style="border-color: black;">2</td>
-                                                    <td style="border-color: black;">$100</td>
-                                                    <td style="border-color: black;">完成<br>收貨</td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr class="align-middle">
-                                                    <td style="border-color: black;">
-                                                        【Transcend 創見】128GB JetFlash700 USB3.1隨身碟-經典黑
-                                                        (商品ID：DSABKR-A900A4HBU-000)
-                                                    </td>
-                                                    <td style="border-color: black;">$599</td>
-                                                    <td style="border-color: black;">1</td>
-                                                    <td style="border-color: black;">$100</td>
-                                                    <td style="border-color: black;">完成<br>收貨</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="sidebar-left-margin"></div>
         </div>
+        <script>
+            $('.BB-btn').click(function () {
+                $('nav ul .BB-show').toggleClass("show");
+            });
+            $('.Account-btn').click(function () {
+                $('nav ul .Account-show').toggleClass("show1");
+            });
+        </script>
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
 
-    </div>
-    <div class="sidebar-left-margin"></div>
-</div>
-<script>
-		$('.BB-btn').click(function () {
-			$('nav ul .BB-show').toggleClass("show");
-		});
-		$('.Account-btn').click(function () {
-			$('nav ul .Account-show').toggleClass("show1");
-		});
-</script>
-
-
-
-
-
-
-
-
-
-<div style="margin: 0 auto; width: 100%; height: 20px; background: white;"></div>
+        <div style="margin: 0 auto; width: 100%; height: 20px; background: white;"></div>
 
