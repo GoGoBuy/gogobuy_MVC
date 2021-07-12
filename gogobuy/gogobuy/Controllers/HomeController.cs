@@ -149,6 +149,7 @@ namespace gogobuy.Controllers
         public ActionResult LoginOutCheckFinish()
         {
             Session[CDictionary.SK_LOGINED_USER_EMAIL] = null;
+            Session[CDictionary.SK_LOGINED_USER_ID] = null;
             return RedirectToAction("Index");
         }
         public ActionResult SelectKeyWord()
