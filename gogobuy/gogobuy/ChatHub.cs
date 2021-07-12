@@ -72,6 +72,25 @@ namespace gogobuy
                 username = "Unknown";
             Clients.All.MessageToUsers(username, message);
         }
+
+
+        //附加訂單同步功能
+
+
+        public class Product
+        {
+            public int ProductKey { get; set; }
+            public String EnglishProductName { get; set; }
+            public String ProductAlternatekey { get; set; }
+            public String Color { get; set; }
+        }
+
+
+        public void updatedata(Product data)
+        {
+            Clients.All.update(data.ProductKey, data.ProductAlternatekey, data.EnglishProductName, data.Color);
+        }
+
     }
 }
    
