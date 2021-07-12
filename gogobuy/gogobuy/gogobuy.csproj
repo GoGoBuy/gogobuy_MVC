@@ -530,6 +530,8 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CartViewModel.cs" />
+    <Compile Include="ViewModels\OrderlistBuyViewModel.cs" />
+    <Compile Include="ViewModels\OrderlistSellViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

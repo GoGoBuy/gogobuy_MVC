@@ -1,4 +1,6 @@
 ﻿using gogobuy.Models;
+using gogobuy.ViewModels;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,16 +56,108 @@ namespace gogobuy.Controllers
             }
             return View();
         }
+        #region 購買查詢
         public ActionResult OrderlistBuy()
         {
-            return View();
+            //--------------------------------------------
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            gogobuydbEntities db = new gogobuydbEntities();
+
+            List<OrderlistBuyViewModel> 這是lstVMOrderlistBuy = new List<OrderlistBuyViewModel>();
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var mytOrderList = db.tOrder.Where(m  =>  m.fBuyerID  == memberId).ToList();
+            
+            //遍歷每張訂單 
+            foreach (var everyOrder in mytOrderList)
+            {
+                OrderlistBuyViewModel temp = new OrderlistBuyViewModel();
+                temp.fOrderUUID = everyOrder.fOrderUUID;
+                temp.fOrderDate = everyOrder.fOrderDate;
+                temp.fOrderStatus = everyOrder.fOrderStatus;
+                temp.fPrice = everyOrder.fPrice;
+                temp.fOrderPayWay = everyOrder.fOrderPayWay;
+
+                //抓取每張Order裡的Detail集合
+                var OrderDetailsList = db.tOrderDetails.Where(m => m.fOrderID == everyOrder.fOrderID).ToList();
+                temp.lsttOrderDetailslist = OrderDetailsList;
+
+                List<tProduct> ProductList = new List<tProduct>();
+                foreach (var everyOrderdetail in OrderDetailsList)
+                {
+                    var myProduct = db.tProduct.Where(m => m.fProductID == everyOrderdetail.fProductID).FirstOrDefault();
+                    ProductList.Add(myProduct);
+                }
+                temp.lsttProductlist = ProductList;
+
+                //var mytOrderdetailList = db.tOrderDetails.Where(m => m.fOrderID == everyOrder.fOrderID)
+                //    .Join(db.tProduct, c => c.fProductID, s => s.fProductID, (c, s) => new
+                //    {
+                //        fProductID = s.fProductID
+                //    })
+                //    .ToList();
+                //temp.lsttOrderlist = mytOrderdetailList;
+                這是lstVMOrderlistBuy.Add(temp);
+            }
+
+            return View(這是lstVMOrderlistBuy);
         }
+        #endregion
         public ActionResult OrderlistSell()
         {
-            return View();
+            //--------------------------------------------
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            gogobuydbEntities db = new gogobuydbEntities();
+
+            List<OrderlistSellViewModel> 這是lstVMOrderlistSell = new List<OrderlistSellViewModel>();
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var mytOrderList = db.tOrder.Where(m => m.fSellerID == memberId).ToList();
+
+            //遍歷每張訂單 
+            foreach (var everyOrder in mytOrderList)
+            {
+                OrderlistSellViewModel temp = new OrderlistSellViewModel();
+                temp.fOrderUUID = everyOrder.fOrderUUID;
+                temp.fOrderDate = everyOrder.fOrderDate;
+                temp.fOrderStatus = everyOrder.fOrderStatus;
+                temp.fPrice = everyOrder.fPrice;
+                temp.fOrderPayWay = everyOrder.fOrderPayWay;
+
+                //抓取每張Order裡的Detail集合
+                var OrderDetailsList = db.tOrderDetails.Where(m => m.fOrderID == everyOrder.fOrderID).ToList();
+                temp.lsttOrderDetailslist = OrderDetailsList;
+
+                List<tProduct> ProductList = new List<tProduct>();
+                foreach (var everyOrderdetail in OrderDetailsList)
+                {
+                    var myProduct = db.tProduct.Where(m => m.fProductID == everyOrderdetail.fProductID).FirstOrDefault();
+                    ProductList.Add(myProduct);
+                }
+                temp.lsttProductlist = ProductList;
+
+                //var mytOrderdetailList = db.tOrderDetails.Where(m => m.fOrderID == everyOrder.fOrderID)
+                //    .Join(db.tProduct, c => c.fProductID, s => s.fProductID, (c, s) => new
+                //    {
+                //        fProductID = s.fProductID
+                //    })
+                //    .ToList();
+                //temp.lsttOrderlist = mytOrderdetailList;
+                這是lstVMOrderlistSell.Add(temp);
+            }
+
+            return View(這是lstVMOrderlistSell);
         }
         public ActionResult SwitchToBuyAndShop()
         {
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
