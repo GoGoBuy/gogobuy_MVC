@@ -361,16 +361,22 @@
                                                                 <div class="btn-group-vertical">
 
                                                                     <input type="text" name="ProductID" value="@item.fProductID" hidden />
+                                                                    <input type="text" name="ProductPrice" value="@item.fProductID" hidden />
+
                                                                     @*<button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
                                                                     <button type="button" class="btn btn-primary">加入購物車</button>*@
 
 
-                                                                    <form class="" method="post" action="~/Chatroom/Chatroom">
-                                                                        <input type="text" name="ProductID" value="@item.fProductID" hidden />
+                                                                    <!--<form class="" method="post" action="~/Chatroom/Chatroom">
+                                                                        <input type="text" name="ProductID" value="@item.fProductID" hidden />-->
                                                                         @*<a href="~/Details/SellListDetails?fProductID=@item.fProductID" class="link-success"> </a>*@
 
-                                                                        <button type="submit" class="btn btn-primary" style="margin-bottom:5px">聯繫許願人</button>
-                                                                    </form>
+                                                                        <!--<button type="submit" class="btn btn-primary" style="margin-bottom:5px">聯繫許願人</button>
+                                                                    </form>-->
+
+                                                                <a href="~/Chatroom/Chatroom" class="link-success">
+                                                                    @Html.ActionLink("聯繫許願人", "Chatroom", "Chatroom", new { fMemberID = item.fMemberID }, new { @class = "btn btn-success" })
+                                                                </a>
 
                                                                 </div>
                                                             </td>
