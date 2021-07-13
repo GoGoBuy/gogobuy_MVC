@@ -4,18 +4,21 @@
     ViewBag.Title = "ProductList";
 }
 <head>
+
     <style>
         .item {
             width: 98%;
             height: 60%;
             margin: 0 auto;
         }
-        .item > img {
-            padding-top: 10px;
-            padding-bottom: 10px;
-            width: 100%; 
-            height: 100%;
-        }
+
+            .item > img {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                width: 100%;
+                height: 100%;
+            }
+
         .item-name {
             display: -webkit-box;
             width: 95%;
@@ -27,12 +30,21 @@
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
         }
+
         .price {
             font-size: 0.95rem;
             padding: 3px 0;
         }
+
         div .col-md-2 {
             height: 300px;
+        }
+
+        .h5 {
+            font-size: 1rem;
+        }
+        .like {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -100,11 +112,11 @@
 <img src="~/Content/img/index/b_ornament_121_0M.png" style="width:100%;" />
 <section class="container" style="background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), #CFFFCC;">
     <h4 class="my-3 mx-5">販售商品總覽：</h4>
-    <div class="row text-center d-flex justify-content-between">
+    <div class="row text-center d-flex justify-content-start">
         @{
             foreach (var p in Model)
             {
-                <div class="col-md-2 col-sm-3 col-6 border border-success rounded">
+                <div class="col-md-2 col-sm-3 col-6 border border-success">
                     <a href="#" class="link-success">
                         <div class="item">
                             <img src="~/Content/img/Product/@p.fImgPath" />
@@ -112,23 +124,79 @@
                         <div class="item-name">@p.fProductName</div>
                     </a>
                     <div class="d-flex align-items-center justify-content-between price">
-                        價格$@String.Format("{0:0.00}", p.fPrice)
+                        價格$@String.Format("{0:0}", p.fPrice)
                         @{ if (p.isLike)
                             {
-                                <img src="~/Content/img/img_memberCenter/heart.png" style="width:100%; max-width:30px;" />
+                                <img src="~/Content/img/img_memberCenter/heart.png" style="width:100%; max-width:30px;" id="@p.fProductID" class="like" />
                             }
                             else
                             {
-                                <img src="~/Content/img/img_memberCenter/unlike.png" style="width:100%; max-width:30px;" />
+                                <img src="~/Content/img/img_memberCenter/unlike.png" style="width:100%; max-width:30px;" id="@p.fProductID" class="like" />
                             }
                         }
                     </div>
                     <div class="d-flex align-content-end justify-content-end">
                         <small>@p.fProductLocation</small>
-                    </div>         
+                    </div>
                 </div>
             }
         }
     </div>
 </section>
 <img src="~/Content/img/index/b_ornament_121_0M.png" style="width:100%;" />
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn-close m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                要使用收藏功能，請先登入會員！
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href=@Url.Action("Login", "home") class="btn btn-primary  m-2">登入</a>
+                <button type="button" class="btn btn-danger  m-2" data-bs-dismiss="modal">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('img.like').click(function (event) {
+            var productID = event.target.id;
+            if ($(this).attr('src') == '/Content/img/img_memberCenter/unlike.png') {
+                $.ajax({
+                    url: "@Url.Action("LikeItem", "Collect")",
+                    type: 'post',
+                    data: {
+                        productID: productID
+                    },
+                    async: true,
+                    success: function (data) {
+                        if (data == 'success') {
+                            $('#' + productID).attr('src', '/Content/img/img_memberCenter/heart.png');
+                        }
+                        if (data == 'login') {
+                            $('#myModal').modal('show');
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                url: "@Url.Action("Delete", "Collect")",
+                type: 'post',
+                data: {
+                    productID: productID
+                },
+                async: true,
+                success: function (data) {
+                    $('#' + productID).attr('src', '/Content/img/img_memberCenter/unlike.png');
+                }
+                });
+            }
+        });
+    });
+
+</script>

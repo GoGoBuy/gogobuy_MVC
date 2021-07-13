@@ -73,7 +73,6 @@ namespace gogobuy.Controllers
         public ActionResult ProductList(string category)
         {
             int userId = -1;
-            bool isLike = false;
             
             if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
                 userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
@@ -94,6 +93,7 @@ namespace gogobuy.Controllers
 
             foreach (var p in table)
             {
+                bool isLike = false;
                 if (userId != -1)
                 {
                     var collection = db.tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == p.fProductID);
@@ -115,7 +115,6 @@ namespace gogobuy.Controllers
         public ActionResult WishProductList(string category)
         {
             int userId = -1;
-            bool isLike = false;
 
             if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
                 userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
@@ -135,6 +134,8 @@ namespace gogobuy.Controllers
             }
             foreach (var p in table)
             {
+                bool isLike = false;
+
                 if (userId != -1)
                 {
                     var collection = db.tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == p.fProductID);
