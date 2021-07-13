@@ -88,6 +88,9 @@ namespace gogobuy.Controllers
                 return RedirectToAction("Login", "Home");
             }
             int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var user = db.tMembership.Where(m => m.fMemberID == memberId).FirstOrDefault();
+            ViewBag.name = user.fFirstName + user.fLastName;
+            ViewBag.phone = user.fPhone;
             var shoptable = from s in db.tShopping
                             join p in db.tProduct on s.fProductID equals p.fProductID
                             where s.fMemberID == memberId

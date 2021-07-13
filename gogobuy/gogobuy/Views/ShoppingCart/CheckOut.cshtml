@@ -17,7 +17,7 @@
     <!-- Shopping cart table -->
     <div class="card">
         <div class="card-header">
-            <h2>購物車</h2>
+            <h2>結帳頁面</h2>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -33,73 +33,40 @@
                             <!-- <th class="text-center" style="width: 95px;"><a class="btn btn-sm btn-outline-danger" href="#">清空</a></th> -->
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403023.png"
-                                         class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 1</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
+                    @{
 
-                        </tr>
+                        decimal? sum = 0;
+                        foreach (var item in Model)
+                        {
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403027.png"
-                                         class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 2</a>
+                            decimal? total = item.fPrice * item.fQuantity;
+                            sum += total;
+                            <tbody>
+                                <tr>
+                                    <td class="p-4">
+                                        <div class="media align-items-center">
+                                            <img src="~/Content/img/Product/@item.fImgPath"
+                                                 class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                            <div class="media-body">
+                                                <a href="#" class="d-block text-dark" style="text-align:center;">@item.fProductName</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">
+                                        @item.fDescription
+                                    </td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
+                                    <td class="align-middle p-4"style="text-align:center;">@item.fQuantity</td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
 
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-
-                        </tr>
-
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403030.png"
-                                         class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 3</a>
-
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4"><input type="text" class="form-control text-center" value="2"></td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-
-                        </tr>
-                    </tbody>
+                                </tr>
+                            </tbody>
+                        }
+                    }
                 </table>
             </div>
 
-            <table class="table " style="border: 0px;background-color: #C4C4C4;">
+            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.08);">
                 <tr>
                     <td>
                         <button type="button" class="btn btn-lg btn-primary mt-2"
@@ -108,87 +75,47 @@
                         </button>
                     </td>
                     <td>
-                        <div style="font-size: large;line-height: 3;text-align: left;">金X五</div>
+                        <div style="font-size: large;line-height: 3;text-align: left;">@ViewBag.name</div>
                     </td>
                     <td>
-                        <div style="font-size: large;line-height: 3;text-align: center;">0911456789</div>
+                        <div style="font-size: large;line-height: 3;text-align: center;">@ViewBag.phone</div>
                     </td>
                 </tr>
             </table>
 
-            <!-- <table style="background-color: blueviolet;">
-              <tr>
-                <td>
-                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                      style="background-color: aliceblue; color: black;">寄送資訊</button>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-lg btn-primary mt-2"
-                  style="background-color: aliceblue; color: black;">7-11</button>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-lg btn-primary mt-2"
-                    style="background-color: aliceblue; color: black;">全家</button>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-lg btn-primary mt-2"
-                    style="background-color: aliceblue; color: black;">宅配</button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div style="font-size: large;line-height: 3;text-align: left;">金X五</div>
-                </td>
-                <td>
-                  <div style="font-size: large;line-height: 3;text-align: center;">0911456789</div>
-                </td>
-              </tr>
-            </table> -->
-
-            <table class="table" style="border: 0px;background-color: #C4C4C4;">
+            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.08);">
                 <tr>
                     <td>
-                        <div class="bs-example">
-                            <ul class="list-inline list-group list-group-horizontal">
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        寄送資訊
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        7-11
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        全家
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        萊爾富
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        宅配
-                                    </button>
-                                </li>
+                        <button type="button" class="btn btn-primary btn-lg" style="background-color: aliceblue; color: black;">寄送資訊</button>
+
+                        <div class="btn-group" role="group" style="padding-left:250px">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: aliceblue; color: black;">
+                                7-11
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <li><a class="dropdown-item link">text1</a></li>
+                                <li><a class="dropdown-item link">text2</a></li>
+                            </ul>
+                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" style="background-color: aliceblue; color: black; margin-left: 30px; border-radius: 5px" data-bs-toggle="dropdown" aria-expanded="false">
+                                全家
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <li><a class="dropdown-item link" href="#">text1</a></li>
+                                <li><a class="dropdown-item link" href="#">text2</a></li>
+                            </ul>
+                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" style="background-color: aliceblue; color: black; margin-left: 30px; border-radius: 5px " data-bs-toggle="dropdown" aria-expanded="false">
+                                宅配
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <li><a class="dropdown-item link" href="#">Dropdown link</a></li>
+                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
                             </ul>
                         </div>
+
                         <div class="container">
                             <div class="row">
-                                <div class="col" style="font-size: large;line-height: 3;">
-                                    7-11台南成大店
-                                </div>
-                                <div class="col" style="font-size: large;line-height: 3;">
-                                    台南市北區勝利路138號
+                                <div id="output" class="col" style="font-size: large;line-height: 3;">
+                                    7-11成功門市  台南市北區勝利路138號
                                 </div>
                             </div>
                         </div>
@@ -196,29 +123,24 @@
                 </tr>
             </table>
             <!-- 付款資訊 -->
-            <table class="table " style="border: 0px; background-color: #C4C4C4;">
+            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.08);">
                 <tr>
                     <td>
-                        <div class="bs-example">
-                            <ul class="list-inline list-group list-group-horizontal">
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        付款資訊
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        貨到付款
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn btn-lg btn-primary mt-2"
-                                            style="background-color: aliceblue; color: black;">
-                                        信用卡
-                                    </button>
-                                </li>
+                        <button type="button" class="btn btn-primary btn-lg" style="background-color: aliceblue; color: black;">付款資訊</button>
+
+                        <div class="btn-group" role="group" style="padding-left:250px">
+                            <button id="btnGroupDrop6" type="button" class="btn btn-outline-primary " aria-expanded="false" style="background-color: aliceblue; color: black;border-radius:5px;">
+                                貨到付款
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop6">
+                                <li><a class="dropdown-item link">text1</a></li>
+                                <li><a class="dropdown-item link">text2</a></li>
+                            </ul>
+                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" style="background-color: aliceblue; color: black; margin-left: 30px; border-radius: 5px" data-bs-toggle="dropdown" aria-expanded="false">
+                                信用卡
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop6">
+                                <li><input type="text" /></li>
                             </ul>
                         </div>
                         <div class="container">
@@ -242,7 +164,7 @@
             <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
                 <div class="mt-4">
                     <label class="text-muted font-weight-normal m-0">商品總計</label>
-                    <div class="text-large"><strong>$1164.65</strong></div>
+                    <div class="text-large"><strong>$@String.Format("{0:0}", sum)</strong></div>
                 </div>
 
                 <div class="mt-4">
