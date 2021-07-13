@@ -23,6 +23,7 @@ namespace gogobuy.Controllers
                 (c, p) => new 
                 {
                     c.fCollectID,
+                    c.fProductID,
                     p.fProductName,
                     p.fImgPath,
                     p.fPrice
@@ -31,16 +32,19 @@ namespace gogobuy.Controllers
             List <CollectViewModel> collections = new List<CollectViewModel>();
             foreach (var collection in queryCollections)
             {
-                collections.Add(new CollectViewModel { fCollectID = collection.fCollectID, fProductName = collection.fProductName, 
+                collections.Add(new CollectViewModel { fProductID = collection.fProductID,fProductName = collection.fProductName, 
                     fImgPath = collection.fImgPath, fPrice = collection.fPrice});
             }
             return View(collections);
         }
 
-        public ActionResult Delete(int collectID)
+        public ActionResult Delete(int productID)
         {
+            if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
+                return Json("login");
+            int userID = (int)Session[CDictionary.SK_LOGINED_USER_ID];
             var db = new gogobuydbEntities();
-            tCollection collection = db.tCollection.FirstOrDefault(c => c.fCollectID == collectID);
+            tCollection collection = db.tCollection.FirstOrDefault(c => c.fProductID == productID && c.fMemberID == userID);
             if (collection != null)
             {
                 db.tCollection.Remove(collection);
@@ -52,7 +56,7 @@ namespace gogobuy.Controllers
 
         public ActionResult Likeitem(int productID) {
             if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
-                return Json("fail");
+                return Json("login");
 
             int userID = (int)Session[CDictionary.SK_LOGINED_USER_ID];
             var db = new gogobuydbEntities();
