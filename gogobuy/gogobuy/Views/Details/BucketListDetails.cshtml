@@ -1,4 +1,4 @@
-﻿
+﻿@model gogobuy.ViewModels.ProductDetailsViewModel
 @{ ViewBag.Title = "BucketListDetails"; }
 
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
@@ -6,29 +6,29 @@
 <section class="container sproduct my-5 pt-5">
     <div class="row mt-5">
         <div class="col-lg-5 col-md-12 col-12">
-            <img class="img-fluid rounded w-100 pb-1" src="~/Content/img/BucketListDetails/BUNNIE.jpg" id="Main-Img" alt="">
+            <img class="img-fluid rounded w-100 pb-1" src="~/Content/img/Product/@Model.fImgPath" id="Main-Img" alt="">
             <div class="small-img-group">
                 <div class="small-img-col">
-                    <img src="" width="100%" class="small-Img rounded" alt="">
+                    <img src="" style="width:100%" class="small-Img rounded" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="" width="100%" class="small-Img rounded" alt="">
+                    <img src="" style="width:100%" class="small-Img rounded" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="" width="100%" class="small-Img rounded" alt="">
+                    <img src="" style="width:100%" class="small-Img rounded" alt="">
                 </div>
             </div>
         </div>
 
 
         <div class="col-lg-6 col-md-12 col-12">
-            <h6>布偶類</h6>
-            <h3 class="py-4">日本動物森友會莉莉安布偶</h3>
-            <h6><i class="iconRequest fas fa-edit"></i>需求數量：2 個</h6>
-            <h6 class="my-3"><i class="iconRequest fas fa-grin-beam"></i>買家：BunnieSick777</h6>
-            <h6 class="my-3"><i class="iconRequest fas fa-map-marker-alt"></i>買家所在地：台灣 台北市</h6>
-            <h6 class="my-3"><i class="iconRequest fas fa-truck"></i>可接受到貨時間：14 ~ 28 天</h6>
-            <h4 class="py-3">可接受價格：<span class="dollars">NT 666 元 / 個</span></h4>
+            <h6>@Model.fCategory</h6>
+            <h3 class="py-4">@Model.fProductName</h3>
+            <h6><i class="iconRequest fas fa-edit"></i>需求數量：@Model.fQuantity 個</h6>
+            <h6 class="my-3"><i class="iconRequest fas fa-grin-beam"></i>買家：@Model.fFirstName@Model.fLastName</h6>
+            <h6 class="my-3"><i class="iconRequest fas fa-map-marker-alt"></i>買家所在地：@Model.fProductLocation</h6>
+            <h6 class="my-3"><i class="iconRequest fas fa-truck"></i>可接受到貨時間：@Model.fArrivalTime</h6>
+            <h4 class="py-3">可接受價格：<span class="dollars">NT @String.Format("{0:0}", Model.fPrice) 元 / 個</span></h4>
             <button class="btn btn-danger"><i class="fas fa-heart"></i> 幫忙代買！</button>
         </div>
     </div>
@@ -49,11 +49,11 @@
             <div class="tab-content py-3" id="ContentTab">
                 <div class="tab-pane fade show active" id="productDetails">
                     <div class="container-fluid pDetails row">
-                        <div class="detailsPicture">
-                            <img class="pPicture img-fluid mx-auto img-thumbnail" src="~/Content/img/BucketListDetails/BUNNIE.jpg" alt="">
-                        </div>
                         <div class="detailsText">
-                            <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam culpa quibusdam est recusandae consequuntur ea sed quo, modi non neque aliquid. Nam aspernatur ipsa ipsam possimus dolorem ex reprehenderit?</p>
+                            <p class="mx-auto">@Model.fDescription</p>
+                        </div>
+                        <div class="detailsPicture">
+                            <img class="pPicture img-fluid mx-auto img-thumbnail" src="~/Content/img/Product/@Model.fImgPath" alt="">
                         </div>
                     </div>
                 </div>

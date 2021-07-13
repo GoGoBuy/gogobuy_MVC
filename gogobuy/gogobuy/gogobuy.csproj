@@ -534,6 +534,7 @@
     <Compile Include="ViewModels\CollectViewModel.cs" />
     <Compile Include="ViewModels\OrderlistBuyViewModel.cs" />
     <Compile Include="ViewModels\OrderlistSellViewModel.cs" />
+    <Compile Include="ViewModels\ProductDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

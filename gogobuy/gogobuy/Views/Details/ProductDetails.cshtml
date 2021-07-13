@@ -1,50 +1,60 @@
-﻿
+﻿@model gogobuy.ViewModels.ProductDetailsViewModel
+
 @{ ViewBag.Title = "ProductDetails"; }
 
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
 <link rel="stylesheet" type="text/css" href="~/Content/css/ProductDetails.css">
+
+
 <section class="container sproduct my-5 pt-5">
     <div class="row mt-5">
         <div class="col-lg-5 col-md-12 col-12">
-            <img class="img-fluid rounded w-100 pb-1" src="~/Content/img/ProductDetails/sneakers.jpg" id="Main-Img" alt="">
+            <img class="img-fluid rounded w-100 pb-1" src="~/Content/img/Product/@Model.fImgPath" id="Main-Img" alt="">
             <div class="small-img-group">
-                <div class="small-img-col">
-                    <img src="~/Content/img/ProductDetails/sneakers.jpg" width="100%" class="small-Img rounded" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="~/Content/img/ProductDetails/sneakers2.jpg" width="100%" class="small-Img rounded" alt="">
-                </div>
-                <div class="small-img-col">
-                    <img src="~/Content/img/ProductDetails/sneakers3.jpg" width="100%" class="small-Img rounded" alt="">
-                </div>
+                @{ foreach (var imgPath in Model.listImgPath)
+                    {
+        <div class="small-img-col">
+            <img src="~/Content/img/Product/@imgPath" style="width:100%" class="small-Img rounded" alt="">
+        </div> } }
+                @*<div class="small-img-col">
+                        <img src="~/Content/img/Product/f.fImgPath" width="100%" class="small-Img rounded" alt="">
+                    </div>*@
+                @*<div class="small-img-col">
+                            <img src="~/Content/img/ProductDetails/sneakers2.jpg" width="100%" class="small-Img rounded" alt="">
+                        </div>
+                        <div class="small-img-col">
+                            <img src="~/Content/img/ProductDetails/sneakers3.jpg" width="100%" class="small-Img rounded" alt="">
+                    </div>*@
             </div>
         </div>
 
 
         <div class="col-lg-6 col-md-12 col-12">
-            <h6>鞋子類</h6>
-            <h3 class="py-4">東京限定Nike鞋</h3>
-            <h2>NT$ 3999.00 元</h2>
-            <select class="my-3">
-                <option>選擇尺寸(USA)</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>10.5</option>
-                <option>11</option>
-            </select>
-            <input type="number" value=1 max=5>
+            @*<h6>鞋子類</h6>*@
+            <h6>@Model.fCategory</h6>
+            @*<h3 class="py-4">東京限定Nike鞋</h3>*@
+            <h3 class="py-4">@Model.fProductName</h3>
+            @*<h2>NT$ 3999.00 元</h2>*@
+            <h2>NT @String.Format("{0:0}", Model.fPrice) 元</h2>
+
+            @*<select class="my-3">
+                    <option>選擇樣式</option>
+                    @{
+                        foreach(var pStyle in Model.listStyle)
+                        {
+                            <option>@Model.fPname</option>
+                        }
+                    }
+                </select>*@
+            <input type="number" value=1 min=1 max=1>
             <button class="btn buy-btn">加入購物車</button>
             <button class="btn btn-danger">加入收藏 <i class="fas fa-heart"></i></button>
-            <h6 class="my-3">賣家：新垣結衣</h6>
-            <h6 class="my-3">商品所在地：東京</h6>
-            <h6 class="my-3">到貨時間：約 7～14 天</h6>
+            <h6 class="my-3">賣家：@Model.fFirstName@Model.fLastName</h6>
+            <h6 class="my-3">商品所在地：@Model.fProductLocation</h6>
+            <h6 class="my-3">到貨時間：@Model.fArrivalTime</h6>
         </div>
     </div>
-</section>
-<!-- product main section -->
-<!-- Tabs -->
+</section> <!-- product main section --> <!-- Tabs -->
 <div class="container">
     <h2 class="py-3 text-center">產品描述</h2>
     <div class="row py-4 justify-content-center">
@@ -64,32 +74,37 @@
             <div class="tab-content py-3" id="ContentTab">
                 <div class="tab-pane fade show active" id="productDetails">
                     <div class="container-fluid pDetails row">
-                        <div class="detailsPicture">
-                            <img class="pPicture img-fluid mx-auto img-thumbnail" src="~/Content/img/ProductDetails/sneakers.jpg" alt="">
-                        </div>
+                        @*<div class="detailsPicture">
+                                <img class="pPicture img-fluid mx-auto img-thumbnail" src="" alt="">
+                            </div>*@
                         <div class="detailsText">
-                            <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aliquam culpa quibusdam est recusandae consequuntur ea sed quo, modi non neque aliquid. Nam aspernatur ipsa ipsam possimus dolorem ex reprehenderit?</p>
+                            <img class="img-fluid rounded w-100 pb-1" src="~/Content/img/@Model.fImgPath" id="Main-Img" alt="">
+                            <p class="mx-auto">@Model.fDescription</p>
                         </div>
                     </div>
                     <div class="container-fluid pDetails row">
-                        <div class="detailsText">
-                            <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam quibusdam dolore nam, obcaecati qui molestiae libero laudantium soluta ullam, nesciunt ad fuga. Minus dolor sunt aliquam minima possimus nam quam mollitia saepe non recusandae? Laboriosam ratione debitis dignissimos error aperiam, ipsam expedita eius quisquam facere earum ut eos magni odio.</p>
-                        </div>
-                        <div class="detailsPicture">
-                            <img class="pPicture img-fluid mx-auto img-thumbnail" src="~/Content/img/ProductDetails/sneakers2.jpg" alt="">
-                        </div>
+                        @*<div class="detailsText">
+                                <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam quibusdam dolore nam, obcaecati qui molestiae libero laudantium soluta ullam, nesciunt ad fuga. Minus dolor sunt aliquam minima possimus nam quam mollitia saepe non recusandae? Laboriosam ratione debitis dignissimos error aperiam, ipsam expedita eius quisquam facere earum ut eos magni odio.</p>
+                            </div>*@
+                        @{ foreach (var imgPath in Model.listImgPath)
+                            {
+                <div class="detailsPicture">
+                    <p>
+                        <img class="pPicture img-fluid mx-auto img-thumbnail" src="~/Content/img/Product/@imgPath" alt="">
+                    </p>
+                </div> } }
                     </div>
                     <div class="container-fluid pDetails row">
-                        <div class="detailsText">
-                            <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam provident harum earum expedita optio dignissimos?</p>
-                        </div>
-                        <div class="detailsPicture">
-                            <img class="pPicture img-fluid mx-auto img-thumbnail" src="~/Content/img/ProductDetails/sneakers3.jpg" alt="">
-                        </div>
-                        <div class="detailsText">
-                            <p class="mx-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat, quidem?</p>
-                            <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi corporis error expedita modi necessitatibus officia repellat! Sunt explicabo obcaecati sed quis possimus velit eius omnis?</p>
-                        </div>
+                        @*<div class="detailsText">
+                                <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam provident harum earum expedita optio dignissimos?</p>
+                            </div>*@
+                        @*<div class="detailsPicture">
+                                <img class="pPicture img-fluid mx-auto img-thumbnail" src="~/Content/img/Product/@imgPath" alt="">
+                            </div>*@
+                        @*<div class="detailsText">
+                                <p class="mx-auto">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat, quidem?</p>
+                                <p class="mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi corporis error expedita modi necessitatibus officia repellat! Sunt explicabo obcaecati sed quis possimus velit eius omnis?</p>
+                            </div>*@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="comments">
@@ -98,22 +113,20 @@
             </div>
         </div>
     </div>
-</div>
-<!-- Tabs -->
+</div> <!-- Tabs -->
 <script>
     var MainImg = document.getElementById("Main-Img");
-	var smallImg = document.getElementsByClassName("small-Img");
+    var smallImg = document.getElementsByClassName("small-Img");
 
-	smallImg[0].onclick = function(){
-		MainImg.src = smallImg[0].src;
-	}
+    smallImg[0].onclick = function () {
+        MainImg.src = smallImg[0].src;
+    }
 
-	smallImg[1].onclick = function(){
-		MainImg.src = smallImg[1].src;
-	}
+    smallImg[1].onclick = function () {
+        MainImg.src = smallImg[1].src;
+    }
 
-	smallImg[2].onclick = function(){
-		MainImg.src = smallImg[2].src;
-	}
+    smallImg[2].onclick = function () {
+        MainImg.src = smallImg[2].src;
+    }
 </script>
-

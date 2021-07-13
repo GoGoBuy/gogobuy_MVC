@@ -17,6 +17,7 @@ namespace gogobuy
         public int fImageID { get; set; }
         public string fImgPath { get; set; }
         public Nullable<int> fProductID { get; set; }
+        public Nullable<bool> fCover { get; set; }
     
         public virtual tProduct tProduct { get; set; }
     }
