@@ -1,4 +1,7 @@
-﻿@{
+﻿
+@model IEnumerable<gogobuy.tProduct>
+
+@{
     ViewBag.Title = "Chat";
 }
 
@@ -17,7 +20,35 @@
     <script src="~/Scripts/gogobuy-chat.js"></script>
     <script src="~/Scripts/SignalR.Update.js"></script>
 
+
 }
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script>
+
+    function wishdelete (productID) {
+        $('#' + productID).remove();
+        console.log("測試有沒有");
+    }
+
+    //$('button').click(function (event) {
+    //    productID = event.target.id
+    //    $('#tr' + productID).remove();
+    //    console.log("測試有沒有");
+    //});
+</script>
+
+
+
+
 
 <style type="text/css">
     #txaChat {
@@ -37,85 +68,89 @@
 
 <br />
 
-<h2>聊天室</h2>
+<h2 style="margin-left:210px">願望商品</h2>
 
 @*<h4>(開啟兩個chatroom測試聊天)</h4>*@
 
 
 
-    <div class="col-md-8 bg-white">
-        <div class="chat-box bg-white">
+<div class="col-md-8 bg-white" style="margin:0px auto">
+    <div class="chat-box bg-white">
 
-            @*聊天室姓名:&nbsp;*@
+        @*聊天室姓名:&nbsp;*@
 
-            <div class="input-group">
-                <input class="form-control border no-shadow no-rounded" placeholder="請登入帳號" id="txbUserName" type="text" hidden value="@ViewBag.UserName">
-                @*<span><h3>聊天室</h3></span>*@
-                <span class="input-group-btn">
-                    <button class="btn btn-success no-rounded" id="btnJoin" type="button" value="Send" style="margin-left:5px; margin-top:2px">開始交談</button>
-                </span>
-            </div>
-
-            <br />
-
-            <textarea id="txaChat" rows="1" readonly="readonly" class="border no-shadow no-rounded"></textarea>
-            <textarea id="txaUsers" name="S2" readonly="readonly" rows="2" class="border no-shadow no-rounded"></textarea>
-
-
+        <div class="input-group">
+            <input class="form-control border no-shadow no-rounded" placeholder="請登入帳號" id="txbUserName" type="text" hidden value="@ViewBag.UserName">
+            @*<span><h3>聊天室</h3></span>*@
+            <span class="input-group-btn">
+                <button class="btn btn-success no-rounded" id="btnJoin" type="button" value="Send" style="margin-left:5px; margin-top:2px">開始協議</button>
+            </span>
         </div>
 
         <br />
 
-        <div class="chat-box bg-white">
-            <div class="input-group">
-                <input class="form-control border no-shadow no-rounded" placeholder="請輸入訊息" id="txbMessage" type="text">
-                <span class="input-group-btn">
-                    <button class="btn btn-success no-rounded" id="btnSend" type="button" value="Send" style="margin-left:5px; margin-top:2px">送出</button>
-                </span>
-            </div>
-        </div>
-
-
-        <br />
-
-
-        <table id="DataTable">
-            <thead>
-                <tr>
-                    <th data-name="ProductKey">商品代號</th>
-                    <th data-name="ProductAlternatekey">商品名稱</th>
-                    <th data-name="EnglishProductName">成交價格</th>
-                    <th data-name="Color">商品備註</th>
-                </tr>
-            </thead>
-            <tbody id="TableBody">
-                <tr class="tr1">
-                    <td>1</td>
-                    <td><input type="text" name="ProductAlternatekey" value="無敵泰迪熊" /></td>
-                    <td><input type="text" name="EnglishProductName" value="1000.00" /></td>
-                    <td><input type="text" name="Color" value="N/A" /></td>
-                </tr>
-                <tr class="tr2">
-                    <td>2</td>
-                    <td><input type="text" name="ProductAlternatekey" value="忠犬小萊姆" /></td>
-                    <td><input type="text" name="EnglishProductName" value="2500.00" /></td>
-                    <td><input type="text" name="Color" value="N/A" /></td>
-                </tr>
-                <tr class="tr3">
-                    <td>3</td>
-                    <td><input type="text" name="ProductAlternatekey" value="野心大蟹堡" /></td>
-                    <td><input type="text" name="EnglishProductName" value="3500.00" /></td>
-                    <td><input type="text" name="Color" value="N/A" /></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <br />
-
-        <span class="input-group-btn">
-            <button class="btn btn-success no-rounded" id="" type="button" value="" style="margin-left:5px; margin-top:2px" onClick="window.alert('已成功提交訂單!')";>確認訂單</button>
-        </span>
+        <textarea id="txaChat" rows="1" readonly="readonly" class="border no-shadow no-rounded"></textarea>
+        <textarea id="txaUsers" name="S2" readonly="readonly" rows="2" class="border no-shadow no-rounded"></textarea>
 
 
     </div>
+
+    <br />
+
+    <div class="chat-box bg-white">
+        <div class="input-group">
+            <input class="form-control border no-shadow no-rounded" placeholder="請輸入訊息" id="txbMessage" type="text">
+            <span class="input-group-btn">
+                <button class="btn btn-success no-rounded" id="btnSend" type="button" value="Send" style="margin-left:5px; margin-top:2px">送出</button>
+            </span>
+        </div>
+    </div>
+
+
+    <br />
+
+
+
+    @{
+        <table class="border no-shadow no-rounded" style="padding:10px">
+            <thead>
+                <tr>
+                    <th>圖片</th>
+                    <th>品名</th>
+                    <th>售價</th>
+                    <th>數量</th>
+                    <th>備註</th>
+                    <th>刪除</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                
+                <tbody>
+                    <tr id="@item.fProductID">
+                        <td><img src="~/Content/img/Product/@item.fImgPath" style="height:50px;width:50px;"></td>
+                        <td>@item.fProductName</td>
+                        <td><input type="text" name="ProductQuantity" value="$@String.Format("{0:0}", item.fPrice)" /></td>
+                        <td><input type="text" name="ProductQuantity" value="0" /></td>
+                        <td><input type="text" name="ProductNote" value="" placeholder="EX:配送細節" /></td>
+                        <td><button onclick="wishdelete(@item.fProductID)" class="btn jq-delete" ><img src="https://image.flaticon.com/icons/png/512/3096/3096673.png" style="height:20px;width:20px"></button></td>
+                    </tr>
+                </tbody>
+
+            }
+        </table>
+    }
+
+
+
+    <span class="input-group-btn">
+        
+      <button class="btn btn-success no-rounded" id="" type="button" value="" style="margin-left:5px; margin-top:20px" onClick="window.alert('已成功提交訂單!')" ;>確認訂單</button>
+        
+    </span>
+
+
+
+</div>
 
