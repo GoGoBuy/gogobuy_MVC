@@ -3,7 +3,29 @@
     ViewBag.Title = "CheckOut";
 }
 
+<script type="text/javascript">
+    function SelectedTextValue(ele) {
+        if (ele.selectedIndex > 0) {
+            var selectedText = ele.options[ele.selectedIndex].innerHTML;
+            var selectedValue = ele.value;
+            document.getElementById("txtContent").value = selectedText;
+        }
+        else {
+            document.getElementById("txtContent").value = "";
+        }
+    }
 
+    function SelectedPaywayValue(ele) {
+        if (ele.selectedIndex > 0) {
+            var selectedText = ele.options[ele.selectedIndex].innerHTML;
+            var selectedValue = ele.value;
+            document.getElementById("payway").value = selectedText;
+        }
+        else {
+            document.getElementById("payway").value = "";
+        }
+    }
+</script>
 
 
 <div class="container px-3 my-5 clearfix">
@@ -56,7 +78,7 @@
                                         @item.fDescription
                                     </td>
                                     <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
-                                    <td class="align-middle p-4"style="text-align:center;">@item.fQuantity</td>
+                                    <td class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
                                     <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
 
                                 </tr>
@@ -66,13 +88,10 @@
                 </table>
             </div>
 
-            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.08);">
+            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-lg btn-primary mt-2"
-                                style="background-color: aliceblue; color: black;">
-                            收件人資訊
-                        </button>
+                        <a style="color: black; font-size: 35px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">收件人資訊</a>
                     </td>
                     <td>
                         <div style="font-size: large;line-height: 3;text-align: left;">@ViewBag.name</div>
@@ -83,76 +102,73 @@
                 </tr>
             </table>
 
-            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.08);">
+            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-primary btn-lg" style="background-color: aliceblue; color: black;">寄送資訊</button>
+                        <form id="form1" runat="server">
+                            <div class="btn-group" role="group">
+                                <a style="color: black; font-size: 35px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">寄送資訊</a>
 
-                        <div class="btn-group" role="group" style="padding-left:250px">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: aliceblue; color: black;">
-                                7-11
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <li><a class="dropdown-item link">text1</a></li>
-                                <li><a class="dropdown-item link">text2</a></li>
-                            </ul>
-                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" style="background-color: aliceblue; color: black; margin-left: 30px; border-radius: 5px" data-bs-toggle="dropdown" aria-expanded="false">
-                                全家
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <li><a class="dropdown-item link" href="#">text1</a></li>
-                                <li><a class="dropdown-item link" href="#">text2</a></li>
-                            </ul>
-                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" style="background-color: aliceblue; color: black; margin-left: 30px; border-radius: 5px " data-bs-toggle="dropdown" aria-expanded="false">
-                                宅配
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <li><a class="dropdown-item link" href="#">Dropdown link</a></li>
-                                <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                            </ul>
-                        </div>
+                                <select name="ddlContent" id="ddlContent" onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 200px;margin-top:5px;border-radius:5px" class="border no-shadow no-rounded">
+                                    <option selected="selected" value="">7-11門市</option>
+                                    <option value="1">台南市勝利路勝利門市</option>
+                                    <option value="2">台南市健康路健康門市</option>
+                                </select>
 
-                        <div class="container">
-                            <div class="row">
-                                <div id="output" class="col" style="font-size: large;line-height: 3;">
-                                    7-11成功門市  台南市北區勝利路138號
+                                <select name="ddlContent" id="ddlContent" onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 60px;margin-top:5px; border-radius: 5px " class="border no-shadow no-rounded">
+                                    <option selected="selected" value="">全家門市</option>
+                                    <option value="1">台南市公園路公園門市</option>
+                                    <option value="2">台南市海安路海安門市</option>
+                                </select>
+
+                                <select name="ddlContent" id="ddlContent" onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 60px; margin-top: 5px; border-radius: 5px " class="border no-shadow no-rounded">
+                                    <option selected="selected" value="">宅配住址</option>
+                                    <option value="1">台南市大學路五巷五號</option>
+                                    <option value="2">台南市勝利路六巷六號</option>
+                                </select>
+                            </div>
+
+                            <div class="container">
+                                <div class="row" style="text-align: center; margin-left: 100px">
+                                    <div id="output" class="col" style="font-size: large;line-height: 3;">
+                                        <input name="txtContent" type="text" id="txtContent" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </td>
                 </tr>
             </table>
             <!-- 付款資訊 -->
-            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.08);">
+            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-primary btn-lg" style="background-color: aliceblue; color: black;">付款資訊</button>
+                        <form id="form1" runat="server">
+                            <div class="container" role="group">
+                                <a style="color: black; font-size: 35px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">付款資訊</a>
+                                <div class="row">
+                                    <select name="ddlContent" id="ddlContent" onchange="SelectedPaywayValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 200px;margin-top:5px;border-radius:5px; margin-left:300px;" class="border no-shadow no-rounded">
+                                        <option selected="selected" value="">到貨付款</option>
+                                        <option value="1">到貨付款</option>
+                                    </select>
 
-                        <div class="btn-group" role="group" style="padding-left:250px">
-                            <button id="btnGroupDrop6" type="button" class="btn btn-outline-primary " aria-expanded="false" style="background-color: aliceblue; color: black;border-radius:5px;">
-                                貨到付款
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop6">
-                                <li><a class="dropdown-item link">text1</a></li>
-                                <li><a class="dropdown-item link">text2</a></li>
-                            </ul>
-                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" style="background-color: aliceblue; color: black; margin-left: 30px; border-radius: 5px" data-bs-toggle="dropdown" aria-expanded="false">
-                                信用卡
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop6">
-                                <li><input type="text" /></li>
-                            </ul>
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col" style="font-size: large;line-height: 3;">
-                                    XXXX商業銀行
+
+                                    <select name="ddlContent" id="ddlContent" onchange="SelectedPaywayValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 60px;margin-top:5px; border-radius: 5px " class="border no-shadow no-rounded">
+                                        <option selected="selected" value="">信用卡</option>
+                                        <option value="1">****-****-****-9453</option>
+                                        
+                                    </select>
                                 </div>
-                                <div class="col" style="font-size: large;line-height: 3;">
-                                    ****-****-****-1234
+
+                                <div class="container">
+                                    <div class="row" style="text-align: center;margin-left:100px">
+                                        <div id="output" class="col" style="font-size: large;line-height: 3;">
+                                            <input name="payway" type="text" id="payway" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </td>
                 </tr>
             </table>
@@ -172,12 +188,16 @@
                     <div class="text-large"><strong>$60</strong></div>
                 </div>
 
-                <div class="d-flex">
-                    <div class="text-right mt-4">
-                        <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3" onclick="location.href='~/Shopping/ShoppingCart'">返回購物車</button>
-                        <a class="btn btn-lg btn-primary mt-2" href="~/ShoppingCart/CheckoutComplete">完成訂單</a>
+                <form method="post" action="~/ShoppingCart/AddOrder">
+                    <input type="text" name="Adress" value="" hidden />
+                    <input type="text" name="Price" value="" hidden />
+                    <div class="d-flex">
+                        <div class="text-right mt-4">
+                            <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3" onclick="location.href='~/Shopping/ShoppingCart'">返回購物車</button>
+                            <button type="submit" class="btn btn-lg btn-primary mt-2" href="~/ShoppingCart/CheckoutComplete">完成訂單</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
 
             <!-- <div class="float-end">
