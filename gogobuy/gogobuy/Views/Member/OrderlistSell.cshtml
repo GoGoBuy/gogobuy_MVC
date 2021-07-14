@@ -15,6 +15,7 @@
 
     <script>
 
+
         //TUNA
         //$(document).ready(function () {
         //    for (int i = 1; i <= count; i++)
@@ -31,20 +32,9 @@
         //    }
 
         //});
-        function showGiveId(showId, showDetail) {
-            $(document).ready(function () {
-                $('#' + showId.toString()).click(function () {
-                    $('#' + showDetail.toString()).show();
-                });
-            });
-        }
-        function hideGiveId(hideId, hideDetail) {
-            $(document).ready(function () {
-                $('#' + hideId.toString()).click(function () {
-                    $('#' + hideDetail.toString()).hide();
-                });
-            });
-        }
+
+
+
 
         //$(document).ready(function () {
         //    $("#show1").click(function () {
@@ -57,7 +47,12 @@
         //        $("#multiCollapseExample1").hide();
         //    });
         //});
-
+        function showGiveId(showDetail) {
+            $('#' + showDetail).show();
+        }
+        function hideGiveId(hideDetail) {
+            $('#' + hideDetail.toString()).hide();
+        }
 
         //$(document).ready(function () {
         //    $("#show2").click(function () {
@@ -85,6 +80,9 @@
     </script>
     @*<span onchange="showGiveId(@showXP,@detailP);hideGiveId(@hideXP,@detailP)"></span>*@
 </head>
+
+
+
 <div style="height: 50px; width: 100%; background: white;"></div>
 <div class="container">
     <nav aria-label="breadcrumb">
@@ -235,11 +233,12 @@
 
 
 
-                        <p>[[[ 以下為測試資料]]]</p>
+                        @*<p>[[[ 以下為測試資料]]]</p>*@
                         @{
                             int count = 0;
                             foreach (var item in Model)
                             {
+
                                 string showX = "show" + count.ToString();
                                 string hideX = "hide" + count.ToString();
                                 string showXP = "\"show" + count.ToString() + "\"";
@@ -253,73 +252,97 @@
                                         {
                                     <p> @item2.fProductName </p>
                                         }*@
-                                <section class="person show active">
-                                    <div class="container text-center table-responsive">
-                                        <p class="mb-4 text-center"></p>
-                                        <table class="table  table-bordered">
-                                            <thead>
-                                                <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                                    <th>訂單<br>編號</th>
-                                                    <th>訂購<br>日期</th>
-                                                    <th>訂單<br>狀態</th>
-                                                    <th>消費<br>總額</th>
-                                                    <th>付款<br>方式</th>
-                                                    <th>狀態</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="align-middle">
-                                                    <td style="border-color: black;">@item.fOrderUUID</td>
-                                                    <td style="border-color: black;">@item.fOrderDate</td>
-                                                    <td style="border-color: black;">@item.fOrderStatus</td>
-                                                    <td style="border-color: black;">@item.fPrice</td>
-                                                    <td style="border-color: black;">@item.fOrderPayWay</td>
-                                                    <td style="border-color: black;"><button>已收貨</button><br><button>取消訂單</button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <div class="pd-3 my-5" style="background: rgba(122, 111, 111, 0.3)">
+                                    <section class="person show active">
+                                        <div class="container text-center table-responsive">
+                                            <p class="mb-4 text-center"></p>
+                                            <table class="table  table-bordered">
+                                                <thead>
+                                                    <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
+                                                        <th>訂單<br>編號</th>
+                                                        <th>訂購<br>日期</th>
+                                                        <th>訂單<br>狀態</th>
+                                                        <th>消費<br>總額</th>
+                                                        <th>付款<br>方式</th>
+                                                        <th>狀態</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="align-middle">
+                                                        <td style="border-color: black;">@item.fOrderUUID</td>
+                                                        <td style="border-color: black;">@item.fOrderDate</td>
+                                                        <td style="border-color: black;">@item.fOrderStatus</td>
+                                                        <td style="border-color: black;">@String.Format("{0:0}", item.fPrice)</td>
+                                                        <td style="border-color: black;">@item.fOrderPayWay</td>
+                                                        <td style="border-color: black;"><button>已收貨</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                        <p>
-                                            <button id="@showX" onclick="showGiveId(@showXP,@detailP)">看明細</button>
-                                            <button id="@hideX" onclick="hideGiveId(@hideXP,@detailP)">收明細</button>
-                                        </p>
-                                        <div class="collapse" id="@detail">
-                                            <div class="card card-body">
-                                                <table class="table  table-bordered">
-                                                    <thead>
-                                                        <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
-                                                            <th>商品<br>名稱</th>
-                                                            <th>商品<br>單價</th>
-                                                            <th>數量</th>
-                                                            <th>收貨<br>確認</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="align-middle">
-                                                            <td style="border-color: black;">Kingston 8GB DDR3L 1600 品牌專用筆記型記憶體(低電壓1.35V)(KCP3L16SD8/8FR)(商品ID：DRAL06-A900794EQ-000)</td>
-                                                            <td style="border-color: black;">$1,799</td>
-                                                            <td style="border-color: black;">2</td>
-                                                            <td style="border-color: black;">完成<br>收貨</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr class="align-middle">
-                                                            <td style="border-color: black;">
-                                                                【Transcend 創見】128GB JetFlash700 USB3.1隨身碟-經典黑
-                                                                (商品ID：DSABKR-A900A4HBU-000)
-                                                            </td>
-                                                            <td style="border-color: black;">$599</td>
-                                                            <td style="border-color: black;">1</td>
-                                                            <td style="border-color: black;">完成<br>收貨</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <p>
+                                                <button onclick="showGiveId(@item.fOrderUUID)">看明細</button>
+                                                <button onclick="hideGiveId(@item.fOrderUUID)">收明細</button>
+                                            </p>
+                                            <div class="collapse" id="@item.fOrderUUID">
+
+
+
+                                                <div class="card card-body">
+                                                    <table class="table  table-bordered">
+                                                        <thead>
+                                                            <tr style="background-color: rgba(240, 50, 75, 0.623); border-color: black;">
+                                                                <th>商品<br>名稱</th>
+                                                                <th>商品<br>單價</th>
+                                                                <th>數量</th>
+                                                                <th>收貨<br>確認</th>
+                                                            </tr>
+                                                        </thead>
+                                                        @{
+                                                            List<int?> tempQuantity = new List<int?>();
+                                                            foreach (var dogItem in item.lsttOrderDetailslist)
+                                                            {
+                                                                tempQuantity.Add(dogItem.fQuantity);
+                                                            }
+
+                                                            int tempCount = -1;
+                                                            foreach (var dogItem in item.lsttProductlist)
+                                                            {
+                                                                tempCount++;
+                                                                <tbody>
+                                                                    <tr class="align-middle">
+                                                                        <td style="border-color: black;">@dogItem.fProductName</td>
+                                                                        <td style="border-color: black;">@String.Format("{0:0}", dogItem.fPrice)</td>
+                                                                        <td style="border-color: black;">@tempQuantity[tempCount]</td>
+                                                                        <td style="border-color: black;">完成<br>訂單</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            }
+                                                        }
+
+                                                        @*<tbody>
+                                                                <tr class="align-middle">
+                                                                    <td style="border-color: black;">
+                                                                        【Transcend 創見】128GB JetFlash700 USB3.1隨身碟-經典黑
+                                                                        (商品ID：DSABKR-A900A4HBU-000)
+                                                                    </td>
+                                                                    <td style="border-color: black;">$599</td>
+                                                                    <td style="border-color: black;">1</td>
+                                                                    <td style="border-color: black;">完成<br>收貨</td>
+                                                                </tr>
+                                                            </tbody>*@
+                                                    </table>
+                                                </div>
+
                                             </div>
+
                                         </div>
-                                    </div>
-                                </section>
+
+
+                                    </section>
+                                </div>
                                 count++;
                             }
+
                         }
                     </div>
                 </div>

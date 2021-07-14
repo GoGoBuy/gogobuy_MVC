@@ -15,7 +15,7 @@ namespace gogobuy.Controllers
         #region 帳戶修改
         public ActionResult EditProfile()
         {
-            if(Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
             {
                 return RedirectToAction("Login", "Home");
             }
@@ -29,13 +29,18 @@ namespace gogobuy.Controllers
         [HttpPost]
         public ActionResult EditProfile(tMembership member)
         {
-            if(Session[CDictionary.SK_LOGINED_USER_ID] == null)
+            if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
             {
                 return RedirectToAction("Login", "Home");
             }
             gogobuydbEntities db = new gogobuydbEntities();
             int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
             tMembership sent = db.tMembership.SingleOrDefault(s => s.fMemberID == memberId);
+            bool? sex;
+            if (Request.Form["sex"] == "")
+                sex = null;
+            else
+                sex = bool.Parse(Request.Form["sex"]);
             if (sent != null)
             {
                 sent.fFirstName = member.fFirstName;
@@ -43,6 +48,7 @@ namespace gogobuy.Controllers
                 sent.fDateOfBirth = member.fDateOfBirth;
                 sent.fEmail = member.fEmail;
                 sent.fAddress = member.fAddress;
+                sent.fGender = sex;
                 db.SaveChanges();
             }
             return View(member);
@@ -68,8 +74,8 @@ namespace gogobuy.Controllers
 
             List<OrderlistBuyViewModel> 這是lstVMOrderlistBuy = new List<OrderlistBuyViewModel>();
             int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
-            var mytOrderList = db.tOrder.Where(m  =>  m.fBuyerID  == memberId).ToList();
-            
+            var mytOrderList = db.tOrder.Where(m => m.fBuyerID == memberId).ToList();
+
             //遍歷每張訂單 
             foreach (var everyOrder in mytOrderList)
             {
@@ -164,7 +170,7 @@ namespace gogobuy.Controllers
         #region 密碼修改
         public ActionResult UpdatePassword()
         {
-            
+
             return View();
         }
 
@@ -179,12 +185,12 @@ namespace gogobuy.Controllers
             string old = Request.Form["old"];
             int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
             tMembership sent = db.tMembership.SingleOrDefault(s => s.fMemberID == memberId);
-            if (!Account.IsPasswordCorrect(old,sent))
+            if (!Account.IsPasswordCorrect(old, sent))
             {
                 ViewBag.msg = "舊密碼錯誤";
                 return View();
             }
-            if (Request.Form["newpassword"]!= Request.Form["check"])
+            if (Request.Form["newpassword"] != Request.Form["check"])
             {
                 ViewBag.msg = "兩次密碼輸入不一樣";
                 return View();

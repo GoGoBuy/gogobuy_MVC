@@ -91,7 +91,9 @@
                                 @using (Html.BeginForm())
                                 {
                                     @Html.AntiForgeryToken()
-
+                                    string nullSex = "";
+                                    string trueSex = "";
+                                    string falseSex = "";
                                     <div class="form-horizontal">
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -113,7 +115,24 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     @Html.LabelFor(model => model.fGender, "性別", htmlAttributes: new { @class = "control-label col-md-4" })
-                                                    @Html.EditorFor(model => model.fGender, new { htmlAttributes = new { @class = "form-control", data = "a" } })
+                                                    @if (Model.fGender == true)
+                                                    {
+                                                        trueSex = "selected";
+                                                    }
+                                                    @if (Model.fGender == false)
+                                                    {
+                                                        falseSex = "selected";
+                                                    }
+                                                    @if (Model.fGender == null)
+                                                    {
+                                                        nullSex = "selected";
+                                                    }
+                                                    <select class="form-control" name="sex">
+                                                        <option @nullSex value="">未設定</option>
+                                                        <option @trueSex value="true">女</option>
+                                                        <option @falseSex value="false">男</option>
+                                                    </select>
+                                                    @*@Html.EditorFor(model => model.fGender , new { htmlAttributes = new { @class = "form-control", data = "a" } })*@
                                                     @Html.ValidationMessageFor(model => model.fGender, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
