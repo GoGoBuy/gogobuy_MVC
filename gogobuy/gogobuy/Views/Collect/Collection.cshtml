@@ -1,6 +1,20 @@
 ﻿@using gogobuy.ViewModels;
 @model List<CollectViewModel>
 @{ ViewBag.Title = "Collection"; }
+<head>
+    <style>
+        .toast {
+            left: 0;
+            margin: auto;
+            position: fixed;
+            right: 0;
+            text-align: center;
+            width: 170px;
+            z-index: 1;
+            top: 40%;
+        }
+    </style>
+</head>
 <div style="height: 50px; width: 100%; background: white;"></div>
 
 <div class="container">
@@ -24,7 +38,6 @@
                                 <tr style="background-color: rgb(19, 38, 56); color: white;">
                                     <th>產品</th>
                                     <th>價錢</th>
-                                    <th>數量</th>
                                     <th>加入購物車</th>
                                     <th>移除</th>
                                 </tr>
@@ -41,16 +54,11 @@
                                                 <p>@collection.fProductName</p>
                                             </div>
                                         </td>
-                                        <td>$@String.Format("{0:0}", collection.fPrice)</td>
-                                        <td>
-                                            <div class="qty">
-                                                <input type="number" value="1">
-                                            </div>
-                                        </td>
-                                        <td><button class="btn-success">加入購物車</button></td>
+                                        <td>$@String.Format("{0:0}", collection.fPrice)</td>           
+                                        <td><button class="btn-success buy-btn">加入購物車</button></td>
                                         <td><button onclick="deleteItem(@collection.fProductID)"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                 }
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -60,7 +68,42 @@
     </div>
 </div>
 <div style="margin: 0 auto; width: 100%; height: 20px; background: white;"></div>
+<!-- Toast -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+    </symbol>
+</svg>
+<div class="toast alert-success" data-animation="true" data-autohide="false" id="myToast">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+    <div class="toast-body">
+        已加入購物車!
+    </div>
+</div>
 <script>
+    $('.buy-btn').click(function () {
+        var productID = $(this).parent().parent().attr("id");
+        $.ajax({
+             url: "@Url.Action("AddToCart", "ShoppingCart")",
+             type: 'post',
+             data: {
+                productID: productID
+             },
+             async: true,
+             success: function (data) {
+                 if (data == 'success') {
+                     $('#myToast').toast('show');
+                     setTimeout(function () {
+                         $('.toast').toast('hide');
+                     }, 1000);
+                 }
+                 if (data == 'login') {
+                     $('#myModal').modal('show');
+                 }
+             }
+         });
+
+    });
     function deleteItem(productID) {
             $.ajax({
                 url: "@Url.Action("Delete", "Collect")",

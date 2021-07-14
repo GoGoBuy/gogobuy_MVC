@@ -480,21 +480,22 @@
 
 
 
-                                                                    <button class="btn buy-btn btn-success mb-2">加入購物車</button>
+                                                                    <button class="btn buy-btn btn-outline-primary mb-2">
+                                                                        <span class="me-2">加入購物車</span><i class="fas fa-shopping-cart"></i>
+                                                                    </button>
 
 
                                                                     @{
                                                                         if (@item.isLike)
                                                                         {
                                                                             <button class="btn btn-danger like" id="@item.fProductID">
-                                                                                <span>已收藏</span> <i class="fas fa-heart"></i>
+                                                                                <span class="me-2">已收藏</span><i class="fas fa-heart"></i>
                                                                             </button>
                                                                         }
                                                                         else
                                                                         {
                                                                             <button class="btn btn-outline-danger like" id="@item.fProductID">
-
-                                                                                <span>加入收藏</span> <i class="fas fa-heart"></i>
+                                                                                <span class="me-2">加入收藏</span><i class="fas fa-heart"></i>
                                                                             </button>
                                                                         }
                                                                     }
