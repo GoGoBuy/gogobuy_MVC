@@ -80,6 +80,35 @@ namespace gogobuy.Controllers
             }
             return View(cartItem);
         }
+        public ActionResult AddToCart(int productID)
+        {
+            if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
+            {
+                return Json("login");
+            }
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var cart = db.tShopping.Where(s => s.fMemberID == memberId && s.fProductID == productID);
+            if (cart.Count() > 0)
+            {
+                cart.FirstOrDefault().fQuantity += 1;
+                db.SaveChanges();
+                return Json("success");
+            }
+            if (cart.Count() == 0)
+            {
+                var newCart = new tShopping()
+                {
+                    fMemberID = memberId,
+                    fProductID = productID,
+                    fQuantity = 1
+                };
+                
+                db.tShopping.Add(newCart);
+                db.SaveChanges();
+                return Json("success");
+            }
+            return Json("fail");
+        }
 
         public ActionResult CheckOut()
         {

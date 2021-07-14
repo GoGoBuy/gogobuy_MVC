@@ -55,6 +55,7 @@ namespace gogobuy.Controllers
         }
 
         public ActionResult Likeitem(int productID) {
+            // 抓取使用者有無登入
             if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
                 return Json("login");
 

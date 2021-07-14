@@ -16,6 +16,8 @@ namespace gogobuy.ViewModels
         public int? fQuantity { get; set; }
         public string fArrivalTime { get; set; }
         public DateTime? fUpdateTime { get; set; }
+        public string fDescription { get; set; }
         public bool isLike { get; set; }
+        public bool? fIsWish { get; set; }
     }
 }

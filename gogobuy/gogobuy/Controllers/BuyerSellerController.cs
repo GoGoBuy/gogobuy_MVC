@@ -114,11 +114,6 @@ namespace gogobuy.Controllers
         }
         public ActionResult WishProductList(string category)
         {
-            int userId = -1;
-
-            if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
-                userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
-
             List<ProductViewModel> products = new List<ProductViewModel>();
             var db = new gogobuydbEntities();
             IEnumerable<tProduct> table;
@@ -134,15 +129,6 @@ namespace gogobuy.Controllers
             }
             foreach (var p in table)
             {
-                bool isLike = false;
-
-                if (userId != -1)
-                {
-                    var collection = db.tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == p.fProductID);
-                    if (collection != null)
-                        isLike = true;
-                }
-
                 products.Add(new ProductViewModel
                 {
                     fProductID = p.fProductID,
@@ -150,7 +136,6 @@ namespace gogobuy.Controllers
                     fImgPath = p.fImgPath,
                     fPrice = p.fPrice,
                     fProductLocation = p.fProductLocation,
-                    isLike = isLike
                 });
             }
             return View(products);

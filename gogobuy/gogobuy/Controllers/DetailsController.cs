@@ -1,4 +1,5 @@
-﻿using gogobuy.ViewModels;
+﻿using gogobuy.Models;
+using gogobuy.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -12,6 +13,12 @@ namespace gogobuy.Controllers
         // GET: Details
         public ActionResult ProductDetails(int fProductID)
         {
+            int userId = -1;
+            // 預設使用者未收藏商品
+            bool isLike = false;
+            // 抓取user是否登入
+            if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
+                userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
             //Create a ViewModel and New it here when you want to use more than one table
             ProductDetailsViewModel pdViewModel = new ProductDetailsViewModel();
 
@@ -22,6 +29,13 @@ namespace gogobuy.Controllers
             var tPDetails = db.tProductDetails.Where(t => t.fProductID == fProductID).FirstOrDefault();
             var tPImage = db.tProductImage.Where(t => t.fProductID == fProductID);
             var tMemberShip = db.tMembership.Where(t => t.fMemberID == tP.fMemberID).FirstOrDefault();
+            // 若是有登入查看使用者是否收藏商品
+            if (userId != -1)
+            {
+                var collection = db.tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == fProductID);
+                if (collection != null)
+                    isLike = true;
+            }
             //FirstOrDefault: to ensure that obtaining only "one" piece of data,
             //                if there's no data, default would be set
 
@@ -42,7 +56,7 @@ namespace gogobuy.Controllers
 
             pdViewModel.fFirstName = tMemberShip.fFirstName;
             pdViewModel.fLastName = tMemberShip.fLastName;
-
+            pdViewModel.isLike = isLike;
 
             foreach (var f in tPImage)
             {

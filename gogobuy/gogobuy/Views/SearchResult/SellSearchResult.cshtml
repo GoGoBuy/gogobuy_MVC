@@ -1,11 +1,6 @@
 ﻿
-
-@model IEnumerable<gogobuy.tProduct>
-
-
-
-
-
+@using gogobuy.ViewModels;
+@model List<ProductViewModel>
 
 
 @{
@@ -22,7 +17,18 @@
     <link href="~/Content/css/Search_css/SearchResult_Style.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.6.0.js"></script>
 
-
+    <style>
+        .toast {
+            left: 0;
+            margin: auto;
+            position: fixed;
+            right: 0;
+            text-align: center;
+            width: 170px;
+            z-index: 1;
+            top: 40%;
+        }
+    </style>
 
 
     <script>
@@ -45,15 +51,74 @@
                 });
 
             });
+            // 加入購物車
+            $('.buy-btn').click(function () {
+                var productID = $(this).next().attr("id");
+                $.ajax({
+                    url: "@Url.Action("AddToCart", "ShoppingCart")",
+                    type: 'post',
+                    data: {
+                        productID: productID
+                    },
+                    async: true,
+                    success: function (data) {
+                        if (data == 'success') {
+                            $('#myToast').toast('show');
+                            setTimeout(function () {
+                                $('.toast').toast('hide');
+                            }, 1000);
+                        }
+                        if (data == 'login') {
+                            $('#myModal').modal('show');
+                        }
+                    }
+                });
+            });
+            // 加入收藏
+            $('button.like').click(function () {
+                var productID = this.id;
+                if ($(this).children('span').text() == '加入收藏') {
+                    $.ajax({
+                        url: "@Url.Action("LikeItem", "Collect")",
+                        type: 'post',
+                        data: {
+                            productID: productID
+                        },
+                        async: true,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $('#' + productID).children('span').text("已收藏");
+                                $('#' + productID).removeClass('btn-outline-danger');
+                                $('#' + productID).addClass('btn-danger');
+                            }
+                            if (data == 'login') {
+                                $('#myModal').modal('show');
+                            }
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: "@Url.Action("Delete", "Collect")",
+                        type: 'post',
+                        data: {
+                            productID: productID
+                        },
+                        async: true,
+                        success: function (data) {
+                            $('#' + productID).children('span').text("加入收藏");
+                            $('#' + productID).removeClass('btn-danger');
+                            $('#' + productID).addClass('btn-outline-danger');
+                        }
+                    });
+                }
+            });
 
         });
-
-
-
-
-
-
     </script>
+
+
+
+
 
 
 </head>
@@ -146,22 +211,30 @@
                                 <!-- <div class="padding"></div> -->
                                 <!-- 篩選條件區塊-上架日期 start -->
                                 <h4 style="margin-top: 20px;">按照日期:</h4>
-                                <p style="font-size: large;">從</p>
+                                @*<p style="font-size: large;">從</p>
 
-                                    <form style="font-size: large;">
-                                        <input type="datetime-local" id="ordertime" name="ordertime">
-                                    </form>
-                                
+                                <form style="font-size: large;">
+                                    <input type="datetime-local" id="ordertime" name="ordertime">
+                                </form>
+
                                 <p style="font-size: large; margin-top: 10px">到</p>
 
 
                                     <form style="font-size: large;">
                                         <input type="datetime-local" id="ordertime" name="ordertime">
-                                    </form>
-
+                                    </form>*@
 
                                 
-                                
+                                @using (Html.BeginForm())
+                                { 
+
+                                    <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="dateInput"/>
+                                    <br />
+                                    <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="dateInput"/>
+
+                                    
+                                }
+
 
 
                                 <!-- 篩選條件區塊-上架日期 end -->
@@ -213,7 +286,7 @@
                                 <div class="input-group">
                                     @using (Html.BeginForm())
                                     {
-                                        @Html.TextBox("txtKeyword", "", new { placeholder = "請輸入查詢關鍵字" })
+                                        @Html.TextBox("txtKeyword", "", new { placeholder = "請輸入關鍵字" })
                                         <input type="submit" value="搜尋" class="btn btn-info" />
 
                                         @Html.ActionLink("切換搜尋願望商品", "WishSearchResult", "SearchResult", new { @class = "btn btn-warning" })
@@ -405,21 +478,25 @@
                                                                     @*<a class="btn btn-info" href="@Url.Action("AddCollection", "Home", new {ProductID = item.fProductID})">加到追蹤中</a>*@
 
 
-                                                                    <form class="" method="post" action="~/Home/AddCollection">
-                                                                        <input type="text" name="ProductID" value="@item.fProductID" hidden />
-                                                                        @*<a href="~/Details/SellListDetails?fProductID=@item.fProductID" class="link-success"> </a>*@
 
-                                                                        <button type="submit" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
-                                                                    </form>
-
-                                                                    <form class="" method="post" action="~/Home/AddCollection">
-                                                                        <input type="text" name="ProductID" value="@item.fProductID" hidden />
-                                                                        <a href="~/Details/SellListDetails?fProductID=@item.fProductID" class="link-success"> </a>
-
-                                                                        <button type="submit" class="btn btn-primary" style="margin-bottom:5px">加入購物車</button>
-                                                                    </form>
+                                                                    <button class="btn buy-btn btn-success mb-2">加入購物車</button>
 
 
+                                                                    @{
+                                                                        if (@item.isLike)
+                                                                        {
+                                                                            <button class="btn btn-danger like" id="@item.fProductID">
+                                                                                <span>已收藏</span> <i class="fas fa-heart"></i>
+                                                                            </button>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <button class="btn btn-outline-danger like" id="@item.fProductID">
+
+                                                                                <span>加入收藏</span> <i class="fas fa-heart"></i>
+                                                                            </button>
+                                                                        }
+                                                                    }
 
 
 
@@ -476,7 +553,37 @@
             <!-- 搜尋結果頁面 end-->
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    要使用收藏功能，請先登入會員！
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary m-2" data-bs-dismiss="modal">關閉</button>
+                    <a href=@Url.Action("Login", "Home") class="btn btn-primary  m-2">登入</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <!-- Toast -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+    </svg>
+    <div class="toast alert-success" data-animation="true" data-autohide="false" id="myToast">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+        <div class="toast-body">
+            已加入購物車!
+        </div>
+    </div>
+    <!-- Toast -->
     <!-- write codes here 寫在這，這是中間 -->
     <!--- Footer -->
     <!-- 暫定，可以改～ -->

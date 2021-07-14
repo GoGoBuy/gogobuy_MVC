@@ -36,7 +36,7 @@ namespace gogobuy.ViewModels
         public string fLastName { get; set; }
 
         public string fPname { get; set; }
-
+        public bool isLike { get; set; }
         public List<string> listImgPath = new List<string>();
 
         public List<string> listStyle = new List<string>();

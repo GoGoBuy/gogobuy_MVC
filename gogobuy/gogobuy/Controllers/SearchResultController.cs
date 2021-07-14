@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using gogobuy.Models;
+using gogobuy.ViewModels;
 
 namespace gogobuy.Controllers
 {
@@ -45,7 +46,12 @@ namespace gogobuy.Controllers
         }
         public ActionResult SellSearchResult(string fCategory)
         {
+            int userId = -1;
+            // 抓取user是否登入
+            if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
+                userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
 
+            List<ProductViewModel> products = new List<ProductViewModel>();
             IEnumerable<tProduct> table = null;
             string keyword = Request.Form["txtKeyword"];
 
@@ -58,7 +64,6 @@ namespace gogobuy.Controllers
             if (string.IsNullOrEmpty(keyword))
             {
                 table = from p in (new gogobuydbEntities()).tProduct
-                        
                         select p;
             }
             else  
@@ -82,7 +87,28 @@ namespace gogobuy.Controllers
                         select p;
             }
 
-
+            // 如果使用者登入查看他是否已收藏
+            foreach (var p in table)
+            {
+                bool isLike = false;
+                if (userId != -1)
+                {
+                    var collection = (new gogobuydbEntities()).tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == p.fProductID);
+                    if (collection != null)
+                        isLike = true;
+                }
+                products.Add(new ProductViewModel
+                {
+                    fProductID = p.fProductID,
+                    fProductName = p.fProductName,
+                    fImgPath = p.fImgPath,
+                    fPrice = p.fPrice,
+                    fDescription = p.fDescription,
+                    fUpdateTime = p.fUpdateTime,
+                    fIsWish = p.fIsWish,
+                    isLike = isLike
+                });
+            }
 
 
             //if (!string.IsNullOrEmpty(txtPrice1) && !string.IsNullOrEmpty(keyword))
@@ -108,7 +134,7 @@ namespace gogobuy.Controllers
             //            select p;
             //}
 
-            return View(table);
+            return View(products);
         }
 
 

@@ -29,7 +29,12 @@
             <h6 class="my-3"><i class="iconRequest fas fa-map-marker-alt"></i>買家所在地：@Model.fProductLocation</h6>
             <h6 class="my-3"><i class="iconRequest fas fa-truck"></i>可接受到貨時間：@Model.fArrivalTime</h6>
             <h4 class="py-3">可接受價格：<span class="dollars">NT @String.Format("{0:0}", Model.fPrice) 元 / 個</span></h4>
-            <button class="btn btn-danger"><i class="fas fa-heart"></i> 幫忙代買！</button>
+            <a href="~/Chatroom/Chatroom?fMemberID=@Model.fMemberID" class="link-success">
+                @{
+
+                                @Html.ActionLink("聯繫許願人", "Chatroom", "Chatroom", new { fMemberID = Model.fMemberID }, new { @class = "btn btn-success" }) }
+            </a>
+            @*<button class="btn btn-danger"><i class="fas fa-heart"></i> 幫忙代買！</button>*@
         </div>
     </div>
 </section>
