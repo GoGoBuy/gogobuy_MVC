@@ -198,7 +198,13 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\BucketListDetails.css" />
+    <Content Include="Content\css\FAQcs_css\css\style.css" />
+    <Content Include="Content\css\FAQcs_css\js\main.js" />
+    <Content Include="Content\css\FAQcs_css\js\util.js" />
     <Content Include="Content\css\MemberCenter.css" />
+    <Content Include="Content\css\ProductDetails.css" />
+    <Content Include="Content\css\Search_css\SearchResult_Style.css" />
     <Content Include="Content\img\BucketListDetails\BUNNIE.jpg" />
     <Content Include="Content\img\buyer_seller\8edb5c27-6852-4a84-adc3-667465bc61a7.jpg" />
     <Content Include="Content\img\buyer_seller\settings.png" />
@@ -447,6 +453,7 @@
     <Content Include="obj\Debug\gogobuy.csproj.AssemblyReference.cache" />
     <Content Include="obj\Debug\gogobuy.csproj.CopyComplete" />
     <Content Include="obj\Debug\gogobuy.csproj.CoreCompileInputs.cache" />
+    <Content Include="Content\css\FAQcs_css\css\style.scss" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />

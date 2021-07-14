@@ -121,6 +121,7 @@
 
 
 
+
 </head>
 <body>
 
@@ -221,19 +222,21 @@
 
 
                                     <form style="font-size: large;">
-                                        <input type="datetime-local" id="ordertime" name="ordertime">
                                     </form>*@
 
                                 
                                 @using (Html.BeginForm())
                                 { 
-
+                                    </form>
                                     <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="dateInput"/>
                                     <br />
                                     <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="dateInput"/>
 
                                     
                                 }
+
+
+
 
 
 
