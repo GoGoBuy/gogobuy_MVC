@@ -1,4 +1,5 @@
 ﻿using gogobuy.Models;
+using gogobuy.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,14 +14,41 @@ namespace gogobuy.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            string sql = "select top (8) * from tProduct where fIsWish=0 order by fProductID desc;";
-            List<tProduct> list = SelectProductBySQL(sql, null);
+            int userId = -1;
+            List<ProductViewModel> products = new List<ProductViewModel>();
+            var db = new gogobuydbEntities();
 
-            string sql2 = "select top (8) * from tProduct where fIsWish=1 order by fUpdateTime desc;";
-            List<tProduct> list2 = SelectProductBySQL(sql2, null);
+            if (Session[CDictionary.SK_LOGINED_USER_ID] != null)
+                userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
 
-            List<tProduct> listall = list.Concat(list2).ToList<tProduct>();
-            return View(listall);
+            string sql = "select top (12) * from tProduct where fIsWish=0 order by fProductID desc;";
+            List<ProductViewModel> list = SelectProductBySQL(sql, null);
+
+            string sql2 = "select top (12) * from tProduct where fIsWish=1 order by fUpdateTime desc;";
+            List<ProductViewModel> list2 = SelectProductBySQL(sql2, null);
+
+            List<ProductViewModel> listall = list.Concat(list2).ToList<ProductViewModel>();
+
+            foreach (var p in listall)
+            {
+                bool isLike = false;
+                if (userId != -1)
+                {
+                    var collection = db.tCollection.FirstOrDefault(c => c.fMemberID == userId && c.fProductID == p.fProductID);
+                    if (collection != null)
+                        isLike = true;
+                }
+                products.Add(new ProductViewModel
+                {
+                    fProductID = p.fProductID,
+                    fProductName = p.fProductName,
+                    fImgPath = p.fImgPath,
+                    fPrice = p.fPrice,
+                    fProductLocation = p.fProductLocation,
+                    isLike = isLike
+                });
+            }
+            return View(products);
         }
 
         public ActionResult Login()
@@ -153,7 +181,7 @@ namespace gogobuy.Controllers
             return RedirectToAction("Index");
         }
         
-        List<tProduct> SelectProductBySQL(string sql, List<SqlParameter> paras)
+        List<ProductViewModel> SelectProductBySQL(string sql, List<SqlParameter> paras)
         {
             SqlConnection con = new SqlConnection();
             con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString;
@@ -166,21 +194,21 @@ namespace gogobuy.Controllers
                     cmd.Parameters.Add(p);
             }
             SqlDataReader reader = cmd.ExecuteReader();
-            List<tProduct> list = new List<tProduct>();
+            List<ProductViewModel> list = new List<ProductViewModel>();
             if (reader != null)
             {
                 while (reader.Read())
                 {
-                    tProduct x = new tProduct()
+                    ProductViewModel x = new ProductViewModel()
                     {
                         fProductID = (int)reader["fProductID"],
-                        fCategory = reader["fCategory"].ToString(),
+                        //fCategory = reader["fCategory"].ToString(),
                         fProductName = reader["fProductName"].ToString(),
                         fPrice = Math.Truncate((decimal)reader["fPrice"]),
                         fQuantity = (int)reader["fQuantity"],
                         fImgPath = reader["fImgPath"].ToString(),
                         fDescription = reader["fDescription"].ToString(),
-                        fMemberID = (int)reader["fMemberID"],
+                        //fMemberID = (int)reader["fMemberID"],
                         fProductLocation = reader["fProductLocation"].ToString(),
                         fArrivalTime =reader["fArrivalTime"].ToString(),
                         fUpdateTime = (DateTime)reader["fUpdateTime"],
