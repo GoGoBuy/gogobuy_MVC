@@ -38,74 +38,79 @@
     </nav>
     <!-- Shopping cart table -->
     <div class="card">
-        <div class="card-header">
-            <h2>結帳頁面</h2>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered m-0">
-                    <thead>
-                        <tr style="text-align: center;">
-                            <!-- Set columns width -->
-                            <th class="text-center py-3 px-4" style="min-width: 150px;">商品名稱</th>
-                            <th class="text-center py-3 px-4" style="min-width: 150px;">備註資訊</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">價格</th>
-                            <th class="text-center py-3 px-4" style="width: 140px;">數量</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">小計</th>
-                            <!-- <th class="text-center" style="width: 95px;"><a class="btn btn-sm btn-outline-danger" href="#">清空</a></th> -->
-                        </tr>
-                    </thead>
-                    @{
-
-                        decimal? sum = 0;
-                        foreach (var item in Model)
-                        {
-
-                            decimal? total = item.fPrice * item.fQuantity;
-                            sum += total;
-                            <tbody>
-                                <tr>
-                                    <td class="p-4">
-                                        <div class="media align-items-center">
-                                            <img src="~/Content/img/Product/@item.fImgPath"
-                                                 class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                            <div class="media-body">
-                                                <a href="#" class="d-block text-dark" style="text-align:center;">@item.fProductName</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">
-                                        @item.fDescription
-                                    </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
-                                    <td class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
-
-                                </tr>
-                            </tbody>
-                        }
-                    }
-                </table>
+        <form method="post" action="~/ShoppingCart/AddOrder">
+            <div class="card-header" style="text-align: center;">
+                <h2>結帳頁面</h2>
             </div>
+            <div class="card-body">
+                <div class="table-responsive">
 
-            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
-                <tr>
-                    <td>
-                        <a style="color: black; font-size: 35px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">收件人資訊</a>
-                    </td>
-                    <td>
-                        <div style="font-size: large;line-height: 3;text-align: left;">@ViewBag.name</div>
-                    </td>
-                    <td>
-                        <div style="font-size: large;line-height: 3;text-align: center;">@ViewBag.phone</div>
-                    </td>
-                </tr>
-            </table>
+                    <table class="table table-bordered m-0">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <!-- Set columns width -->
+                                <th class="text-center py-3 px-4" style="min-width: 150px;">商品名稱</th>
+                                <th class="text-center py-3 px-4" style="min-width: 150px;">備註資訊</th>
+                                <th class="text-right py-3 px-4" style="width: 100px;">價格</th>
+                                <th class="text-center py-3 px-4" style="width: 140px;">數量</th>
+                                <th class="text-right py-3 px-4" style="width: 100px;">小計</th>
+                                <!-- <th class="text-center" style="width: 95px;"><a class="btn btn-sm btn-outline-danger" href="#">清空</a></th> -->
+                            </tr>
+                        </thead>
+                        @{
 
-            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
-                <tr>
-                    <td>
-                        <form id="form1" runat="server">
+                            decimal? sum = 0;
+                            decimal? deliveryin = 60;
+                            foreach (var item in Model)
+                            {
+
+                                decimal? total = item.fPrice * item.fQuantity;
+                                sum += total;
+                                deliveryin += sum;
+
+                                <tbody>
+                                    <tr>
+                                        <td class="p-4">
+                                            <div class="media align-items-center">
+                                                <img src="~/Content/img/Product/@item.fImgPath"
+                                                     class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                                <div class="media-body">
+                                                    <a href="#" class="d-block text-dark" style="text-align:center;">@item.fProductName</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-right font-weight-semibold align-middle p-4">
+                                            @item.fDescription
+                                        </td>
+                                        <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
+                                        <td class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
+                                        <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
+
+                                    </tr>
+                                </tbody>
+                            }
+                        }
+                    </table>
+                </div>
+
+                <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
+                    <tr>
+                        <td>
+                            <a style="color: black; font-size: 35px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">收件人資訊</a>
+                        </td>
+                        <td>
+                            <div style="font-size: large;line-height: 3;text-align: left;" name="">@ViewBag.name</div>
+                        </td>
+                        <td>
+                            <div style="font-size: large;line-height: 3;text-align: center;" name="phone">@ViewBag.phone</div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
+                    <tr>
+                        <td>
+
                             <div class="btn-group" role="group">
                                 <a style="color: black; font-size: 35px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">寄送資訊</a>
 
@@ -131,19 +136,19 @@
                             <div class="container">
                                 <div class="row" style="text-align: center; margin-left: 100px">
                                     <div id="output" class="col" style="font-size: large;line-height: 3;">
-                                        <input name="txtContent" type="text" id="txtContent" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
+                                        <input name="Address" type="text" id="txtContent" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </td>
-                </tr>
-            </table>
-            <!-- 付款資訊 -->
-            <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
-                <tr>
-                    <td>
-                        <form id="form1" runat="server">
+
+                        </td>
+                    </tr>
+                </table>
+                <!-- 付款資訊 -->
+                <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
+                    <tr>
+                        <td>
+
                             <div class="container" role="group">
                                 <a style="color: black; font-size: 35px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">付款資訊</a>
                                 <div class="row">
@@ -155,55 +160,58 @@
 
                                     <select name="ddlContent" id="ddlContent" onchange="SelectedPaywayValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 60px;margin-top:5px; border-radius: 5px " class="border no-shadow no-rounded">
                                         <option selected="selected" value="">信用卡</option>
-                                        <option value="1">****-****-****-9453</option>
-                                        
+                                        <option value="1">台南市公園路公園門市</option>
+                                        <option value="2">台南市海安路海安門市</option>
                                     </select>
                                 </div>
 
                                 <div class="container">
                                     <div class="row" style="text-align: center;margin-left:100px">
                                         <div id="output" class="col" style="font-size: large;line-height: 3;">
-                                            <input name="payway" type="text" id="payway" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
+                                            <input name="Payway" type="text" id="payway" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </td>
-                </tr>
-            </table>
+
+                        </td>
+                    </tr>
+                </table>
 
 
 
-            <!-- / Shopping cart table -->
+                <!-- / Shopping cart table -->
 
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                <div class="mt-4">
-                    <label class="text-muted font-weight-normal m-0">商品總計</label>
-                    <div class="text-large"><strong>$@String.Format("{0:0}", sum)</strong></div>
-                </div>
-
-                <div class="mt-4">
-                    <label class="text-muted font-weight-normal m-0">運費總計</label>
-                    <div class="text-large"><strong>$60</strong></div>
-                </div>
-
-                <form method="post" action="~/ShoppingCart/AddOrder">
-                    <input type="text" name="Adress" value="" hidden />
-                    <input type="text" name="Price" value="" hidden />
-                    <div class="d-flex">
-                        <div class="text-right mt-4">
-                            <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3" onclick="location.href='~/Shopping/ShoppingCart'">返回購物車</button>
-                            <button type="submit" class="btn btn-lg btn-primary mt-2" href="~/ShoppingCart/CheckoutComplete">完成訂單</button>
-                        </div>
+                <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+                    <div class="mt-4">
+                        <label class="text-muted font-weight-normal m-0">商品總計</label>
+                        <div class="text-large"><strong>$@String.Format("{0:0}", sum)</strong></div>
                     </div>
-                </form>
+
+                    <div class="mt-4">
+                        <label class="text-muted font-weight-normal m-0">運費總計</label>
+                        <div class="text-large"><strong>$60</strong></div>
+                    </div>
+                    <input type="text" name="Price" value="@deliveryin" hidden />
+                </div>
+
+
+
+                
+                <div class="d-flex">
+                    <div class="text-right mt-4">
+                        <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3" onclick="location.href='~/Shopping/ShoppingCart'">返回購物車</button>
+                        <button type="submit" class="btn btn-lg btn-primary mt-2" href="~/ShoppingCart/CheckoutComplete">完成訂單</button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- <div class="float-end">
 
-                    </div> -->
-
-        </div>
+            </div> -->
+        </form>
     </div>
+
 </div>
+

@@ -125,18 +125,6 @@
           <Property Name="fCommission" Type="money" />
           <Property Name="fUpdateTime" Type="date" />
         </EntityType>
-        <Association Name="FK__tShopping__fProd__47DBAE45">
-          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
-          <End Role="tShopping" Type="Self.tShopping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tProduct">
-              <PropertyRef Name="fProductID" />
-            </Principal>
-            <Dependent Role="tShopping">
-              <PropertyRef Name="fProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tCollection_tMembership">
           <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
           <End Role="tCollection" Type="Self.tCollection" Multiplicity="*" />
@@ -257,6 +245,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tShopping_tProduct">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tShopping" Type="Self.tShopping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tShopping">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tShoppingDetails_tProduct">
           <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
           <End Role="tShoppingDetails" Type="Self.tShoppingDetails" Multiplicity="*" />
@@ -304,10 +304,6 @@
           <EntitySet Name="tShopping" EntityType="Self.tShopping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tShoppingDetails" EntityType="Self.tShoppingDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tWishProduct" EntityType="Self.tWishProduct" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__tShopping__fProd__47DBAE45" Association="Self.FK__tShopping__fProd__47DBAE45">
-            <End Role="tProduct" EntitySet="tProduct" />
-            <End Role="tShopping" EntitySet="tShopping" />
-          </AssociationSet>
           <AssociationSet Name="FK_tCollection_tMembership" Association="Self.FK_tCollection_tMembership">
             <End Role="tMembership" EntitySet="tMembership" />
             <End Role="tCollection" EntitySet="tCollection" />
@@ -346,6 +342,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_tShopping_tMembership" Association="Self.FK_tShopping_tMembership">
             <End Role="tMembership" EntitySet="tMembership" />
+            <End Role="tShopping" EntitySet="tShopping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tShopping_tProduct" Association="Self.FK_tShopping_tProduct">
+            <End Role="tProduct" EntitySet="tProduct" />
             <End Role="tShopping" EntitySet="tShopping" />
           </AssociationSet>
           <AssociationSet Name="FK_tShoppingDetails_tProduct" Association="Self.FK_tShoppingDetails_tProduct">

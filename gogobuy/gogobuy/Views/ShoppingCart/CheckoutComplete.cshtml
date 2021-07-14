@@ -13,10 +13,13 @@
     </nav>
     <!-- Shopping cart table -->
     <div class="card">
+
         <div class="card-header" style="text-align: center;">
             <h2>訂單已完成</h2>
-            <h3>訂單編號:2021060000000000</h3>
+            <h3>訂單編號:@ViewBag.uuid</h3>
         </div>
+
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered m-0">
@@ -31,59 +34,39 @@
 
                         </tr>
                     </thead>
-                    <tbody>
+                    @{
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403023.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 1</a>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4 text-center">2</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
+                        decimal? sum = 0;
+                        decimal? deliveryin = 60;
+                        foreach (var item in Model)
+                        {
 
-                        </tr>
+                            decimal? total = item.fPrice * item.fQuantity;
+                            sum += total;
+                            deliveryin += sum;
 
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403027.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 2</a>
+                            <tbody>
+                                <tr>
+                                    <td class="p-4">
+                                        <div class="media align-items-center">
+                                            <img src="~/Content/img/Product/@item.fImgPath"
+                                                 class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                            <div class="media-body">
+                                                <a href="#" class="d-block text-dark" style="text-align:center;">@item.fProductName</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">
+                                        @item.fDescription
+                                    </td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
+                                    <td class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
 
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4 text-center">2</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-
-                        </tr>
-
-                        <tr>
-                            <td class="p-4">
-                                <div class="media align-items-center">
-                                    <img src="https://image.flaticon.com/icons/png/256/4403/4403030.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                    <div class="media-body">
-                                        <a href="#" class="d-block text-dark" style="text-align: center;">商品名稱 3</a>
-
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-right font-weight-semibold align-middle p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab totam consequuntur quod omnis cum alias quia laudantium sequi molestiae animi!</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$57.55</td>
-                            <td class="align-middle p-4 text-center">2</td>
-                            <td class="text-right font-weight-semibold align-middle p-4">$115.1</td>
-
-                        </tr>
-
-                    </tbody>
+                                </tr>
+                            </tbody>
+                        }
+                    }
                 </table>
             </div>
 

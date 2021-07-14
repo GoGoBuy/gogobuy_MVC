@@ -11,13 +11,76 @@ namespace gogobuy.Controllers
     public class ShoppingCartController : Controller
     {
         // GET: ShoppingCart
+        public string GetSerialNumber()
+        {
+
+
+            string headDate = DateTime.Now.ToString("yyyyMMdd");
+            Random crantom = new Random();
+            string lastnum = crantom.Next(0000, 9999).ToString();
+            string x = headDate + lastnum;
+            return x;
+
+        }
+        public ActionResult AddOrder()
+        {
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null || Session[CDictionary.SK_LOGINED_USER_ID] == null)
+            {
+
+                return RedirectToAction("Login", "Home");
+            }
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var user = db.tMembership.Where(m => m.fMemberID == memberId).FirstOrDefault();
+            ViewBag.name = user.fFirstName + user.fLastName;
+            ViewBag.phone = user.fPhone;
+
+
+            string address = Request.Form["Address"];
+            string price = Request.Form["Price"];
+            string payway = Request.Form["Payway"];
+            string datetime = DateTime.Now.ToString("yyyyMMdd");
+            string phone = ViewBag.phone;
+            string buyername = ViewBag.name;
+            int buyerID = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            string orderstate = "已成立";
+            string orderuuID = GetSerialNumber();
+
+
+            string sql = "insert into tOrder (fOrderAddress,fPrice,fOrderDate,fOrderPayWay,fOrderPhone,fBuyerName,fBuyerID,fOrderStatus,fOrderUUID) values(@K_FADDRESS,@K_FPRICE,@K_FORDERDATE,@K_FPAYWAY,@K_ORDERFPHONE,@K_FBUYERNAME,@K_FBUYERID,@K_FORDERSTATUS,@K_FORDERUUID)";
+            List<SqlParameter> paras = new List<SqlParameter>();
+            paras.Add(new SqlParameter("K_FADDRESS", (object)address));
+            paras.Add(new SqlParameter("K_FPRICE", (object)price));
+            paras.Add(new SqlParameter("K_FORDERDATE", (object)datetime));
+            paras.Add(new SqlParameter("K_FPAYWAY", (object)payway));
+            paras.Add(new SqlParameter("K_ORDERFPHONE", (object)phone));
+            paras.Add(new SqlParameter("K_FBUYERNAME", (object)buyername));
+            paras.Add(new SqlParameter("K_FBUYERID", (object)buyerID));
+            paras.Add(new SqlParameter("K_FORDERSTATUS", (object)orderstate));
+            paras.Add(new SqlParameter("K_FORDERUUID", (object)orderuuID));
+
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString;
+
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+            if (paras != null)
+            {
+                foreach (SqlParameter p in paras)
+                    cmd.Parameters.Add(p);
+            }
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            return RedirectToAction("CheckoutComplete");
+        }
         public ActionResult DeleteAll()
         {
             // 驗證使用者有無登入
-            if(Session[CDictionary.SK_LOGINED_USER_ID] == null)
-                    return Json("fail");
+            if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
+                return Json("fail");
             try
-                {
+            {
                 gogobuydbEntities db = new gogobuydbEntities();
                 // 抓取使用者ID
                 int memberID = (int)Session[CDictionary.SK_LOGINED_USER_ID];
@@ -30,11 +93,12 @@ namespace gogobuy.Controllers
                     return Json("success");
                 }
                 return Json("noData");
-            }catch
+            }
+            catch
             {
                 return Json("fail");
             }
-            
+
         }
         public ActionResult Delete(int id)
         {
@@ -102,7 +166,7 @@ namespace gogobuy.Controllers
                     fProductID = productID,
                     fQuantity = 1
                 };
-                
+
                 db.tShopping.Add(newCart);
                 db.SaveChanges();
                 return Json("success");
@@ -143,7 +207,48 @@ namespace gogobuy.Controllers
         }
         public ActionResult CheckoutComplete()
         {
-            return View();
+            if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            //IEnumerable<tOrder> table = null;
+            //string orderuuID = GetSerialNumber();
+            //table = from p in (new gogobuydbEntities()).tOrder
+            //        where p.fOrderUUID == orderuuID
+            //        select p;
+
+
+
+            string uu = GetSerialNumber();
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var user = db.tMembership.Where(m => m.fMemberID == memberId).FirstOrDefault();
+            var uuis = db.tOrder.Where(p => p.fOrderUUID == uu).FirstOrDefault();
+            ViewBag.name = user.fFirstName + user.fLastName;
+            ViewBag.phone = user.fPhone;
+            ViewBag.uuid = uuis.fOrderUUID;
+            var shoptable = from s in db.tShopping
+                            join p in db.tProduct on s.fProductID equals p.fProductID
+
+                            where s.fMemberID == memberId
+                            select new { s, p.fProductName, p.fImgPath, p.fPrice, p.fDescription };
+
+            List<CartViewModel> cartItem = new List<CartViewModel>();
+            foreach (var item in shoptable)
+            {
+                cartItem.Add(new CartViewModel
+                {
+                    fCartID = item.s.fCartID,
+                    fMemberID = item.s.fMemberID,
+                    fProductID = item.s.fProductID,
+                    fDescription = item.fDescription,
+                    fQuantity = item.s.fQuantity,
+                    fImgPath = item.fImgPath,
+                    fProductName = item.fProductName,
+                    fPrice = item.fPrice
+                });
+            }
+            return View(cartItem);
         }
     }
 }
