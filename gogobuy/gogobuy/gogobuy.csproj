@@ -434,7 +434,6 @@
     <Content Include="Content\img\Product\f09-1.jpg" />
     <Content Include="Content\img\Product\f09-2.jpg" />
     <Content Include="Content\img\Product\f09.jpg" />
-    <Content Include="Content\img\SearchResults\shoppingCart.svg" />
     <Content Include="Content\img\SearchResults\沒有圖片.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
