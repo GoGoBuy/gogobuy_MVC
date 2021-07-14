@@ -114,18 +114,6 @@
                                         </div>
 
 
-                                        @*<div style="margin-top:10px">
-                                            <label>
-                                                @Html.ActionLink("手機周邊", "手機周邊", "SearchResult", null, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("3C產品", "三C產品", "SearchResult", null, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("生活居家", "生活居家", "SearchResult", null, new { @class = "btn btn-success" })
-                                            </label>
-                                            </div>*@
-
                                     }
 
 
@@ -136,18 +124,7 @@
                                 <!-- <div class="padding"></div> -->
                                 <!-- 篩選條件區塊-上架日期 start -->
                                 <h4 style="margin-top: 20px;">按照日期:</h4>
-                                @*<p style="font-size: large;">從</p>
-
-                                <form style="font-size: large;">
-                                    <input type="datetime-local" id="ordertime1" name="ordertime1">
-                                </form>
-                                <p style="font-size: large; margin-top:10px">到</p>
-
-
-                                <form style="font-size: large;">
-                                    <input type="datetime-local" id="ordertime2" name="ordertime2">
-                                </form>*@
-
+                               
 
                                 @using (Html.BeginForm())
                                 { 
@@ -158,7 +135,6 @@
 
                                     
                                 }
-
 
 
                                 <!-- 篩選條件區塊-上架日期 end -->
@@ -196,54 +172,10 @@
 
                                         @Html.ActionLink("切換搜尋販賣商品", "SellSearchResult", "SearchResult", new { @class = "btn btn-warning" })
 
-                                        @*<span>
-                                                <input type="text" class="form-control" placeholder="請輸入搜尋關鍵字" style="margin-top: 5px;">
-
-                                                <button class="btn btn-primary" type="submit">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-
-                                            </span>*@
-
-                                        @*<span class="dropdown" style="margin-left: 3px; margin-right: 3px; margin-top: 8px;">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    切換搜尋模式
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="text-align: center;">
-                                                    <li><a class="dropdown-item" href="#">願望商品</a></li>
-                                                    <li><a class="dropdown-item" href="#">販售商品</a></li>
-                                                    <li><a class="dropdown-item" href="#">會員帳號</a></li>
-                                                    <li><a class="dropdown-item" href="#">商品地區</a></li>
-                                                </ul>
-                                            </span>*@
-
-
-
-                                        @*<span class="input-group-btn" style="margin-top: 8px">
-                                                <button class="btn btn-primary" type="submit">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-                                            </span>*@
+                                       
                                     }
 
                                 </div>
-
-                                <!-- <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                      切換搜尋模式
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                      <li><a class="dropdown-item" href="#">願望商品</a></li>
-                                      <li><a class="dropdown-item" href="#">販售商品</a></li>
-                                      <li><a class="dropdown-item" href="#">會員帳號</a></li>
-                                      <li><a class="dropdown-item" href="#">商品地區</a></li>
-                                    </ul>
-                                </div> -->
-                                <!--搜尋輸入 end -->
-
-
-
-
 
 
 
@@ -253,20 +185,7 @@
 
                                 <div class="row">
                                     <!-- 搜尋排序 start -->
-                                    <!-- <div class="col-sm-6">
-                                        <div class="btn-group">
-
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option value="0" selected="selected">排序方式</option>
-                                                <option value="1">商品名稱</option>
-                                                <option value="2">上架日期</option>
-                                                <option value="3">價格高低</option>
-                                                <option value="4">評價高低</option>
-
-                                            </select>
-                                        </div>
-                                    </div> -->
-
+                                    
                                     <div class="col-sm-6">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -341,26 +260,21 @@
 
                                                             <td class="text-right" style="margin-left:50px">
 
-                                                                <strong style="font-size: 20px;">@Html.DisplayFor(modelItem => item.fProductName)</strong>
-                                                                <br>
-                                                                <br>
-                                                                <strong>@Html.DisplayFor(modelItem => item.fDescription)</strong>
-                                                                <br>
-                                                                <span class="date">
-                                                                    上架：@Html.DisplayFor(modelItem => item.fUpdateTime)
-                                                                </span>
-                                                                <br>
-                                                                <span class="price">
-                                                                    價格：@Html.DisplayFor(modelItem => item.fPrice) 元
-                                                                </span>
-                                                                <br>
-                                                                @*<span class="rate">
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star-half-o"></i>
-                                                                    </span>*@
+                                                                <a href="~/Details/BucketListDetails?fProductID=@item.fProductID" class="link-success">
+                                                                    <strong style="font-size: 20px;">@Html.DisplayFor(modelItem => item.fProductName)</strong>
+                                                                    <br>
+                                                                    <br>
+                                                                    <strong>@Html.DisplayFor(modelItem => item.fDescription)</strong>
+                                                                    <br>
+                                                                    <span class="date">
+                                                                        上架：@Html.DisplayFor(modelItem => item.fUpdateTime)
+                                                                    </span>
+                                                                    <br>
+                                                                    <span class="price">
+                                                                        價格：@Html.DisplayFor(modelItem => item.fPrice) 元
+                                                                    </span>
+                                                                    <br>
+                                                                </a>
 
                                                             </td>
                                                             <!-- <td class="price text-right">350元</td> -->
@@ -371,27 +285,15 @@
                                                                     <input type="text" name="ProductID" value="@item.fProductID" hidden />
                                                                     <input type="text" name="ProductPrice" value="@item.fProductID" hidden />
 
-                                                                    @*<button type="button" class="btn btn-primary" style="margin-bottom:5px">加入追蹤中</button>
-                                                                    <button type="button" class="btn btn-primary">加入購物車</button>*@
-
-
-                                                                    <!--<form class="" method="post" action="~/Chatroom/Chatroom">
-                                                                        <input type="text" name="ProductID" value="@item.fProductID" hidden />-->
-                                                                        @*<a href="~/Details/SellListDetails?fProductID=@item.fProductID" class="link-success"> </a>*@
-
-                                                                        <!--<button type="submit" class="btn btn-primary" style="margin-bottom:5px">聯繫許願人</button>
-                                                                    </form>-->
-
+                                                                    
                                                                 <a href="~/Chatroom/Chatroom" class="link-success">
-                                                                    @Html.ActionLink("聯繫買家", "Chatroom", "Chatroom", new { fMemberID = item.fMemberID }, new { @class = "btn btn-primary" })
+                                                                    @Html.ActionLink("聯繫買家", "Chatroom", "Chatroom", new { fMemberID = item.fMemberID }, new { @class = "btn btn-outline-primary mb-2" })
                                                                 </a>
 
                                                                 </div>
                                                             </td>
-                                                            <!-- <button type="button" class="btn btn-secondary">測試分隔</button> -->
-
+                                                           
                                                         </tr>
-
 
                                                     }
                                                     else
