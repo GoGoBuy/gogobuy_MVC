@@ -49,11 +49,11 @@
         });
 
 
-
-
-
-
     </script>
+
+
+
+
 
 
 </head>
@@ -146,7 +146,7 @@
                                 <!-- <div class="padding"></div> -->
                                 <!-- 篩選條件區塊-上架日期 start -->
                                 <h4 style="margin-top: 20px;">按照日期:</h4>
-                                <p style="font-size: large;">從</p>
+                                @*<p style="font-size: large;">從</p>
 
                                     <form style="font-size: large;">
                                         <input type="datetime-local" id="ordertime" name="ordertime">
@@ -157,11 +157,19 @@
 
                                     <form style="font-size: large;">
                                         <input type="datetime-local" id="ordertime" name="ordertime">
-                                    </form>
-
+                                    </form>*@
 
                                 
-                                
+                                @using (Html.BeginForm())
+                                { 
+
+                                    <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="dateInput"/>
+                                    <br />
+                                    <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="dateInput"/>
+
+                                    
+                                }
+
 
 
                                 <!-- 篩選條件區塊-上架日期 end -->
@@ -213,7 +221,7 @@
                                 <div class="input-group">
                                     @using (Html.BeginForm())
                                     {
-                                        @Html.TextBox("txtKeyword", "", new { placeholder = "請輸入查詢關鍵字" })
+                                        @Html.TextBox("txtKeyword", "", new { placeholder = "請輸入關鍵字" })
                                         <input type="submit" value="搜尋" class="btn btn-info" />
 
                                         @Html.ActionLink("切換搜尋願望商品", "WishSearchResult", "SearchResult", new { @class = "btn btn-warning" })
