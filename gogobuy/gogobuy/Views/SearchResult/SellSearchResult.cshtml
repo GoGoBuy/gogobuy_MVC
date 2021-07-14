@@ -214,23 +214,23 @@
                                 <h4 style="margin-top: 20px;">按照日期:</h4>
                                 @*<p style="font-size: large;">從</p>
 
-                                <form style="font-size: large;">
-                                    <input type="datetime-local" id="ordertime" name="ordertime">
-                                </form>
-
-                                <p style="font-size: large; margin-top: 10px">到</p>
-
-
                                     <form style="font-size: large;">
-                                    </form>*@
+                                        <input type="datetime-local" id="ordertime" name="ordertime">
+                                    </form>
 
-                                
+                                    <p style="font-size: large; margin-top: 10px">到</p>
+
+
+                                        <form style="font-size: large;">
+                                        </form>*@
+
+
                                 @using (Html.BeginForm())
-                                { 
-                                    <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="dateInput"/>
+                                {
+                                    <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="dateInput" />
                                     <br />
-                                    <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="dateInput"/>
-                  
+                                    <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="dateInput" />
+
                                 }
 
 
@@ -563,7 +563,7 @@
                     <button type="button" class="btn-close m-2" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    要使用收藏功能，請先登入會員！
+                    要使用此功能，請先登入會員！
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-outline-secondary m-2" data-bs-dismiss="modal">關閉</button>
