@@ -1,4 +1,4 @@
-﻿
+﻿@using gogobuy.ViewModels;
 
 @model IEnumerable<gogobuy.tProduct>
 
@@ -61,12 +61,42 @@
                     });
 
                 });
-                var dateSort = $("#my-products").find("[data-productdate]");
+
+                $('#sortSelect').change(function () {
+                    var priceArray = Array.from($cards);
+                    let product = $('#my-products');
+                    if ($(this).val() == 1) {
+                        $cards.sort(function (a, b) {
+                            return b.dataset.productprice - a.dataset.productprice;
+                        }).appendTo(product);
+                        return;
+                    }
+                    if ($(this).val() == 2) {
+                        console.log(product);
+                        $cards.sort(function (a, b) {
+                            return +a.dataset.productprice - +b.dataset.productprice;
+                        }).appendTo(product);
+                        return;
+                    }
+                    if ($(this).val() == 3) {
+                        $cards.sort(function (a, b) {
+                            return new Date(b.dataset.productdate) - new Date(a.dataset.productdate);
+                        }).appendTo(product);
+                        return;
+                    }
+                    if ($(this).val() == 4) {
+                        $cards.sort(function (a, b) {
+                            return new Date(a.dataset.productdate) - new Date(b.dataset.productdate);
+                        }).appendTo(product);
+                        return;
+                    }
+                });
+                var date = $("#my-products").find("[data-productdate]");
                 $('#searchDate').click(function () {
                     var start = new Date($('#startDate').val());
                     var end = new Date($('#endDate').val());
-                    console.log(start+end);
-                    $.each(dateSort, function (a, b) {
+                    console.log(start + end);
+                    $.each(date, function (a, b) {
                         var p = new Date($(b).data("productdate"));
                         if (p >= start && p <= end) {
                             $(b).show();
@@ -273,7 +303,7 @@
 
                                         @Html.ActionLink("切換搜尋販賣商品", "SellSearchResult", "SearchResult", new { @class = "btn btn-warning" })
 
-                                       
+
                                     }
 
                                 </div>
@@ -286,27 +316,26 @@
 
                                 <div class="row">
                                     <!-- 搜尋排序 start -->
-                                    
                                     @*<div class="col-sm-6">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                排序依照 <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu" style="text-align: center;">
-                                                <li>商品名稱</li>
-                                                <li>上架日期</li>
-                                                <li>價格高低</li>
-                                                <li>評價高低</li>
-                                            </ul>
-                                        </div>
-                                    </div>*@
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    排序依照 <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu" style="text-align: center;">
+                                                    <li>商品名稱</li>
+                                                    <li>上架日期</li>
+                                                    <li>價格高低</li>
+                                                    <li>評價高低</li>
+                                                </ul>
+                                            </div>
+                                        </div>*@
 
-                                    <select class="border no-shadow no-rounded" aria-label="Default select example" style="width:135px; height:35px; margin-left:12px; margin-top: 18px;">
-                                            <option selected disabled hidden value="">排序方式</option>
-                                            <option value="1">價格高到低</option>
-                                            <option value="2">價格低到高</option>
-                                            <option value="3">日期新到舊</option>
-                                            <option value="4">價格舊到新</option>
+                                    <select id="sortSelect" class="border no-shadow no-rounded" aria-label="Default select example" style="width:135px; height:35px; margin-left:12px; margin-top: 18px;">
+                                        <option selected disabled hidden value="">排序方式</option>
+                                        <option value="1">價格高到低</option>
+                                        <option value="2">價格低到高</option>
+                                        <option value="3">日期新到舊</option>
+                                        <option value="4">日期舊到新</option>
                                     </select>
 
 
@@ -342,7 +371,7 @@
 
                                                     if (item.fIsWish == true)
                                                     {
-                                                        <tr data-productprice="@item.fPrice" data-productdate="@item.fUpdateTime.Value.ToString("yyyy-MM-dd")">
+                                                        <tr data-productprice="@item.fPrice" data-productdate="@item.fUpdateTime.Value.ToString("d")">
                                                             <td class="number text-center"></td>
 
                                                             <td class="image">
@@ -350,13 +379,13 @@
                                                                     if (item.fImgPath == null)
                                                                     {
                                                                         <a href="~/Details/BucketListDetails?fProductID=@item.fProductID" class="link-success">
-                                                                        <img src="~/Content/img/SearchResults/沒有圖片.jpg" width="300" height="300" />
+                                                                            <img src="~/Content/img/SearchResults/沒有圖片.jpg" width="300" height="300" />
                                                                         </a>
                                                                     }
                                                                     else
                                                                     {
                                                                         <a href="~/Details/BucketListDetails?fProductID=@item.fProductID" class="link-success">
-                                                                        <img src="~/Content/img/Product/@item.fImgPath" width="300" height="300" />
+                                                                            <img src="~/Content/img/Product/@item.fImgPath" width="300" height="300" />
                                                                         </a>
                                                                     }
 
@@ -378,11 +407,11 @@
                                                                     <strong>@Html.DisplayFor(modelItem => item.fDescription)</strong>
                                                                     <br>
                                                                     <span class="date">
-                                                                        上架：@Html.DisplayFor(modelItem => item.fUpdateTime)
+                                                                        上架：@String.Format("{0:d}", item.fUpdateTime)
                                                                     </span>
                                                                     <br>
                                                                     <span class="price">
-                                                                        價格：@Html.DisplayFor(modelItem => item.fPrice) 元
+                                                                        價格：$@String.Format("{0:0}", item.fPrice) 元
                                                                     </span>
                                                                     <br>
                                                                 </a>
@@ -396,14 +425,14 @@
                                                                     <input type="text" name="ProductID" value="@item.fProductID" hidden />
                                                                     <input type="text" name="ProductPrice" value="@item.fProductID" hidden />
 
-                                                                    
-                                                                <a href="~/Chatroom/Chatroom" class="link-success">
-                                                                    @Html.ActionLink("聯繫買家", "Chatroom", "Chatroom", new { fMemberID = item.fMemberID }, new { @class = "btn btn-outline-primary mb-2" })
-                                                                </a>
+
+                                                                    <a href="~/Chatroom/Chatroom" class="link-success">
+                                                                        @Html.ActionLink("聯繫買家", "Chatroom", "Chatroom", new { fMemberID = item.fMemberID }, new { @class = "btn btn-outline-primary mb-2" })
+                                                                    </a>
 
                                                                 </div>
                                                             </td>
-                                                           
+
                                                         </tr>
 
                                                     }
