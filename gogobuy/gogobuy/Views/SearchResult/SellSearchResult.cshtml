@@ -57,12 +57,42 @@
                     });
 
                 });
-                var dateSort = $("#my-products").find("[data-productdate]");
+               
+                $('#sortSelect').change(function () {
+                    var priceArray = Array.from($cards);
+                    let product = $('#my-products');
+                    if ($(this).val() == 1) {
+                        $cards.sort(function (a, b) {
+                            return b.dataset.productprice - a.dataset.productprice;
+                        }).appendTo(product);
+                        return;
+                    }
+                    if ($(this).val() == 2) {
+                        console.log(product);
+                        $cards.sort(function (a, b) {
+                            return +a.dataset.productprice - +b.dataset.productprice;
+                        }).appendTo(product);
+                        return;
+                    }
+                    if ($(this).val() == 3) {
+                        $cards.sort(function (a, b) {
+                            return  new Date(b.dataset.productdate) - new Date(a.dataset.productdate);
+                        }).appendTo(product);
+                        return;
+                    }
+                    if ($(this).val() == 4) {
+                        $cards.sort(function (a, b) {
+                            return new Date(a.dataset.productdate) - new Date(b.dataset.productdate);
+                        }).appendTo(product);
+                        return;
+                    }
+                });
+                var date = $("#my-products").find("[data-productdate]");
                 $('#searchDate').click(function () {
                     var start = new Date($('#startDate').val());
                     var end = new Date($('#endDate').val());
                     console.log(start+end);
-                    $.each(dateSort, function (a, b) {
+                    $.each(date, function (a, b) {
                         var p = new Date($(b).data("productdate"));
                         if (p >= start && p <= end) {
                             $(b).show();
@@ -324,12 +354,12 @@
                                         </div>*@
 
 
-                                        <select class="border no-shadow no-rounded" aria-label="Default select example" style="width:135px; height:35px; margin-left:12px; margin-top: 18px;">
+                                        <select id="sortSelect" class="border no-shadow no-rounded" aria-label="Default select example" style="width:135px; height:35px; margin-left:12px; margin-top: 18px;">
                                             <option selected disabled hidden value="">排序方式</option>
                                             <option value="1">價格高到低</option>
                                             <option value="2">價格低到高</option>
                                             <option value="3">日期新到舊</option>
-                                            <option value="4">價格舊到新</option>
+                                            <option value="4">日期舊到新</option>
                                         </select>
 
 
@@ -364,7 +394,7 @@
                                                 {
                                                     if (item.fIsWish == false)
                                                     {
-                                                    <tr data-productprice="@item.fPrice" data-productdate="@item.fUpdateTime.Value.ToString("yyyy-MM-dd")">
+                                                    <tr data-productprice="@item.fPrice" data-productdate="@item.fUpdateTime.Value.ToString("d")">
                                                         <td class="number text-center"></td>
                                                         <td class="image">
                                                             @{
@@ -399,7 +429,7 @@
                                                                 </span>
                                                                 <br>
                                                                 <span class="price">
-                                                                    價格：@Html.DisplayFor(modelItem => item.fPrice) 元
+                                                                    價格：@Html.DisplayFor(modelItem => item.fPrice)元
                                                                 </span>
                                                                 <br>
                                                             </a>
