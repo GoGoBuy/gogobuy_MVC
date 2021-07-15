@@ -72,7 +72,7 @@ namespace gogobuy.Controllers
             cmd.ExecuteNonQuery();
             con.Close();
 
-            return RedirectToAction("CheckoutComplete");
+            return RedirectToAction("CheckoutComplete", new { orderuuID = orderuuID });
         }
         public ActionResult DeleteAll()
         {
