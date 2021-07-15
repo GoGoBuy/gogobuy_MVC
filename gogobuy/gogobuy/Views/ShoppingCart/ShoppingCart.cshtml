@@ -25,7 +25,7 @@
                         <tr style="text-align: center;">
                             <!-- Set columns width -->
                             <th class="text-center py-3 px-4" style="min-width: 150px;">商品名稱</th>
-                            <th class="text-center py-3 px-4" style="min-width: 150px;">備註資訊</th>
+                            <th class="text-center py-3 px-4" style="min-width: 150px;">詳細資訊</th>
                             <th class="text-right py-3 px-4" style="width: 100px;">價格</th>
                             <th class="text-center py-3 px-4" style="width: 140px;">數量</th>
                             <th class="text-right py-3 px-4" style="width: 100px;">小計</th>
@@ -44,10 +44,12 @@
                                 <tr class="cart-item">
                                     <td class="p-4">
                                         <div class="media align-items-center">
-                                            <img src="~/Content/img/Product/@item.fImgPath" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                            <div class="media-body">
-                                                <a href="#" class="d-block text-dark" style="text-align: center;">@item.fProductName</a>
-                                            </div>
+                                            <a style="text-decoration:none;" href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
+                                                <img src="~/Content/img/Product/@item.fImgPath" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                                <div class="media-body">
+                                                    <p href="#" class="d-block text-dark" style="text-align: center;">@item.fProductName</p>
+                                                </div>
+                                            </a>
                                         </div>
                                     </td>
                                     <td class="text-right font-weight-semibold align-middle p-4">@item.fDescription</td>
@@ -106,7 +108,7 @@
 
                     <div class="text-right mt-4">
                         <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3">返回購物</button>
-                        <a class="btn btn-lg btn-primary mt-2" href="~/ShoppingCart/CheckOut">送出訂單</a>
+                        <a class="btn btn-lg btn-outline-primary mt-2" href="~/ShoppingCart/CheckOut">送出訂單</a>
                     </div>
                 </div>
             </div>

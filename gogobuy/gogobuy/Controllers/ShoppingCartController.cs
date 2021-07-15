@@ -17,7 +17,7 @@ namespace gogobuy.Controllers
 
             string headDate = DateTime.Now.ToString("yyyyMMdd");
             Random crantom = new Random();
-            string lastnum = crantom.Next(0000, 9999).ToString();
+            string lastnum = String.Format("{0:X5}", crantom.Next(1048576));
             string x = headDate + lastnum;
             return x;
 
@@ -34,6 +34,8 @@ namespace gogobuy.Controllers
             ViewBag.name = user.fFirstName + user.fLastName;
             ViewBag.phone = user.fPhone;
 
+            
+
 
             string address = Request.Form["Address"];
             string price = Request.Form["Price"];
@@ -46,7 +48,10 @@ namespace gogobuy.Controllers
             string orderuuID = GetSerialNumber();
 
 
+
             string sql = "insert into tOrder (fOrderAddress,fPrice,fOrderDate,fOrderPayWay,fOrderPhone,fBuyerName,fBuyerID,fOrderStatus,fOrderUUID) values(@K_FADDRESS,@K_FPRICE,@K_FORDERDATE,@K_FPAYWAY,@K_ORDERFPHONE,@K_FBUYERNAME,@K_FBUYERID,@K_FORDERSTATUS,@K_FORDERUUID)";
+            
+
             List<SqlParameter> paras = new List<SqlParameter>();
             paras.Add(new SqlParameter("K_FADDRESS", (object)address));
             paras.Add(new SqlParameter("K_FPRICE", (object)price));
@@ -57,6 +62,8 @@ namespace gogobuy.Controllers
             paras.Add(new SqlParameter("K_FBUYERID", (object)buyerID));
             paras.Add(new SqlParameter("K_FORDERSTATUS", (object)orderstate));
             paras.Add(new SqlParameter("K_FORDERUUID", (object)orderuuID));
+
+            
 
             SqlConnection con = new SqlConnection();
             con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString;
@@ -72,7 +79,53 @@ namespace gogobuy.Controllers
             cmd.ExecuteNonQuery();
             con.Close();
 
+            var orderID = db.tOrder.Where(o => o.fOrderUUID == orderuuID).Select(o => o.fOrderID).FirstOrDefault();
+            var cart = from s in db.tShopping
+                       where s.fMemberID == memberId
+                       select new { s.fProductID, s.fQuantity, s.fCartID };
+            foreach (var product in cart)
+            {
+                var details = new tOrderDetails()
+                {
+                    fOrderID = orderID,
+                    fProductID = product.fProductID,
+                    fQuantity = product.fQuantity,
+
+                };
+                db.tOrderDetails.Add(details);
+                db.tShopping.Remove(db.tShopping.Where(s => s.fCartID == product.fCartID).FirstOrDefault());
+
+            }
+            db.SaveChanges();
+
+
+
+
             return RedirectToAction("CheckoutComplete", new { orderuuID = orderuuID });
+        }
+        public ActionResult AddOrderDetails(string orderuuID)
+        {
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+
+            var orderID = db.tOrder.Where(o => o.fOrderUUID == orderuuID).Select(o => o.fOrderID).FirstOrDefault();
+            var cart = from s in db.tShopping
+                       where s.fMemberID == memberId
+                       select new { s.fProductID, s.fQuantity, s.fCartID };
+            foreach (var product in cart)
+            {
+                var details = new tOrderDetails()
+                {
+                    fOrderID = orderID,
+                    fProductID = product.fProductID,
+                    fQuantity = product.fQuantity,
+
+                };
+                db.tOrderDetails.Add(details);
+                db.tShopping.Remove(db.tShopping.Where(s => s.fCartID == product.fCartID).FirstOrDefault());
+
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
         public ActionResult DeleteAll()
         {
@@ -203,44 +256,49 @@ namespace gogobuy.Controllers
                     fPrice = item.fPrice
                 });
             }
+
             return View(cartItem);
         }
         public ActionResult CheckoutComplete(string orderuuID)
         {
+
+
+
             if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
             {
                 return RedirectToAction("Login", "Home");
             }
 
-            //IEnumerable<tOrder> table = null;
-            //string orderuuID = GetSerialNumber();
-            //table = from p in (new gogobuydbEntities()).tOrder
-            //        where p.fOrderUUID == orderuuID
-            //        select p;
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            //var order = db.tOrder.Where(m => m.fOrderUUID == memberId).FirstOrDefault();
+            //ViewBag.name = order.fFirstName + order.fLastName;
+            //ViewBag.phone = order.fPhone;
+
 
             var uuis = db.tOrder.Where(p => p.fOrderUUID == orderuuID).Select(p => p.fOrderUUID).FirstOrDefault();
             ViewBag.uuid = uuis;
+            var orderID = db.tOrder.Where(p => p.fOrderUUID == orderuuID).Select(p => p.fOrderID).FirstOrDefault();
 
-            
-            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+
+
+
             var user = db.tMembership.Where(m => m.fMemberID == memberId).FirstOrDefault();
-            
+
             ViewBag.name = user.fFirstName + user.fLastName;
             ViewBag.phone = user.fPhone;
-            
-            var shoptable = from s in db.tShopping
-                            join p in db.tProduct on s.fProductID equals p.fProductID
 
-                            where s.fMemberID == memberId
-                            select new { s, p.fProductName, p.fImgPath, p.fPrice, p.fDescription };
+            var detailtable = from s in db.tOrderDetails
+                              join p in db.tProduct on s.fProductID equals p.fProductID
+                              where s.fOrderID == orderID
+                              select new { s, p.fProductName, p.fImgPath, p.fPrice, p.fDescription };
 
             List<CartViewModel> cartItem = new List<CartViewModel>();
-            foreach (var item in shoptable)
+            foreach (var item in detailtable)
             {
                 cartItem.Add(new CartViewModel
                 {
-                    fCartID = item.s.fCartID,
-                    fMemberID = item.s.fMemberID,
+
+                    fMemberID = memberId,
                     fProductID = item.s.fProductID,
                     fDescription = item.fDescription,
                     fQuantity = item.s.fQuantity,
@@ -249,7 +307,9 @@ namespace gogobuy.Controllers
                     fPrice = item.fPrice
                 });
             }
+
             return View(cartItem);
+
         }
     }
 }
