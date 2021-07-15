@@ -21,31 +21,130 @@
 
     <link href="~/Content/css/Search_css/SearchResult_Style.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.6.0.js"></script>
-    <style></style>
+
+    <style>
+        .toast {
+            left: 0;
+            margin: auto;
+            position: fixed;
+            right: 0;
+            text-align: center;
+            width: 170px;
+            z-index: 10;
+            top: 40%;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+
 
     <script>
-        $(function () {
+            $(function () {
 
-            var $cards = $("#my-products").find("[data-productprice]");
-            $("#sort").change(function () {
-                var t = $(this).find(':selected').data('price');
-                var a = t.split(':');
-                var l = parseFloat(a[0]);
-                var u = parseFloat(a[1]);
+                var $cards = $("#my-products").find("[data-productprice]");
+                $("#sort").change(function () {
+                    var t = $(this).find(':selected').data('price');
+                    var a = t.split(':');
+                    var l = parseFloat(a[0]);
+                    var u = parseFloat(a[1]);
 
-                $.each($cards, function (a, b) {
-                    var p = parseFloat($(b).data("productprice"));
-                    if (p >= l && p <= u) {
-                        $(b).show();
+                    $.each($cards, function (a, b) {
+                        console.log($(b).data("productprice"));
+                        var p = parseFloat($(b).data("productprice"));
+                        if (p >= l && p <= u) {
+                            $(b).show();
+                        } else {
+                            $(b).hide();
+                        }
+                    });
+
+                });
+                var dateSort = $("#my-products").find("[data-productdate]");
+                $('#searchDate').click(function () {
+                    var start = new Date($('#startDate').val());
+                    var end = new Date($('#endDate').val());
+                    console.log(start+end);
+                    $.each(dateSort, function (a, b) {
+                        var p = new Date($(b).data("productdate"));
+                        if (p >= start && p <= end) {
+                            $(b).show();
+                        } else {
+                            $(b).hide();
+                        }
+                    });
+                });
+                // 加入購物車
+                $('.buy-btn').click(function () {
+                    var productID = $(this).next().attr("id");
+                    $.ajax({
+                        url: "@Url.Action("AddToCart", "ShoppingCart")",
+                        type: 'post',
+                        data: {
+                            productID: productID
+                        },
+                        async: true,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $('#myToast').toast('show');
+                                setTimeout(function () {
+                                    $('.toast').toast('hide');
+                                }, 1000);
+                            }
+                            if (data == 'login') {
+                                $('#myModal').modal('show');
+                            }
+                        }
+                    });
+                });
+                // 加入收藏
+                $('button.like').click(function () {
+                    var productID = this.id;
+                    if ($(this).children('span').text() == '加入收藏') {
+                        $.ajax({
+                            url: "@Url.Action("LikeItem", "Collect")",
+                            type: 'post',
+                            data: {
+                                productID: productID
+                            },
+                            async: true,
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $('#' + productID).children('span').text("已收藏");
+                                    $('#' + productID).removeClass('btn-outline-danger');
+                                    $('#' + productID).addClass('btn-danger');
+                                }
+                                if (data == 'login') {
+                                    $('#myModal').modal('show');
+                                }
+                            }
+                        });
                     } else {
-                        $(b).hide();
+                        $.ajax({
+                            url: "@Url.Action("Delete", "Collect")",
+                            type: 'post',
+                            data: {
+                                productID: productID
+                            },
+                            async: true,
+                            success: function (data) {
+                                $('#' + productID).children('span').text("加入收藏");
+                                $('#' + productID).removeClass('btn-danger');
+                                $('#' + productID).addClass('btn-outline-danger');
+                            }
+                        });
                     }
                 });
 
             });
-
-        });
     </script>
+
+
+
+
+
+
 
 </head>
 <body>
@@ -124,17 +223,19 @@
                                 <!-- <div class="padding"></div> -->
                                 <!-- 篩選條件區塊-上架日期 start -->
                                 <h4 style="margin-top: 20px;">按照日期:</h4>
-                               
 
-                                @using (Html.BeginForm())
-                                { 
 
-                                    <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="dateInput"/>
-                                    <br />
-                                    <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="dateInput"/>
+                                <a style="font-size: large; margin-right: 5px">從</a>
 
-                                    
-                                }
+                                <input id="startDate" type="date" width="10" class="date" name="startDate" />
+
+                                <br />
+
+                                <a style="font-size: large; margin-right: 5px">到</a>
+
+                                <input id="endDate" type="date" width="10" class="date" name="endDate" />
+
+                                <button type="submit" name="submit" id="searchDate" style="margin-top:10px" class="btn btn-primary">選定日期範圍</button>
 
 
                                 <!-- 篩選條件區塊-上架日期 end -->
@@ -186,7 +287,7 @@
                                 <div class="row">
                                     <!-- 搜尋排序 start -->
                                     
-                                    <div class="col-sm-6">
+                                    @*<div class="col-sm-6">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                                 排序依照 <span class="caret"></span>
@@ -198,12 +299,22 @@
                                                 <li>評價高低</li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div>*@
+
+                                    <select class="border no-shadow no-rounded" aria-label="Default select example" style="width:135px; height:35px; margin-left:12px; margin-top: 18px;">
+                                            <option selected disabled hidden value="">排序方式</option>
+                                            <option value="1">價格高到低</option>
+                                            <option value="2">價格低到高</option>
+                                            <option value="3">日期新到舊</option>
+                                            <option value="4">價格舊到新</option>
+                                    </select>
+
+
 
                                     <!-- 搜尋排序 end -->
                                     <!-- 條列或九宮格顯示 start -->
 
-                                    <div class="col-md-6 text-right">
+                                    <div class="col-md-6 text-right" style="text-align:right;">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default active">
                                                 <i class="fa fa-list"></i>
@@ -231,7 +342,7 @@
 
                                                     if (item.fIsWish == true)
                                                     {
-                                                        <tr data-productprice="@item.fPrice">
+                                                        <tr data-productprice="@item.fPrice" data-productdate="@item.fUpdateTime.Value.ToString("yyyy-MM-dd")">
                                                             <td class="number text-center"></td>
 
                                                             <td class="image">
