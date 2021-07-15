@@ -1,4 +1,4 @@
-﻿
+﻿@using gogobuy.ViewModels;
 @model IEnumerable<gogobuy.tProduct>
 
 @{
@@ -34,7 +34,7 @@
 
 <script>
 
-    function wishdelete (productID) {
+    function wishdelete(productID) {
         $('#' + productID).remove();
         console.log("測試有沒有");
     }
@@ -111,44 +111,102 @@
 
 
 
-    @{
-        <table class="border no-shadow no-rounded" style="padding:10px">
-            <thead>
-                <tr>
-                    <th>圖片</th>
-                    <th>品名</th>
-                    <th>售價</th>
-                    <th>數量</th>
-                    <th>備註</th>
-                    <th>刪除</th>
-                </tr>
-            </thead>
-
-            @foreach (var item in Model)
-            {
-                
-                <tbody>
-                    <tr id="@item.fProductID">
-                        <td><img src="~/Content/img/Product/@item.fImgPath" style="height:50px;width:50px;"></td>
-                        <td>@item.fProductName</td>
-                        <td><input type="text" name="ProductQuantity" value="$@String.Format("{0:0}", item.fPrice)" /></td>
-                        <td><input type="text" name="ProductQuantity" value="0" /></td>
-                        <td><input type="text" name="ProductNote" value="" placeholder="EX:配送細節" /></td>
-                        <td><button onclick="wishdelete(@item.fProductID)" class="btn jq-delete" ><img src="https://image.flaticon.com/icons/png/512/3096/3096673.png" style="height:20px;width:20px"></button></td>
+    @*@{
+            <table class="border no-shadow no-rounded" style="padding:10px">
+                <thead>
+                    <tr>
+                        <th>圖片</th>
+                        <th>品名</th>
+                        <th>售價</th>
+                        <th>數量</th>
+                        <th>備註</th>
+                        <th>刪除</th>
                     </tr>
-                </tbody>
+                </thead>
 
-            }
-        </table>
+                @foreach (var item in Model)
+                {
+
+                    <tbody>
+                            <tr id="@item.fProductID">
+                                <td hidden><input type="text" name="MemberID" value="@item.fMemberID" hidden /></td>
+                                <td><img src="~/Content/img/Product/@item.fImgPath" style="height:50px;width:50px;"></td>
+                                <td>@item.fProductName</td>
+                                <td><input type="text" name="ProductPrice" value="$@String.Format("{0:0}", item.fPrice)" /></td>
+                                <td><input type="text" name="ProductQuantity" value="" placeholder="輸入購買數量"/></td>
+                                <td><input type="text" name="ProductNote" value="" placeholder="EX:寄送事宜"/></td>
+                                <td><button onclick="wishdelete(@item.fProductID)" class="btn jq-delete"><img src="https://image.flaticon.com/icons/png/512/3096/3096673.png" style="height:20px;width:20px"></button></td>
+                            </tr>
+                        </tbody>
+
+                }
+            </table>
+        }*@
+
+
+
+
+
+
+
+    @{<form method="post" action="~/Chatroom/AddWishOrder">
+            <table class="border no-shadow no-rounded" style="padding:10px">
+                <thead>
+                    <tr>
+                        <th>圖片</th>
+                        <th>品名</th>
+                        <th>售價</th>
+                        <th>數量</th>
+                        <th>備註</th>
+                        <th>刪除</th>
+                    </tr>
+                </thead>
+
+                @{
+                    int count = 1; 
+                 }
+                
+
+                @foreach (var item in Model)
+
+                {
+
+                    
+
+                    <tbody>
+                        <tr id="@item.fProductID">
+                            <td hidden><input type="text" name="ProductID@(count)" value="@item.fProductID" hidden /></td>
+                            <td hidden><input type="text" name="MemberID@(count)" value="@item.fMemberID" hidden /></td>
+                            <td><img src="~/Content/img/Product/@item.fImgPath" style="height:50px;width:50px;"></td>
+                            <td>@item.fProductName</td>
+                            <td><input type="text" name="ProductPrice@(count)" value="@item.fPrice" placeholder="$@String.Format("{0:0}", item.fPrice)" /></td>
+                            <td><input type="text" name="ProductQuantity@(count)" value="3" placeholder="輸入購買數量" /></td>
+                            <td><input type="text" name="ProductNote@(count)" value="n/a" placeholder="EX:寄送事宜" /></td>
+                            <td><button onclick="wishdelete(@item.fProductID)" class="btn jq-delete"><img src="https://image.flaticon.com/icons/png/512/3096/3096673.png" style="height:20px;width:20px"></button></td>
+                        </tr>
+                    </tbody>
+                    count++;
+                }
+
+                
+            </table>
+                <input type="text" name="Count" value="@(count)" hidden />
+
+            <span class="input-group-btn">
+
+                <button class="btn btn-success no-rounded" id="" type="submit" value="submit" style="margin-left:5px; margin-top:20px" onClick="window.alert('已成功提交訂單!')" ;>確認訂單</button>
+
+            </span>
+
+       </form>
+
+
+
+
     }
 
 
 
-    <span class="input-group-btn">
-        
-      <button class="btn btn-success no-rounded" id="" type="button" value="" style="margin-left:5px; margin-top:20px" onClick="window.alert('已成功提交訂單!')" ;>確認訂單</button>
-        
-    </span>
 
 
 
