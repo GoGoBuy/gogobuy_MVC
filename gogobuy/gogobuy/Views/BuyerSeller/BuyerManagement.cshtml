@@ -5,78 +5,125 @@
 }
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
     <style>
-
         .sm-img {
             width: 150px;
             height: 150px;
         }
-
-        thead {
-            border-bottom: 2px black solid;
-        }
-
-        th {
-            text-align: center;
-        }
-
-        tbody > tr {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        span {
-            font-size: 0.8rem;
-            color: #898282;
-        }
-
         .setting-icon {
             width: 30px;
             height: 30px;
         }
+        /* Table Head */
+        #table-5 thead th {
+            background-color: #F9F9F9;
+            color: #515151;
+            border-bottom-width: 0;
+        }
+        /* 表格rwd */
+        .rwd-table {
+            background: #DDDDDD;
+            overflow: hidden;
+        }
+
+            .rwd-table tr:nth-of-type(2n) {
+                background: #EDEDED
+            }
+
+            .rwd-table th,
+            .rwd-table td {
+                margin: 0.5em 1em;
+            }
+
+        .rwd-table {
+            min-width: 100%;
+        }
+
+            .rwd-table th {
+                display: none;
+            }
+
+            .rwd-table td {
+                display: block;
+            }
+
+                .rwd-table td:before {
+                    content: attr(data-th) " : ";
+                    font-weight: bold;
+                    width: 6.5em;
+                    display: inline-block;
+                }
+
+            .rwd-table th,
+            .rwd-table td {
+                text-align: left;
+            }
+
+                .rwd-table th,
+                .rwd-table td:before {
+                    color: #515151ff;
+                    font-weight: bold;
+                }
+
+        @@media (min-width: 960px) {
+            .rwd-table td:before {
+                display: none;
+            }
+
+            .rwd-table th,
+            .rwd-table td {
+                display: table-cell;
+                padding: 0.25em 0.5em;
+            }
+
+                .rwd-table th:first-child,
+                .rwd-table td:first-child {
+                    padding-left: 0;
+                }
+
+                .rwd-table th:last-child,
+                .rwd-table td:last-child {
+                    padding-right: 0;
+                }
+
+            .rwd-table th,
+            .rwd-table td {
+                padding: 1em !important;
+            }
+        }
     </style>
 </head>
 
-<div class="table-responsive-sm">
-    <table class="table table-borderless table-responsive">
-        <thead>
-            <tr>
-                <th scope="col"><input type="checkbox"></th>
-                <th scope="col">圖片</th>
-                <th scope="col">商品名稱</th>
-                <th scope="col">收購價格</th>
-                <th scope="col">收購數量</th>
-                <th scope="col">更新日期</th>
-                <th scope="col">管理</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                foreach (var wishProds in Model)
-                {
-                    <tr>
-                        <th scope="row"><input type="checkbox"></th>
-                        <td><img src="~/Content/img/Product/@wishProds.fImgPath" class="sm-img"></td>
-                        <td>
-                            @wishProds.fProductName
-                        </td>
-                        <td>$@String.Format("{0:0.00}", wishProds.fPrice)</td>
-                        <td>@wishProds.fQuantity</td>
-                        <td>@String.Format("{0:yyyy/MM/dd}",wishProds.fUpdateTime)</td>
-                        <td><a href="~/BuyerSeller/BucketListDetails"><img src="~/Content/img/buyer_seller/settings.png" class="setting-icon"></a></td>
-                    </tr>
+<div class="row justify-content-center">
+    <div class="table-responsive-sm">
+        <table class="rwd-table">
+            <thead>
+                <tr>
+                    <th scope="col">圖片</th>
+                    <th scope="col">商品名稱</th>
+                    <th scope="col">收購價格</th>
+                    <th scope="col">收購數量</th>
+                    <th scope="col">更新日期</th>
+                    <th scope="col">管理</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var wishProds in Model)
+                    {
+                        <tr>
+                            <td data-th="圖片"><img src="~/Content/img/Product/@wishProds.fImgPath" class="sm-img"></td>
+                            <td data-th="商品名稱">
+                                @wishProds.fProductName
+                            </td>
+                            <td data-th="收購價格">$@String.Format("{0:0.00}", wishProds.fPrice)</td>
+                            <td data-th="收購數量">@wishProds.fQuantity</td>
+                            <td data-th="更新日期">@String.Format("{0:yyyy/MM/dd}", wishProds.fUpdateTime)</td>
+                            <td data-th="管理"><a href="~/BuyerSeller/BucketListDetails"><img src="~/Content/img/buyer_seller/settings.png" class="setting-icon"></a></td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
-
