@@ -72,7 +72,7 @@ namespace gogobuy.Controllers
             cmd.ExecuteNonQuery();
             con.Close();
 
-            return RedirectToAction("CheckoutComplete");
+            return RedirectToAction("CheckoutComplete", new { orderuuID = orderuuID });
         }
         public ActionResult DeleteAll()
         {
@@ -205,7 +205,7 @@ namespace gogobuy.Controllers
             }
             return View(cartItem);
         }
-        public ActionResult CheckoutComplete()
+        public ActionResult CheckoutComplete(string orderuuID)
         {
             if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
             {
@@ -218,15 +218,16 @@ namespace gogobuy.Controllers
             //        where p.fOrderUUID == orderuuID
             //        select p;
 
+            var uuis = db.tOrder.Where(p => p.fOrderUUID == orderuuID).Select(p => p.fOrderUUID).FirstOrDefault();
+            ViewBag.uuid = uuis;
 
-
-            string uu = GetSerialNumber();
+            
             int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
             var user = db.tMembership.Where(m => m.fMemberID == memberId).FirstOrDefault();
-            var uuis = db.tOrder.Where(p => p.fOrderUUID == uu).FirstOrDefault();
+            
             ViewBag.name = user.fFirstName + user.fLastName;
             ViewBag.phone = user.fPhone;
-            ViewBag.uuid = uuis.fOrderUUID;
+            
             var shoptable = from s in db.tShopping
                             join p in db.tProduct on s.fProductID equals p.fProductID
 

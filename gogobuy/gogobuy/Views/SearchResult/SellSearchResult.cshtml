@@ -1,85 +1,81 @@
 ﻿
 @using gogobuy.ViewModels;
+
 @model List<ProductViewModel>
 
 
-@{
+    @{
     ViewBag.Title = "SellSearchResult";
-}
+    }
 
 
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GoGoBuy</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GoGoBuy</title>
 
-    <link href="~/Content/css/Search_css/SearchResult_Style.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-3.6.0.js"></script>
+        <link href="~/Content/css/Search_css/SearchResult_Style.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery-3.6.0.js"></script>
 
-    <style>
-        .toast {
-            left: 0;
-            margin: auto;
-            position: fixed;
-            right: 0;
-            text-align: center;
-            width: 170px;
-            z-index: 1;
-            top: 40%;
-        }
-    </style>
+        <style>
+            .toast {
+                left: 0;
+                margin: auto;
+                position: fixed;
+                right: 0;
+                text-align: center;
+                width: 170px;
+                z-index: 10;
+                top: 40%;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        </style>
 
 
-    <script>
-        $(function () {
+        <script>
+            $(function () {
 
-            var $cards = $("#my-products").find("[data-productprice]");
-            $("#sort").change(function () {
-                var t = $(this).find(':selected').data('price');
-                var a = t.split(':');
-                var l = parseFloat(a[0]);
-                var u = parseFloat(a[1]);
+                var $cards = $("#my-products").find("[data-productprice]");
+                $("#sort").change(function () {
+                    var t = $(this).find(':selected').data('price');
+                    var a = t.split(':');
+                    var l = parseFloat(a[0]);
+                    var u = parseFloat(a[1]);
 
-                $.each($cards, function (a, b) {
-                    var p = parseFloat($(b).data("productprice"));
-                    if (p >= l && p <= u) {
-                        $(b).show();
-                    } else {
-                        $(b).hide();
-                    }
-                });
-
-            });
-            // 加入購物車
-            $('.buy-btn').click(function () {
-                var productID = $(this).next().attr("id");
-                $.ajax({
-                    url: "@Url.Action("AddToCart", "ShoppingCart")",
-                    type: 'post',
-                    data: {
-                        productID: productID
-                    },
-                    async: true,
-                    success: function (data) {
-                        if (data == 'success') {
-                            $('#myToast').toast('show');
-                            setTimeout(function () {
-                                $('.toast').toast('hide');
-                            }, 1000);
+                    $.each($cards, function (a, b) {
+                        console.log($(b).data("productprice"));
+                        var p = parseFloat($(b).data("productprice"));
+                        if (p >= l && p <= u) {
+                            $(b).show();
+                        } else {
+                            $(b).hide();
                         }
-                        if (data == 'login') {
-                            $('#myModal').modal('show');
-                        }
-                    }
+                    });
+
                 });
-            });
-            // 加入收藏
-            $('button.like').click(function () {
-                var productID = this.id;
-                if ($(this).children('span').text() == '加入收藏') {
+                var dateSort = $("#my-products").find("[data-productdate]");
+                $('#searchDate').click(function () {
+                    var start = new Date($('#startDate').val());
+                    var end = new Date($('#endDate').val());
+                    console.log(start+end);
+                    $.each(dateSort, function (a, b) {
+                        var p = new Date($(b).data("productdate"));
+                        if (p >= start && p <= end) {
+                            $(b).show();
+                        } else {
+                            $(b).hide();
+                        }
+                    });
+                });
+                // 加入購物車
+                $('.buy-btn').click(function () {
+                    var productID = $(this).next().attr("id");
                     $.ajax({
-                        url: "@Url.Action("LikeItem", "Collect")",
+                        url: "@Url.Action("AddToCart", "ShoppingCart")",
                         type: 'post',
                         data: {
                             productID: productID
@@ -87,162 +83,197 @@
                         async: true,
                         success: function (data) {
                             if (data == 'success') {
-                                $('#' + productID).children('span').text("已收藏");
-                                $('#' + productID).removeClass('btn-outline-danger');
-                                $('#' + productID).addClass('btn-danger');
+                                $('#myToast').toast('show');
+                                setTimeout(function () {
+                                    $('.toast').toast('hide');
+                                }, 1000);
                             }
                             if (data == 'login') {
                                 $('#myModal').modal('show');
                             }
                         }
                     });
-                } else {
-                    $.ajax({
-                        url: "@Url.Action("Delete", "Collect")",
-                        type: 'post',
-                        data: {
-                            productID: productID
-                        },
-                        async: true,
-                        success: function (data) {
-                            $('#' + productID).children('span').text("加入收藏");
-                            $('#' + productID).removeClass('btn-danger');
-                            $('#' + productID).addClass('btn-outline-danger');
-                        }
-                    });
-                }
-            });
-
-        });
-    </script>
-
-
-
-
-
-
-
-</head>
-<body>
-
-
-
-    <div class="container">
-        <div class="row">
-            <!-- 搜尋結果頁面 start-->
-            <div class="col-md-12">
-                <div class="grid search">
-                    <div class="grid-body">
-                        <div class="row">
-                            <!-- 篩選條區塊 start-->
-                            <div class="col-md-3">
-                                <h2 class="grid-title">
-                                    <i class="fa fa-filter"></i>
-                                    篩選條件
-                                </h2>
-                                <hr>
-
-                                <!-- 篩選條件區塊-分類清單 start -->
-                                <h4>分類清單:</h4>
-
-
-
-
-                                <div class="checkbox">
-
-
-                                    @{
-
-                                        <div>
-                                            <label>
-                                                @Html.ActionLink("手機周邊", "SellSearchResult", "SearchResult", new { fCategory = "手機周邊" }, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("3C產品", "SellSearchResult", "SearchResult", new { fCategory = "3C產品" }, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("生活居家", "SellSearchResult", "SearchResult", new { fCategory = "生活居家" }, new { @class = "btn btn-success" })
-                                            </label>
-                                        </div>
-
-                                        <div style="margin-top:10px">
-                                            <label>
-                                                @Html.ActionLink("服飾飾品", "SellSearchResult", "SearchResult", new { fCategory = "服飾飾品" }, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("名產食品", "SellSearchResult", "SearchResult", new { fCategory = "名產食品" }, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("文創書籍", "SellSearchResult", "SearchResult", new { fCategory = "文創書籍" }, new { @class = "btn btn-success" })
-                                            </label>
-                                        </div>
-
-                                        <div style="margin-top:10px">
-                                            <label>
-                                                @Html.ActionLink("影音周邊", "SellSearchResult", "SearchResult", new { fCategory = "影音周邊" }, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("古董古玩", "SellSearchResult", "SearchResult", new { fCategory = "古董古玩" }, new { @class = "btn btn-success" })
-                                            </label>
-                                            <label>
-                                                @Html.ActionLink("其他", "SellSearchResult", "SearchResult", new { fCategory = "其他" }, new { @class = "btn btn-success" })
-                                            </label>
-                                        </div>
-
-                                    }
-
-
-                                </div>
-
-
-                                <!-- 篩選條件區塊-分類清單 end -->
-                                
-                                <!-- 篩選條件區塊-上架日期 start -->
-                                <h4 style="margin-top: 20px;">按照日期:</h4>
-                                
-
-
-                                @using (Html.BeginForm())
-                                {
-                                    <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="dateInput" />
-                                    <br />
-                                    <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="dateInput" />
-
+                });
+                // 加入收藏
+                $('button.like').click(function () {
+                    var productID = this.id;
+                    if ($(this).children('span').text() == '加入收藏') {
+                        $.ajax({
+                            url: "@Url.Action("LikeItem", "Collect")",
+                            type: 'post',
+                            data: {
+                                productID: productID
+                            },
+                            async: true,
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $('#' + productID).children('span').text("已收藏");
+                                    $('#' + productID).removeClass('btn-outline-danger');
+                                    $('#' + productID).addClass('btn-danger');
                                 }
+                                if (data == 'login') {
+                                    $('#myModal').modal('show');
+                                }
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: "@Url.Action("Delete", "Collect")",
+                            type: 'post',
+                            data: {
+                                productID: productID
+                            },
+                            async: true,
+                            success: function (data) {
+                                $('#' + productID).children('span').text("加入收藏");
+                                $('#' + productID).removeClass('btn-danger');
+                                $('#' + productID).addClass('btn-outline-danger');
+                            }
+                        });
+                    }
+                });
+
+            });
+        </script>
 
 
 
-                                <!-- 篩選條件區塊-上架日期 end -->
-
-                                <div class="padding"></div>
-
-                                <!-- 篩選條件區塊-價錢範圍 start -->
-                                <h4 style="margin-top: 20px;">按照價格:</h4>
-
-                               
-                                <select id="sort" style="font-size:large">
-                                    <option data-price="0:@Int32.MaxValue" value="all">全部價格</option>
-                                    <option data-price="0:500" value="1">$0 到 $500</option>
-                                    <option data-price="501:1000" value="2">$501 到 $1000</option>
-                                    <option data-price="1001:5000" value="3">$1001 到 5000</option>
-                                    <option data-price="5001:@Int32.MaxValue" value="4">5001 以上 </option>
-                                </select>
 
 
 
-                                <!-- 篩選條件區塊-價錢範圍 end -->
-                            </div>
-                            <!-- 篩選條區塊 end-->
-                            <!-- 搜尋結果區塊 start -->
-                            <div class="col-md-9">
-                                <h2>
-                                    <i class="fa fa-file-o"></i>
-                                    搜尋結果
-                                </h2>
-                                <hr>
-                                <!-- 搜尋輸入 start -->
-                                <div class="input-group">
-                                    @using (Html.BeginForm())
+
+    </head>
+    <body>
+
+
+
+        <div class="container">
+            <div class="row">
+                <!-- 搜尋結果頁面 start-->
+                <div class="col-md-12">
+                    <div class="grid search">
+                        <div class="grid-body">
+                            <div class="row">
+                                <!-- 篩選條區塊 start-->
+                                <div class="col-md-3">
+                                    <h2 class="grid-title">
+                                        <i class="fa fa-filter"></i>
+                                        篩選條件
+                                    </h2>
+                                    <hr>
+
+                                    <!-- 篩選條件區塊-分類清單 start -->
+                                    <h4>分類清單:</h4>
+
+
+
+
+                                    <div class="checkbox">
+
+
+                                        @{
+
+                                            <div>
+                                                <label>
+                                                    @Html.ActionLink("手機周邊", "SellSearchResult", "SearchResult", new { fCategory = "手機周邊" }, new { @class = "btn btn-success" })
+                                                </label>
+                                                <label>
+                                                    @Html.ActionLink("3C產品", "SellSearchResult", "SearchResult", new { fCategory = "3C產品" }, new { @class = "btn btn-success" })
+                                                </label>
+                                                <label>
+                                                    @Html.ActionLink("生活居家", "SellSearchResult", "SearchResult", new { fCategory = "生活居家" }, new { @class = "btn btn-success" })
+                                                </label>
+                                            </div>
+
+                                            <div style="margin-top:10px">
+                                                <label>
+                                                    @Html.ActionLink("服飾飾品", "SellSearchResult", "SearchResult", new { fCategory = "服飾飾品" }, new { @class = "btn btn-success" })
+                                                </label>
+                                                <label>
+                                                    @Html.ActionLink("名產食品", "SellSearchResult", "SearchResult", new { fCategory = "名產食品" }, new { @class = "btn btn-success" })
+                                                </label>
+                                                <label>
+                                                    @Html.ActionLink("文創書籍", "SellSearchResult", "SearchResult", new { fCategory = "文創書籍" }, new { @class = "btn btn-success" })
+                                                </label>
+                                            </div>
+
+                                            <div style="margin-top:10px">
+                                                <label>
+                                                    @Html.ActionLink("影音周邊", "SellSearchResult", "SearchResult", new { fCategory = "影音周邊" }, new { @class = "btn btn-success" })
+                                                </label>
+                                                <label>
+                                                    @Html.ActionLink("古董古玩", "SellSearchResult", "SearchResult", new { fCategory = "古董古玩" }, new { @class = "btn btn-success" })
+                                                </label>
+                                                <label>
+                                                    @Html.ActionLink("其他", "SellSearchResult", "SearchResult", new { fCategory = "其他" }, new { @class = "btn btn-success" })
+                                                </label>
+                                            </div>
+
+                                        }
+
+
+                                    </div>
+
+
+                                    <!-- 篩選條件區塊-分類清單 end -->
+                                    <!-- 篩選條件區塊-上架日期 start -->
+                                    <h4 style="margin-top: 20px;">按照日期:</h4>
+
+
+                                    @*@{
+                                            <form method="post" action="~/SearchResult/SellSearchResult">
+                                                <a style="font-size: large; margin-right: 5px">從</a><input id="startDate" type="date" width="10" class="date" name="startDate" />
+                                                <br />
+                                                <a style="font-size: large; margin-right: 5px">到</a><input id="endDate" type="date" width="10" class="date" name="endDate" />
+                                            <button type="submit" name="submit" style="margin-top:10px" class="btn btn-primary">選定日期範圍</button>
+
+                                            </form>
+
+                                        }*@
+
+                                    <a style="font-size: large; margin-right: 5px">從</a>
+
+                                    <input id="startDate" type="date" width="10" class="date" name="startDate" />
+
+                                    <br />
+
+                                    <a style="font-size: large; margin-right: 5px">到</a>
+
+                                    <input id="endDate" type="date" width="10" class="date" name="endDate" />
+
+                                    <button type="submit" name="submit" id="searchDate" style="margin-top:10px" class="btn btn-primary">選定日期範圍</button>
+
+                                    <!-- 篩選條件區塊-上架日期 end -->
+
+                                    <div class="padding"></div>
+
+                                    <!-- 篩選條件區塊-價錢範圍 start -->
+                                    <h4 style="margin-top: 20px;">按照價格:</h4>
+
+
+                                    <select id="sort" style="font-size:large">
+                                        <option data-price="0:@Int32.MaxValue" value="all">全部價格</option>
+                                        <option data-price="0:500" value="1">$500 以下</option>
+                                        <option data-price="501:1000" value="2">$501 到 $1000</option>
+                                        <option data-price="1001:5000" value="3">$1001 到 $5000</option>
+                                        <option data-price="5001:@Int32.MaxValue" value="4">$5001 以上 </option>
+                                    </select>
+
+
+
+                                    <!-- 篩選條件區塊-價錢範圍 end -->
+                                </div>
+                                <!-- 篩選條區塊 end-->
+                                <!-- 搜尋結果區塊 start -->
+                                <div class="col-md-9">
+                                    <h2>
+                                        <i class="fa fa-file-o"></i>
+                                        搜尋結果
+                                    </h2>
+                                    <hr>
+                                    <!-- 搜尋輸入 start -->
+                                    <div class="input-group">
+                                        @using (Html.BeginForm())
                                     {
                                         @Html.TextBox("txtKeyword", "", new { placeholder = "請輸入關鍵字" })
                                         <input type="submit" value="搜尋" class="btn btn-info" />
@@ -251,141 +282,165 @@
 
                                     }
 
-                                </div>
-
-                                
-                                <!--搜尋輸入 end -->
-
-
-                                <p></p>
-
-                                <div class="padding"></div>
-
-                                <div class="row">
-                                    <!-- 搜尋排序 start -->
-                                    
-
-                                    <div class="col-sm-6">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                排序依照 <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu" style="text-align: center;">
-                                                <li>商品名稱</li>
-                                                <li>上架日期</li>
-                                                <li>價格高低</li>
-                                                <li>評價高低</li>
-                                            </ul>
-                                        </div>
                                     </div>
 
-                                    <!-- 搜尋排序 end -->
-                                    <!-- 條列或九宮格顯示 start -->
 
-                                    <div class="col-md-6 text-right">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default active">
-                                                <i class="fa fa-list"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-default">
-                                                <i class="fa fa-th"></i>
-                                            </button>
+                                    <!--搜尋輸入 end -->
+
+
+                                    <p></p>
+
+                                    <div class="padding"></div>
+
+                                    <div class="row">
+                                        <!-- 搜尋排序 start -->
+
+
+                                        @*<div class="col-sm-6">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    排序依照 <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu" style="text-align: center;">
+                                                    <li>商品名稱</li>
+                                                    <li>上架日期</li>
+                                                    <li>價格高低</li>
+                                                    <li>評價高低</li>
+                                                </ul>
+                                            </div>
+                                        </div>*@
+
+
+                                        @*<div class="dropdown">
+                                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            排序方式
+                                          </button>
+                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                              <li>價格由高到低</li>
+                                              <li>價格由低到高</li>
+                                              <li>日期由新到舊</li>
+                                              <li>價格由舊到新</li>
+                                          </ul>
+                                        </div>*@
+
+
+                                        <select class="border no-shadow no-rounded" aria-label="Default select example" style="width:135px; height:35px; margin-left:12px; margin-top: 18px;">
+                                            <option selected disabled hidden value="">排序方式</option>
+                                            <option value="1">價格高到低</option>
+                                            <option value="2">價格低到高</option>
+                                            <option value="3">日期新到舊</option>
+                                            <option value="4">價格舊到新</option>
+                                        </select>
+
+
+
+
+                                        <!-- 搜尋排序 end -->
+                                        <!-- 條列或九宮格顯示 start -->
+
+                                        <div class="col-md-6 text-right" style="text-align:right;">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default active">
+                                                    <i class="fa fa-list"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-default">
+                                                    <i class="fa fa-th"></i>
+                                                </button>
+                                            </div>
                                         </div>
+
+                                        <!-- 條列或九宮格顯示 end -->
+
                                     </div>
 
-                                    <!-- 條列或九宮格顯示 end -->
+                                    <!-- 搜尋清單 start -->
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <tbody id="my-products">
 
-                                </div>
-
-                                <!-- 搜尋清單 start -->
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody id="my-products">
-
-                                            @{
+                                                @{
 
                                                 foreach (var item in Model)
                                                 {
                                                     if (item.fIsWish == false)
                                                     {
-                                                        <tr data-productprice="@item.fPrice">
-                                                            <td class="number text-center"></td>
-
-                                                            <td class="image">
-                                                                @{
+                                                    <tr data-productprice="@item.fPrice" data-productdate="@item.fUpdateTime.Value.ToString("yyyy-MM-dd")">
+                                                        <td class="number text-center"></td>
+                                                        <td class="image">
+                                                            @{
                                                                     if (item.fImgPath == null)
                                                                     {
-                                                                        <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
-                                                                            <img src="~/Content/img/SearchResults/沒有圖片.jpg" width="300" height="300" />
-                                                                        </a>
+                                                                <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
+                                                                    <img src="~/Content/img/SearchResults/沒有圖片.jpg" width="300" height="300" />
+                                                                </a>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
-                                                                            <img src="~/Content/img/Product/@item.fImgPath" width="300" height="300" />
-                                                                        </a>
+                                                                <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
+                                                                    <img src="~/Content/img/Product/@item.fImgPath" width="300" height="300" />
+                                                                </a>
                                                                     }
 
-                                                                }
+                                                            }
 
 
-                                                            </td>
+                                                        </td>
 
 
-                                                            <td class="text-right" style="margin-left:50px">
-                                                                <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
-                                                                    <strong style="font-size: 20px;">@Html.DisplayFor(modelItem => item.fProductName)</strong>
-                                                                    <br>
-                                                                    <br>
-                                                                    <strong>@Html.DisplayFor(modelItem => item.fDescription)</strong>
-                                                                    <br>
-                                                                    <span class="date">
-                                                                        上架：@Html.DisplayFor(modelItem => item.fUpdateTime)
-                                                                    </span>
-                                                                    <br>
-                                                                    <span class="price">
-                                                                        價格：@Html.DisplayFor(modelItem => item.fPrice) 元
-                                                                    </span>
-                                                                    <br>
-                                                                </a>
+                                                        <td class="text-right" style="margin-left:50px">
+                                                            <a href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
+                                                                <strong style="font-size: 20px;">@Html.DisplayFor(modelItem => item.fProductName)</strong>
+                                                                <br>
+                                                                <br>
+                                                                <strong>@Html.DisplayFor(modelItem => item.fDescription)</strong>
+                                                                <br>
+                                                                <span class="date">
+                                                                    上架：@Html.DisplayFor(modelItem => item.fUpdateTime)
+                                                                </span>
+                                                                <br>
+                                                                <span class="price">
+                                                                    價格：@Html.DisplayFor(modelItem => item.fPrice) 元
+                                                                </span>
+                                                                <br>
+                                                            </a>
 
-                                                            </td>
-                                                            <!-- <td class="price text-right">350元</td> -->
+                                                        </td>
+                                                        <!-- <td class="price text-right">350元</td> -->
 
-                                                            <td class="button text-right">
+                                                        <td class="button text-right">
 
-                                                                <div class="btn-group-vertical">
-
-
-                                                                    <input type="text" name="ProductID" value="@item.fProductID" hidden />
+                                                            <div class="btn-group-vertical">
 
 
-                                                                    <button class="btn buy-btn btn-outline-primary mb-2">
-                                                                        <span class="me-2">加入購物車</span><i class="fas fa-shopping-cart"></i>
-                                                                    </button>
+                                                                <input type="text" name="ProductID" value="@item.fProductID" hidden />
 
 
-                                                                    @{
+                                                                <button class="btn buy-btn btn-outline-primary mb-2">
+                                                                    <span class="me-2">加入購物車</span><i class="fas fa-shopping-cart"></i>
+                                                                </button>
+
+
+                                                                @{
                                                                         if (@item.isLike)
                                                                         {
-                                                                            <button class="btn btn-danger like" id="@item.fProductID">
-                                                                                <span class="me-2">已收藏</span><i class="fas fa-heart"></i>
-                                                                            </button>
+                                                                    <button class="btn btn-danger like" id="@item.fProductID">
+                                                                        <span class="me-2">已收藏</span><i class="fas fa-heart"></i>
+                                                                    </button>
                                                                         }
                                                                         else
                                                                         {
-                                                                            <button class="btn btn-outline-danger like" id="@item.fProductID">
-                                                                                <span class="me-2">加入收藏</span><i class="fas fa-heart"></i>
-                                                                            </button>
+                                                                    <button class="btn btn-outline-danger like" id="@item.fProductID">
+                                                                        <span class="me-2">加入收藏</span><i class="fas fa-heart"></i>
+                                                                    </button>
                                                                         }
-                                                                    }
+                                                                }
 
 
 
-                                                                </div>
-                                                            </td>
-                                                           
-                                                        </tr>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
 
                                                     }
                                                     else
@@ -394,81 +449,81 @@
                                                     }
 
                                                 }
-                                            }
+                                                }
 
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- 搜尋清單 end -->
+                                    <!-- 切換頁面 start -->
+                                    <div class="text-align-center">
+                                        <nav aria-label="Page navigation example" class="pagination-buttom">
+                                            <ul class="pagination">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">上一頁</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">1</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">2</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">3</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">下一頁</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!-- 切換頁面 end -->
                                 </div>
-                                <!-- 搜尋清單 end -->
-                                <!-- 切換頁面 start -->
-                                <div class="text-align-center">
-                                    <nav aria-label="Page navigation example" class="pagination-buttom">
-                                        <ul class="pagination">
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">上一頁</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">下一頁</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                                <!-- 切換頁面 end -->
+                                <!-- 搜尋結果區塊 end -->
                             </div>
-                            <!-- 搜尋結果區塊 end -->
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- 搜尋結果頁面 end-->
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn-close m-2" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center" style="font-size:x-large">
-                    要使用此功能，請先登入會員！
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-secondary m-2" data-bs-dismiss="modal">關閉</button>
-                    <a href=@Url.Action("Login", "Home") class="btn btn-primary  m-2">登入</a>
-                </div>
+                <!-- 搜尋結果頁面 end-->
             </div>
         </div>
-    </div>
-    <!-- Modal -->
-    <!-- Toast -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-        </symbol>
-    </svg>
-    <div class="toast alert-success" data-animation="true" data-autohide="false" id="myToast">
-        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-        <div class="toast-body" style="font-size:x-large">
-            已加入購物車!
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn-close m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center" style="font-size:x-large">
+                        要使用此功能，請先登入會員！
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary m-2" data-bs-dismiss="modal">關閉</button>
+                        <a href=@Url.Action("Login", "Home") class="btn btn-primary  m-2">登入</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- Toast -->
-    <!-- write codes here 寫在這，這是中間 -->
-    <!--- Footer -->
-    <!-- 暫定，可以改～ -->
-    <!-- Footer -->
-</body>
+        <!-- Modal -->
+        <!-- Toast -->
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+            </symbol>
+        </svg>
+        <div class="toast alert-success" data-animation="true" data-autohide="false" id="myToast">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+            <div class="toast-body" style="font-size:x-large">
+                已加入購物車!
+            </div>
+        </div>
+        <!-- Toast -->
+        <!-- write codes here 寫在這，這是中間 -->
+        <!--- Footer -->
+        <!-- 暫定，可以改～ -->
+        <!-- Footer -->
+    </body>
 
 
 
