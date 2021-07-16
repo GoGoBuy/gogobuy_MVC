@@ -97,20 +97,14 @@ namespace gogobuy.Controllers
                     ProductList.Add(myProduct);
                 }
                 temp.lsttProductlist = ProductList;
-
-                //var mytOrderdetailList = db.tOrderDetails.Where(m => m.fOrderID == everyOrder.fOrderID)
-                //    .Join(db.tProduct, c => c.fProductID, s => s.fProductID, (c, s) => new
-                //    {
-                //        fProductID = s.fProductID
-                //    })
-                //    .ToList();
-                //temp.lsttOrderlist = mytOrderdetailList;
                 這是lstVMOrderlistBuy.Add(temp);
             }
 
             return View(這是lstVMOrderlistBuy);
         }
         #endregion
+
+        #region 販售查詢
         public ActionResult OrderlistSell()
         {
             //--------------------------------------------
@@ -145,19 +139,12 @@ namespace gogobuy.Controllers
                     ProductList.Add(myProduct);
                 }
                 temp.lsttProductlist = ProductList;
-
-                //var mytOrderdetailList = db.tOrderDetails.Where(m => m.fOrderID == everyOrder.fOrderID)
-                //    .Join(db.tProduct, c => c.fProductID, s => s.fProductID, (c, s) => new
-                //    {
-                //        fProductID = s.fProductID
-                //    })
-                //    .ToList();
-                //temp.lsttOrderlist = mytOrderdetailList;
                 這是lstVMOrderlistSell.Add(temp);
             }
 
             return View(這是lstVMOrderlistSell);
         }
+        #endregion
         public ActionResult SwitchToBuyAndShop()
         {
             if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
@@ -170,7 +157,10 @@ namespace gogobuy.Controllers
         #region 密碼修改
         public ActionResult UpdatePassword()
         {
-
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
