@@ -177,7 +177,7 @@ namespace gogobuy.Controllers
 
                 paras.Add(new SqlParameter("K_FMEMBERID", (object)SellerID));
 
-                paras.Add(new SqlParameter("K_SHOPPINGNOTE", (object)SellerID));
+                paras.Add(new SqlParameter("K_SHOPPINGNOTE", (object)ProductNote));
 
 
                 SqlConnection con = new SqlConnection();
