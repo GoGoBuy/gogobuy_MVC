@@ -13,11 +13,9 @@ namespace gogobuy.Controllers
         // GET: ShoppingCart
         public string GetSerialNumber()
         {
-
-
-            string headDate = DateTime.Now.ToString("yyyyMMdd");
+            string headDate = DateTime.Now.ToString("yyyyMMdd") + "8";
             Random crantom = new Random();
-            string lastnum = String.Format("{0:X5}", crantom.Next(1048576));
+            string lastnum = crantom.Next(0000, 9999).ToString();
             string x = headDate + lastnum;
             return x;
 
@@ -34,7 +32,7 @@ namespace gogobuy.Controllers
             ViewBag.name = user.fFirstName + user.fLastName;
             ViewBag.phone = user.fPhone;
 
-            
+
 
 
             string address = Request.Form["Address"];
@@ -50,7 +48,7 @@ namespace gogobuy.Controllers
 
 
             string sql = "insert into tOrder (fOrderAddress,fPrice,fOrderDate,fOrderPayWay,fOrderPhone,fBuyerName,fBuyerID,fOrderStatus,fOrderUUID) values(@K_FADDRESS,@K_FPRICE,@K_FORDERDATE,@K_FPAYWAY,@K_ORDERFPHONE,@K_FBUYERNAME,@K_FBUYERID,@K_FORDERSTATUS,@K_FORDERUUID)";
-            
+
 
             List<SqlParameter> paras = new List<SqlParameter>();
             paras.Add(new SqlParameter("K_FADDRESS", (object)address));
@@ -63,7 +61,7 @@ namespace gogobuy.Controllers
             paras.Add(new SqlParameter("K_FORDERSTATUS", (object)orderstate));
             paras.Add(new SqlParameter("K_FORDERUUID", (object)orderuuID));
 
-            
+
 
             SqlConnection con = new SqlConnection();
             con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString;
