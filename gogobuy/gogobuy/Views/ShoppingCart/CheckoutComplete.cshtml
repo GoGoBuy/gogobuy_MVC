@@ -3,12 +3,59 @@
     ViewBag.Title = "CheckoutComplete";
 }
 
+<style>
 
+    .table-rwd {
+    }
+    /*這是額外做顏色，沒有什麼意義*/
+    tr.tr-only-hide {
+        color: #000;
+    }
+
+    @@media (max-width: 736px) {
+        .table-rwd {
+            min-width: 100%;
+        }
+        /*針對tr去做隱藏*/
+        tr.tr-only-hide {
+            display: none !important;
+        }
+        /*讓tr變成區塊主要讓他有個區塊*/
+        .table-rwd tr {
+            display: block;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+        }
+
+        .table-rwd td {
+            text-align: left;
+            font-size: 15px;
+            overflow: hidden;
+            width: 100%;
+            display: block;
+        }
+
+            .table-rwd td:before {
+                /*最重要的就是這串*/
+                content: attr(data-th) " : ";
+                /*最重要的就是這串*/
+                display: inline-block;
+                text-transform: uppercase;
+                font-weight: bold;
+                margin-right: 10px;
+                color: #D20B2A;
+            }
+        /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
+        .table-rwd.table-bordered td, .table-rwd.table-bordered th, .table-rwd.table-bordered {
+            border: 0;
+        }
+    }
+</style>
 
 <div class="container px-3 my-5 clearfix">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="padding: 20px;">
-            <li class="breadcrumb-item"><a href="#">首頁</a></li>
+            <li class="breadcrumb-item"><a href="~/Home/Index">首頁</a></li>
         </ol>
     </nav>
     <!-- Shopping cart table -->
@@ -22,9 +69,9 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered m-0">
+                <table class="table table-bordered table-rwd">
                     <thead>
-                        <tr style="text-align: center;">
+                        <tr style="text-align: center;" class="tr-only-hide">
                             <!-- Set columns width -->
                             <th class="text-center py-3 px-4" style="min-width: 150px;">商品名稱</th>
                             <th class="text-center py-3 px-4" style="min-width: 150px;">詳細資訊</th>
@@ -47,7 +94,7 @@
 
                             <tbody>
                                 <tr>
-                                    <td class="p-4">
+                                    <td data-th="商品名稱" class="p-4">
                                         <div class="media align-items-center">
                                             <a style="text-decoration:none;" href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
                                                 <img src="~/Content/img/Product/@item.fImgPath"
@@ -58,12 +105,12 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">
+                                    <td data-th="詳細資訊" class="text-right font-weight-semibold align-middle p-4">
                                         @item.fDescription
                                     </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
-                                    <td class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
+                                    <td data-th="價格" class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
+                                    <td data-th="數量" class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
+                                    <td data-th="小計" class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
 
                                 </tr>
                             </tbody>

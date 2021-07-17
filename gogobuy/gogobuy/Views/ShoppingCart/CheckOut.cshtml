@@ -3,6 +3,55 @@
     ViewBag.Title = "CheckOut";
 }
 
+<style>
+
+    .table-rwd {
+    }
+    /*這是額外做顏色，沒有什麼意義*/
+    tr.tr-only-hide {
+        color: #000;
+    }
+
+    @@media (max-width: 736px) {
+        .table-rwd {
+            min-width: 100%;
+        }
+        /*針對tr去做隱藏*/
+        tr.tr-only-hide {
+            display: none !important;
+        }
+        /*讓tr變成區塊主要讓他有個區塊*/
+        .table-rwd tr {
+            display: block;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+        }
+
+        .table-rwd td {
+            text-align: left;
+            font-size: 15px;
+            overflow: hidden;
+            width: 100%;
+            display: block;
+        }
+
+            .table-rwd td:before {
+                /*最重要的就是這串*/
+                content: attr(data-th) " : ";
+                /*最重要的就是這串*/
+                display: inline-block;
+                text-transform: uppercase;
+                font-weight: bold;
+                margin-right: 10px;
+                color: #D20B2A;
+            }
+        /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
+        .table-rwd.table-bordered td, .table-rwd.table-bordered th, .table-rwd.table-bordered {
+            border: 0;
+        }
+    }
+</style>
+
 <script type="text/javascript">
     function SelectedTextValue(ele) {
         if (ele.selectedIndex > 0) {
@@ -31,8 +80,8 @@
 <div class="container px-3 my-5 clearfix">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb" style="padding: 20px;">
-            <li class="breadcrumb-item"><a href="#">首頁</a></li>
-            <li class="breadcrumb-item"><a href="#">購物車</a></li>
+            <li class="breadcrumb-item"><a href="~/Home/Index">首頁</a></li>
+            <li class="breadcrumb-item"><a href="~/ShoppingCart/ShoppingCart">購物車</a></li>
             <li class="breadcrumb-item active" aria-current="page">結帳頁面</li>
         </ol>
     </nav>
@@ -45,9 +94,9 @@
             <div class="card-body">
                 <div class="table-responsive">
 
-                    <table class="table table-bordered m-0">
+                    <table class="table table-bordered table-rwd">
                         <thead>
-                            <tr style="text-align: center;">
+                            <tr style="text-align: center;" class="tr-only-hide">
                                 <!-- Set columns width -->
                                 <th class="text-center py-3 px-4" style="min-width: 150px;">商品名稱</th>
                                 <th class="text-center py-3 px-4" style="min-width: 150px;">詳細資訊</th>
@@ -70,7 +119,7 @@
 
                                 <tbody>
                                     <tr>
-                                        <td class="p-4">
+                                        <td data-th="商品名稱" class="p-4">
                                             <div class="media align-items-center">
                                                 <a style="text-decoration:none;" href="~/Details/ProductDetails?fProductID=@item.fProductID" class="link-success">
                                                     <img src="~/Content/img/Product/@item.fImgPath"
@@ -82,12 +131,12 @@
                                                 </a>
                                             </div>
                                         </td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">
+                                        <td data-th="詳細資訊" class="text-right font-weight-semibold align-middle p-4">
                                             @item.fDescription
                                         </td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
-                                        <td class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
+                                        <td data-th="價格" class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
+                                        <td data-th="數量" class="align-middle p-4" style="text-align:center;">@item.fQuantity</td>
+                                        <td data-th="小計" class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
 
                                     </tr>
                                 </tbody>
@@ -96,120 +145,106 @@
                     </table>
                 </div>
 
-                <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
-                    <tr>
-                        <td>
-                            <a style="color: black; font-size: 30px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">收件人資訊</a>
-                        </td>
-                        <td>
-                            <div style="font-size: large;line-height: 3;text-align: left;" name="">@ViewBag.name</div>
-                        </td>
-                        <td>
-                            <div style="font-size: large;line-height: 3;text-align: center;" name="phone">@ViewBag.phone</div>
-                        </td>
-                    </tr>
-                </table>
+                <div class="table container" style="border: 0px; background-color: rgba(0,0,0,.03);">
+                    <div class="row">
+                        <div class="col col-12 col-lg-4" style=" margin-top: 20px;">
+                            <a style="color: black; font-size: 30px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px;">收件人資訊</a>
+                        </div>
+                        <div class="col col-12 col-lg-4" style="font-size: large; line-height: 3; text-align: center;" name="">@ViewBag.name</div>
 
-                <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
-                    <tr>
-                        <td>
+                        <div class="col col-12 col-lg-4" style="font-size: large; line-height: 3; text-align: center;" name="phone">@ViewBag.phone</div>
+                    </div>
+                </div>
+                <!--寄送資訊-->
+                <div class="table container" style="border: 0px; background-color: rgba(0,0,0,.03);">
+                    <div class="row">
+                        <div class="col col-12 col-lg-3">
+                            <a style="color: black; font-size: 30px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color: steelblue; border-radius: 5px; padding: 5px 15px; float: left; margin-top: 20px;">寄送資訊</a>
+                        </div>
+                        <div class="col col-12 col-lg-2">
+                            <select onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; margin-top: 25px; border-radius: 5px; padding:5px;" class="border ">
+                                <option selected="selected" value="">7-11門市</option>
+                                <option value="1">台南市勝利路勝利門市</option>
+                                <option value="2">台南市健康路健康門市</option>
+                            </select>
+                        </div>
 
-                            <div class="btn-group" role="group">
-                                <a style="color: black; font-size: 30px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; margin-left:17px; float:left;">寄送資訊</a>
+                        <div class="col col-12 col-lg-2">
+                            <select onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; margin-top: 25px; border-radius: 5px; padding: 5px;" class="border ">
+                                <option selected="selected" value="">全家門市</option>
+                                <option value="1">台南市公園路公園門市</option>
+                                <option value="2">台南市海安路海安門市</option>
+                            </select>
+                        </div>
 
-                                <select onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 200px;margin-top:5px;border-radius:5px" class="border no-shadow no-rounded">
-                                    <option selected="selected" value="">7-11門市</option>
-                                    <option value="1">台南市勝利路勝利門市</option>
-                                    <option value="2">台南市健康路健康門市</option>
-                                </select>
+                        <div class="col col-12 col-lg-2">
+                            <select onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; margin-top: 25px; border-radius: 5px; padding: 5px;" class="border ">
+                                <option selected="selected" value="">宅配住址</option>
+                                <option value="1">台南市大學路五巷五號</option>
+                                <option value="2">台南市勝利路六巷六號</option>
+                            </select>
+                        </div>
 
-                                <select onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 60px;margin-top:5px; border-radius: 5px " class="border no-shadow no-rounded">
-                                    <option selected="selected" value="">全家門市</option>
-                                    <option value="1">台南市公園路公園門市</option>
-                                    <option value="2">台南市海安路海安門市</option>
-                                </select>
+                    </div>
 
-                                <select onchange="SelectedTextValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 60px; margin-top: 5px; border-radius: 5px " class="border no-shadow no-rounded">
-                                    <option selected="selected" value="">宅配住址</option>
-                                    <option value="1">台南市大學路五巷五號</option>
-                                    <option value="2">台南市勝利路六巷六號</option>
-                                </select>
+                    <div class="container">
+                        <div class="row" style="text-align: center;">
+                            <div id="output" class="d-flex justify-content-center" style="font-size: large;">
+                                <input name="Address" type="text" id="txtContent" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
                             </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="container">
-                                <div class="row" style="text-align: center; margin-left: 100px">
-                                    <div id="output" class="col" style="font-size: large;line-height: 3;">
-                                        <input name="Address" type="text" id="txtContent" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
-                                    </div>
-                                </div>
+                <!--付款資訊-->
+                <div class="table container" style="border: 0px; background-color: rgba(0,0,0,.03);">
+                    <div class="row">
+                        <div class="col col-12 col-lg-4">
+                            <a style="color: black; font-size: 30px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color: steelblue; border-radius: 5px; padding: 5px 15px; float: left; margin-top: 20px;">付款資訊</a>
+                        </div>
+                        <div class="col col-12 col-lg-2">
+                            <select onchange="SelectedPaywayValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; margin-top: 25px; border-radius: 5px; padding:5px;" class="border ">
+                                <option selected="selected" value="">到貨付款</option>
+                                <option value="1">到貨付款</option>
+                            </select>
+                        </div>
+
+                        <div class="col col-12 col-lg-2">
+                            <select onchange="SelectedPaywayValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; margin-top: 25px; border-radius: 5px; padding: 5px;" class="border ">
+                                <option selected="selected" value="">信用卡</option>
+                                <option value="1">****-****-****-6753</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div id="output" class="d-flex justify-content-center " style="font-size: large;">
+                                <input name="Payway" type="text" id="payway" style="height: 50px; width: 500px; font-size: large; text-align: center; border: none; outline: none; background-color: rgba(0,0,0,.03); margin: 0 auto;" class="border no-shadow no-rounded" readonly="readonly" />
                             </div>
-
-                        </td>
-                    </tr>
-                </table>
-                <!-- 付款資訊 -->
-                <table class="table table-borderless" style="border: 0px; background-color: rgba(0,0,0,.03);">
-                    <tr>
-                        <td>
-                            <div class="container" role="group">
-                                <a style="color: black; font-size: 30px; background-color: aliceblue; border-width: 1px; border-style: solid; border-color:steelblue;border-radius:5px;padding:5px 15px; float:left;">付款資訊</a>
-                                <div class="row">
-                                    <select onchange="SelectedPaywayValue(this)" style="background-color: aliceblue; color: black; width: 155px; height: 50px; font-size: large; margin-left: 200px;margin-top:5px;border-radius:5px; margin-left:300px; padding-left:0px;" class="border no-shadow no-rounded">
-                                        <option selected="selected" value="">到貨付款</option>
-                                        <option value="1">到貨付款</option>
-                                    </select>
-
-
-                                    <select onchange="SelectedPaywayValue(this)" style="background-color: aliceblue; color: black; width: 150px; height: 50px; font-size: large; margin-left: 60px;margin-top:5px; border-radius: 5px " class="border no-shadow no-rounded">
-                                        <option selected="selected" value="">信用卡</option>
-                                        <option value="1">****-****-****-6753</option>
-
-                                    </select>
-                                </div>
-
-                                <div class="container">
-                                    <div class="row" style="text-align: center;margin-left:100px">
-                                        <div id="output" class="col" style="font-size: large;line-height: 3;">
-                                            <input name="Payway" type="text" id="payway" style="height: 50px; width: 500px; font-size: large; text-align: center;margin-right:15px; border: none; outline: none; background-color: rgba(0,0,0,.03); " class="border no-shadow no-rounded" readonly="readonly" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </td>
-                    </tr>
-                </table>
-
-
+                        </div>
+                    </div>
+                </div>
 
                 <!-- / Shopping cart table -->
-
-                <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                    <div class="mt-4" style="text-align: center; margin-left:300px;">
+                <div class="d-flex flex-wrap justify-content-around align-items-center pb-4">
+                    <div class="mt-4" style="text-align: center;">
                         <label class="text-muted font-weight-normal m-0">商品總計</label>
                         <div class="text-large"><strong>$@String.Format("{0:0}", sum)</strong></div>
                     </div>
-
-                    <div class="mt-4" style="text-align: center; margin-right: 300px;">
+                    <div class="mt-4" style="text-align: center;">
                         <label class="text-muted font-weight-normal m-0">運費總計</label>
                         <div class="text-large"><strong>$60</strong></div>
                         <input type="text" name="Price" value="@deliveryin" hidden />
                     </div>
-
+                    
+                        <div class="text-right mt-4"style="letter-spacing: 10px;">
+                            <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3" onclick="location.href='ShoppingCart/ShoppingCart'">返回購物車</button>
+                            <button type="submit" class="btn btn-lg btn-primary mt-2 "style="margin-left:15px;" href="~/ShoppingCart/CheckoutComplete">完成訂單</button>
+                        </div>
+                    
                 </div>
-
-                <div class="d-flex" style="float: right; margin-bottom:20px;">
-                    <div class="text-right mt-4">
-                        <button type="button" class="btn btn-lg btn-outline-secondary md-btn-flat mt-2 mr-3" onclick="location.href='ShoppingCart/ShoppingCart'">返回購物車</button>
-                        <button type="submit" class="btn btn-lg btn-outline-primary mt-2 " href="~/ShoppingCart/CheckoutComplete">完成訂單</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- <div class="float-end">
-
-            </div> -->
         </form>
     </div>
 

@@ -13,9 +13,11 @@ namespace gogobuy.Controllers
         // GET: ShoppingCart
         public string GetSerialNumber()
         {
+
+
             string headDate = DateTime.Now.ToString("yyyyMMdd") + "8";
             Random crantom = new Random();
-            string lastnum = crantom.Next(0000, 9999).ToString();
+            string lastnum = crantom.Next(0001, 9999).ToString();
             string x = headDate + lastnum;
             return x;
 
