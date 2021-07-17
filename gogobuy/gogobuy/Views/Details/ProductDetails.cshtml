@@ -48,7 +48,7 @@
             @*<h2>NT$ 3999.00 元</h2>*@
             <h2>NT @String.Format("{0:0}", Model.fPrice) 元</h2>
 
-            @{ foreach (var pStyle in Model.listStyle)
+            @*@{ foreach (var pStyle in Model.listStyle)
                             {
                                 if ( Model.fPname != null)
                                 {
@@ -58,7 +58,7 @@
                                     </select>
                                 }
                         } 
-              }
+              }*@
             <input type="number" value=1 min=1 max=1 />
             <button class="btn buy-btn">
                 <span class="me-2">加入購物車</span><i class="fas fa-shopping-cart"></i>
