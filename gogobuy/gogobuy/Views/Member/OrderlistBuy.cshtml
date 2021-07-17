@@ -15,12 +15,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        function showGiveId(showDetail) {
-            $('#' + showDetail).show();
-        }
-        function hideGiveId(hideDetail) {
-            $('#' + hideDetail.toString()).hide();
-        }
+        $(function () {
+            $('.details').hide();
+            $('.detailsButton').click(function () {
+                console.log($(this).text());
+                if ($(this).text() == '訂單明細🔽') {
+                    $(this).parent().next().show();
+                    $(this).text('訂單明細🔼');
+                    return;
+                }
+                if ($(this).text() == '訂單明細🔼') {
+                    $(this).parent().next().hide();
+                    $(this).text('訂單明細🔽');
+                    return;
+                }
+            });
+            
+        });
     </script>
 </head>
 
@@ -110,13 +121,6 @@
                             int count = 0;
                             foreach (var item in Model)
                             {
-
-                                string showX = "show" + count.ToString();
-                                string hideX = "hide" + count.ToString();
-                                string showXP = "\"show" + count.ToString() + "\"";
-                                string hideXP = "\"hide" + count.ToString() + "\"";
-                                string detail = "detail" + count.ToString();
-                                string detailP = "\"detail" + count.ToString() + "\"";
                                 <div class="pd-3 my-5" style="background: rgba(122, 111, 111, 0.3)">
                                     <section class="person show active">
                                         <div class="container text-center table-responsive">
@@ -145,10 +149,9 @@
                                             </table>
 
                                             <p>
-                                                <button onclick="showGiveId(@item.fOrderUUID)">看明細</button>
-                                                <button onclick="hideGiveId(@item.fOrderUUID)">收明細</button>
+                                                <button class="detailsButton btn-outline-secondary">訂單明細🔽</button>
                                             </p>
-                                            <div class="collapse" id="@item.fOrderUUID">
+                                            <div class="details">
                                                 <div class="card card-body">
                                                     <table class="table  table-bordered">
                                                         <thead>
