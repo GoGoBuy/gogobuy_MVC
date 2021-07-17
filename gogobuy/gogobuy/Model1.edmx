@@ -44,7 +44,7 @@
           <Property Name="fBuyerName" Type="nvarchar" MaxLength="30" />
           <Property Name="fOrderStatus" Type="nvarchar" MaxLength="10" />
           <Property Name="fOrderUUID" Type="char" MaxLength="13" />
-          <Property Name="fOrderPayWay" Type="nvarchar" MaxLength="10" />
+          <Property Name="fOrderPayWay" Type="nvarchar" MaxLength="100" />
           <Property Name="fOrderNote" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tOrderDetails">
@@ -65,7 +65,7 @@
           <Property Name="fProductName" Type="nvarchar" MaxLength="50" />
           <Property Name="fPrice" Type="money" />
           <Property Name="fQuantity" Type="int" />
-          <Property Name="fImgPath" Type="nvarchar" MaxLength="30" />
+          <Property Name="fImgPath" Type="nvarchar" MaxLength="60" />
           <Property Name="fDescription" Type="nvarchar" MaxLength="500" />
           <Property Name="fMemberID" Type="int" />
           <Property Name="fProductLocation" Type="nvarchar" MaxLength="30" />
@@ -86,7 +86,7 @@
             <PropertyRef Name="fImageID" />
           </Key>
           <Property Name="fImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fImgPath" Type="nvarchar" MaxLength="30" />
+          <Property Name="fImgPath" Type="nvarchar" MaxLength="60" />
           <Property Name="fProductID" Type="int" />
           <Property Name="fCover" Type="bit" />
         </EntityType>
@@ -125,6 +125,18 @@
           <Property Name="fCommission" Type="money" />
           <Property Name="fUpdateTime" Type="date" />
         </EntityType>
+        <Association Name="FK__tShopping__fProd__47DBAE45">
+          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
+          <End Role="tShopping" Type="Self.tShopping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tProduct">
+              <PropertyRef Name="fProductID" />
+            </Principal>
+            <Dependent Role="tShopping">
+              <PropertyRef Name="fProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tCollection_tMembership">
           <End Role="tMembership" Type="Self.tMembership" Multiplicity="0..1" />
           <End Role="tCollection" Type="Self.tCollection" Multiplicity="*" />
@@ -245,18 +257,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tShopping_tProduct">
-          <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
-          <End Role="tShopping" Type="Self.tShopping" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tProduct">
-              <PropertyRef Name="fProductID" />
-            </Principal>
-            <Dependent Role="tShopping">
-              <PropertyRef Name="fProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tShoppingDetails_tProduct">
           <End Role="tProduct" Type="Self.tProduct" Multiplicity="0..1" />
           <End Role="tShoppingDetails" Type="Self.tShoppingDetails" Multiplicity="*" />
@@ -304,6 +304,10 @@
           <EntitySet Name="tShopping" EntityType="Self.tShopping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tShoppingDetails" EntityType="Self.tShoppingDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tWishProduct" EntityType="Self.tWishProduct" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tShopping__fProd__47DBAE45" Association="Self.FK__tShopping__fProd__47DBAE45">
+            <End Role="tProduct" EntitySet="tProduct" />
+            <End Role="tShopping" EntitySet="tShopping" />
+          </AssociationSet>
           <AssociationSet Name="FK_tCollection_tMembership" Association="Self.FK_tCollection_tMembership">
             <End Role="tMembership" EntitySet="tMembership" />
             <End Role="tCollection" EntitySet="tCollection" />
@@ -342,10 +346,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_tShopping_tMembership" Association="Self.FK_tShopping_tMembership">
             <End Role="tMembership" EntitySet="tMembership" />
-            <End Role="tShopping" EntitySet="tShopping" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tShopping_tProduct" Association="Self.FK_tShopping_tProduct">
-            <End Role="tProduct" EntitySet="tProduct" />
             <End Role="tShopping" EntitySet="tShopping" />
           </AssociationSet>
           <AssociationSet Name="FK_tShoppingDetails_tProduct" Association="Self.FK_tShoppingDetails_tProduct">
@@ -415,7 +415,7 @@
           <NavigationProperty Name="tOrderDetails" Relationship="Self.FK_tOrderDetails_tOrder" FromRole="tOrder" ToRole="tOrderDetails" />
           <Property Name="fOrderStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="fOrderUUID" Type="String" MaxLength="13" FixedLength="true" Unicode="false" />
-          <Property Name="fOrderPayWay" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="fOrderPayWay" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="fOrderNote" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tOrderDetails">
@@ -438,7 +438,7 @@
           <Property Name="fProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="fQuantity" Type="Int32" />
-          <Property Name="fImgPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fImgPath" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="fDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="fMemberID" Type="Int32" />
           <Property Name="fProductLocation" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -732,7 +732,7 @@
             <PropertyRef Name="fImageID" />
           </Key>
           <Property Name="fImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fImgPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="fImgPath" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="fProductID" Type="Int32" />
           <Property Name="fCover" Type="Boolean" />
           <NavigationProperty Name="tProduct" Relationship="gogobuydbModel.FK_tProductImage_tProduct" FromRole="tProductImage" ToRole="tProduct" />

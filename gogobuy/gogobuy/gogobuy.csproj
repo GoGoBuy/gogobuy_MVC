@@ -258,7 +258,7 @@
     <Content Include="Content\img\Blog\js\syntax\shBrushXml.js" />
     <Content Include="Content\img\Blog\js\syntax\shCore.js" />
     <Content Include="Content\img\BucketListDetails\BUNNIE.jpg" />
-    <Content Include="Content\img\buyer_seller\8edb5c27-6852-4a84-adc3-667465bc61a7.jpg" />
+    <Content Include="Content\img\buyer_seller\delete.png" />
     <Content Include="Content\img\buyer_seller\settings.png" />
     <Content Include="Content\img\buyer_seller\upload.png" />
     <Content Include="Content\img\img_memberCenter\check-list.png" />
@@ -605,6 +605,7 @@
     <Compile Include="ViewModels\OrderlistSellViewModel.cs" />
     <Compile Include="ViewModels\ProductDetailsViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\UploadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -642,6 +643,8 @@
     <Content Include="Views\ContactUs\ContactUs.cshtml" />
     <Content Include="Views\BuyerSeller\ProductList.cshtml" />
     <Content Include="Views\BuyerSeller\WishProductList.cshtml" />
+    <Content Include="Views\Home\LoginOutCheck.cshtml" />
+    <Content Include="Views\Home\RegisterFinish.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

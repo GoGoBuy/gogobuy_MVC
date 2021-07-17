@@ -1,54 +1,82 @@
-﻿
+﻿@model gogobuy.ViewModels.UploadViewModel
 @{
     ViewBag.Title = "BuyerUpload";
 }
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
     <style>
-        .container {
-            width: 100%;
+        .form {
+            width: 1000px;
             background-color: #d3d1d1;
         }
 
         .sm-img {
-            width: 190px;
-            height: 175px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .center {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .m-padded-tb-big {
+            padding-top: 3em !important;
+            padding-bottom: 3em !important;
+        }
+
+        .m-container-small {
+            max-width: 60em !important;
+            margin: auto !important;
         }
     </style>
 </head>
 <section>
-    <form>
-        <div class="container ps-5 pt-4 pb-4 text-center">
-            <div class="row">
-                <div class="pt-4 justify-content-start">
-                    <img src="~/Content/img/buyer_seller/add-image-line-icon-outline-260nw-751009576.jpg" class="sm-img mx-4 p-4">
-                    <button type="button" class="btn btn-secondary px-5">上傳圖片</button>
+    <form method="post" action="~/BuyerSeller/BuyerUpload" enctype="multipart/form-data">
+        <div class="container ps-5 pt-4 pb-4 text-center form">
+
+            <div class="d-flex justify-content-start">
+                <div class="field">
+                    <input type="file" multiple id="upload_file" name="photo" style="display: none;" >
+                    <div class="imageContainer">
+                        <div class="ui centered image"
+                             style="width:150px; height: 150px; background-color: white; border: 2px dashed black; display: inline-block;">
+                            <div class="center">
+                                <img src="~/Content/img/buyer_seller/upload.png" alt="" class="ui  mini centered image">
+                                <p style="margin-top: 8px;" id="uploadMoreImages">上傳圖片</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
 
             <div class="row">
                 <div class=" col-auto pt-4">
                     <label class="col-form-label">商品名稱</label>
+                    <span class="text-danger">*</span>
                 </div>
                 <div class="col-md-4 pt-4">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="fProductName">
+                    @Html.ValidationMessageFor(model => model.fProductName, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row justify-content-start">
                 <div class="col-auto pt-4">
                     <label class="col-form-label">選擇分類</label>
+                    <span class="text-danger">*</span>
                 </div>
                 <div class="col-md-4 pt-4">
-                    <select class="form-select"></select>
+                    <select name="fCategory" class="form-select">
+                        <option value="手機周邊">手機周邊</option>
+                        <option value="3C產品">3C產品</option>
+                        <option value="生活居家">生活居家</option>
+                        <option value="服飾飾品">服飾飾品</option>
+                        <option value="名產食品">名產食品</option>
+                        <option value="文創書籍">文創書籍</option>
+                        <option value="影音周邊">影音周邊</option>
+                        <option value="古董古玩">古董古玩</option>
+                        <option value="其他">其他</option>
+                    </select>
                 </div>
             </div>
             <div class="row justify-content-start">
@@ -56,43 +84,103 @@
                     <label class="col-form-label">商品描述</label>
                 </div>
                 <div class="col-md-6 pt-4">
-                    <textarea id="message" class="form-control" style="height: 250px;"></textarea>
+                    <textarea id="message" class="form-control ckeditor" style="height: 250px;" maxlength="500" name="fDescription"></textarea>
                 </div>
             </div>
             <div class="row justify-content-start">
                 <div class="col-auto pt-4">
                     <label class="col-form-label">買家所在地</label>
+                    <span class="text-danger">*</span>
                 </div>
                 <div class="col-md-6 pt-4">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="fProductLocation">
+                    @Html.ValidationMessageFor(model => model.fPrice, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row justify-content-start">
                 <div class="col-auto pt-4">
                     <label class="col-form-label">收購價格</label>
+                    <span class="text-danger">*</span>
                 </div>
                 <div class="col-auto pt-4">
-                    <input type="text" class="form-control">
-                </div>
-                <div class="col-auto pt-4">
-                    <label class="col-form-label">傭金</label>
-                </div>
-                <div class="col-auto pt-4">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="fPrice">
+                    @Html.ValidationMessageFor(model => model.fPrice, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row pb-5 justify-content-start">
                 <div class="col-auto pt-4">
                     <label class="col-form-label">收購數量</label>
+                    <span class="text-danger">*</span>
                 </div>
                 <div class="col-md-4 pt-4">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" name="fQuantity">
+                    @Html.ValidationMessageFor(model => model.fQuantity, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-auto pb-5 text-center">
-                <button type="button" class="btn btn-secondary btn-lg">確認許願</button>
+                <button type="submit" class="btn btn-secondary btn-lg">確認許願</button>
             </div>
         </div>
     </form>
 </section>
+<script>
+    $('.menu_toggle').click(function () {
+        $(".m-item").toggleClass('m-mobile-hide')
+    })
+    $(".center").click(function () {
+        $("#upload_file").click();
+    })
+    var img
+    $("#upload_file").change(function () {
+        var images = []; //定義一個空的陣列用來儲存img路徑
+        var files = $(this).get(0).files;
+        console.log(files)
+        var regex = /^.+(.jpg|.jpeg|.gif|.png)$/; //只能上傳圖片
+        $($(this)[0].files).each(function () {
+            var file = $(this);
+            if (regex.test(file[0].name.toLowerCase())) {
+                //如果是圖片
+                var reader = new FileReader();
+                reader.onload = function (e) { //讀取圖片成功會執行這個函式
+                    var div = $("<div></div>")
+                    div.attr("style", "position: relative; display:inline-block;")
+                    var delImg = $("<img/>")
+                    delImg.attr("style", "position: absolute; right: 15px; top: 15px; width: 20px;height: 20px; z-index:1; display:none;")
+                    delImg.attr("src", "../Content/img/buyer_seller/delete.png")
+                    delImg.attr("class", "delImg")
 
+                    var img = $("<img />");
+                    img.attr("style", "display: inline-block; height:150px width:100%; margin:8px;");
+                    img.attr("src", e.target.result);
+                    img.attr("class", "ui small centered image")
+                    div.append(delImg)
+                    div.append(img);
+                    $(".imageContainer").prepend(div);
+                }
+                reader.readAsDataURL(file[0]);
+                $("#uploadMoreImages").text("上傳更多圖片")
+            } else {
+                alert(file[0].name + "不是一張圖片");
+                return false;
+            }
+        })
+    })
+
+    //滑鼠懸浮顯示刪除按鈕
+    $(".imageContainer").on("mouseover mouseout", "img", function (event) {
+        // console.log($(this).prev()[0])
+        if (event.type == "mouseover") {
+            //滑鼠懸浮
+            $($(this).prev()[0]).show();
+        } else if (event.type == "mouseout") {
+            //滑鼠離開
+            $($(this).prev()[0]).hide();
+        }
+    })
+
+    //刪除圖片
+    $(".imageContainer").on("click", ".delImg", function () {
+        $($(this).next()[0]).remove();
+        $(this).remove();
+    })
+</script>
