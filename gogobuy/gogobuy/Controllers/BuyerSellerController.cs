@@ -189,13 +189,91 @@ namespace gogobuy.Controllers
             }
             return View(list);
         }
-        public ActionResult BucketListDetails()
+        public ActionResult BucketListDetails(int productID)
         {
-            return View();
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var db = new gogobuydbEntities();
+            int userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var wishProdInfo = db.tProduct.Where(p => p.fMemberID == userId && p.fProductID == productID).FirstOrDefault();
+            //var imgPaths = db.tProductImage.Where(p => p.fProductID == productID).Select(p => p.fImgPath);
+            
+            UploadViewModel wishProduct = new UploadViewModel()
+            {
+                fProductID = wishProdInfo.fProductID,
+                fProductName = wishProdInfo.fProductName,
+                fCategory = wishProdInfo.fCategory,
+                fDescription = wishProdInfo.fDescription,
+                fPrice = wishProdInfo.fPrice,
+                fQuantity = wishProdInfo.fQuantity,
+                fProductLocation = wishProdInfo.fProductLocation
+            };
+            //foreach(var imgPath in imgPaths)
+            //{
+            //    wishProduct.imgName.Add(imgPath);
+            //}
+            return View(wishProduct);
         }
-        public ActionResult SellListDetails()
+        [HttpPost]
+        public ActionResult BucketListDetails(UploadViewModel wishProduct)
         {
-            return View();
+            var db = new gogobuydbEntities();
+            tProduct wishEdit = db.tProduct.Where(p=>p.fProductID == wishProduct.fProductID).First();
+            wishEdit.fProductName = wishProduct.fProductName;
+            wishEdit.fCategory = wishProduct.fCategory;
+            wishEdit.fDescription = wishProduct.fDescription;
+            wishEdit.fProductLocation = wishProduct.fProductLocation;
+            wishEdit.fPrice = wishProduct.fPrice;
+            wishEdit.fQuantity = wishProduct.fQuantity;
+            wishEdit.fUpdateTime = DateTime.Now;
+            db.SaveChanges();
+            return RedirectToAction("BuyerManagement");
+        }
+        public ActionResult SellListDetails(int productID)
+        {
+            if (Session[CDictionary.SK_LOGINED_USER_EMAIL] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var db = new gogobuydbEntities();
+            int userId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var prodInfo = db.tProduct.Where(p => p.fMemberID == userId && p.fProductID == productID).FirstOrDefault();
+            //var imgPaths = db.tProductImage.Where(p => p.fProductID == productID).Select(p => p.fImgPath);
+
+            UploadViewModel product = new UploadViewModel()
+            {
+                fProductID = prodInfo.fProductID,
+                fProductName = prodInfo.fProductName,
+                fCategory = prodInfo.fCategory,
+                fDescription = prodInfo.fDescription,
+                fPrice = prodInfo.fPrice,
+                fQuantity = prodInfo.fQuantity,
+                fProductLocation = prodInfo.fProductLocation,
+                fArrivalTime = prodInfo.fArrivalTime
+            };
+            //foreach(var imgPath in imgPaths)
+            //{
+            //    wishProduct.imgName.Add(imgPath);
+            //}
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult SellListDetails(UploadViewModel product)
+        {
+            var db = new gogobuydbEntities();
+            tProduct prodEdit = db.tProduct.Where(p => p.fProductID == product.fProductID).First();
+            prodEdit.fProductName = product.fProductName;
+            prodEdit.fCategory = product.fCategory;
+            prodEdit.fDescription = product.fDescription;
+            prodEdit.fProductLocation = product.fProductLocation;
+            prodEdit.fPrice = product.fPrice;
+            prodEdit.fQuantity = product.fQuantity;
+            prodEdit.fArrivalTime = product.fArrivalTime;
+            prodEdit.fUpdateTime = DateTime.Now;
+            db.SaveChanges();
+            return RedirectToAction("SellerManagement");
         }
         public ActionResult ProductList(string category)
         {

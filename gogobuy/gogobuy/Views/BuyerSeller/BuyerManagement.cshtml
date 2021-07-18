@@ -93,8 +93,8 @@
         }
     </style>
 </head>
-
-<div class="row justify-content-center">
+<a class="btn btn-primary mx-2 my-2" href="@Url.Action("BuyerUpload", "BuyerSeller")" style="width: 100px;">商品許願</a>
+<div class="row justify-content-center"> 
     <div class="table-responsive-sm">
         <table class="rwd-table">
             <thead>
@@ -105,6 +105,7 @@
                     <th scope="col">收購數量</th>
                     <th scope="col">更新日期</th>
                     <th scope="col">管理</th>
+                    <th scope="col">刪除</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,10 +117,11 @@
                             <td data-th="商品名稱">
                                 @wishProds.fProductName
                             </td>
-                            <td data-th="收購價格">$@String.Format("{0:0.00}", wishProds.fPrice)</td>
+                            <td data-th="收購價格">$@String.Format("{0:0}", wishProds.fPrice)</td>
                             <td data-th="收購數量">@wishProds.fQuantity</td>
                             <td data-th="更新日期">@String.Format("{0:yyyy/MM/dd}", wishProds.fUpdateTime)</td>
-                            <td data-th="管理"><a href="~/BuyerSeller/BucketListDetails"><img src="~/Content/img/buyer_seller/settings.png" class="setting-icon"></a></td>
+                            <td data-th="管理"><a href="~/BuyerSeller/BucketListDetails?productID=@wishProds.fProductID"><img src="~/Content/img/buyer_seller/settings.png" class="setting-icon"></a></td>
+                            <td data-th="刪除"><a href=""><i class="fa fa-trash" style="color: #b51b0d;"></i></a></td>
                         </tr>
                     }
                 }
