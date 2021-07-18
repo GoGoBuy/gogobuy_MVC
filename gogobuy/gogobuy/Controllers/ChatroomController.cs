@@ -164,35 +164,48 @@ namespace gogobuy.Controllers
                     db.SaveChanges();
                 }
 
-                string sql =
 
-                "insert into tShopping (fProductID,fMemberID,fQuantity,fShoppingNote) values(@K_FPRODUCTID,@K_FMEMBERID,@K_FQUANTITY,@K_SHOPPINGNOTE)";
-
-
-                List<SqlParameter> paras = new List<SqlParameter>();
-
-                paras.Add(new SqlParameter("K_FPRODUCTID", (object)ProductID));
-
-                paras.Add(new SqlParameter("K_FQUANTITY", (object)ProductQuantity));
-
-                paras.Add(new SqlParameter("K_FMEMBERID", (object)SellerID));
-
-                paras.Add(new SqlParameter("K_SHOPPINGNOTE", (object)ProductNote));
+                if(Convert.ToInt32(count) >= 1)
+                { 
 
 
-                SqlConnection con = new SqlConnection();
-                con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString;
-                con.Open();
-
-                SqlCommand cmd = new SqlCommand(sql, con);
-                if (paras != null)
+                if (Convert.ToInt32(ProductQuantity) >= 1)
                 {
-                    foreach (SqlParameter p in paras)
-                        cmd.Parameters.Add(p);
-                }
 
-                cmd.ExecuteNonQuery();
-                con.Close();
+                    string sql =
+
+                    "insert into tShopping (fProductID,fMemberID,fQuantity,fShoppingNote) values(@K_FPRODUCTID,@K_FMEMBERID,@K_FQUANTITY,@K_SHOPPINGNOTE)";
+
+
+                    List<SqlParameter> paras = new List<SqlParameter>();
+
+                    paras.Add(new SqlParameter("K_FPRODUCTID", (object)ProductID));
+
+                    paras.Add(new SqlParameter("K_FQUANTITY", (object)ProductQuantity));
+
+                    paras.Add(new SqlParameter("K_FMEMBERID", (object)SellerID));
+
+                    paras.Add(new SqlParameter("K_SHOPPINGNOTE", (object)ProductNote));
+
+
+
+                    SqlConnection con = new SqlConnection();
+                    con.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString;
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, con);
+                    if (paras != null)
+                    {
+                        foreach (SqlParameter p in paras)
+                            cmd.Parameters.Add(p);
+                    }
+
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
+
+                }
+                }
             }
 
             return Redirect("~/ShoppingCart/Checkout");
