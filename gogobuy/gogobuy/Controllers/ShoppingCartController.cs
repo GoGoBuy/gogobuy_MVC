@@ -224,7 +224,23 @@ namespace gogobuy.Controllers
             }
             return Json("fail");
         }
-
+        [HttpPost]
+        public ActionResult ChangeQuantity(int productID, int quantity)
+        {
+            if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
+            {
+                return Json("login");
+            }
+            int memberId = (int)Session[CDictionary.SK_LOGINED_USER_ID];
+            var cart = db.tShopping.Where(s => s.fMemberID == memberId && s.fProductID == productID);
+            if (cart.Count() > 0)
+            {
+                cart.FirstOrDefault().fQuantity = quantity;
+                db.SaveChanges();
+                return Json("success");
+            }
+            return Json("fail");
+        }
         public ActionResult CheckOut()
         {
             if (Session[CDictionary.SK_LOGINED_USER_ID] == null)
