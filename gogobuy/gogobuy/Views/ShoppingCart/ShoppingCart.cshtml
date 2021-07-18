@@ -101,7 +101,7 @@
                                     </td>
                                     <td data-th="詳細資訊" class="text-right font-weight-semibold align-middle p-4">@item.fDescription</td>
                                     <td data-th="價格" class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", item.fPrice)</td>
-                                    <td data-th="數量" class="align-middle p-4"><input type="text" class="form-control text-center" value="@item.fQuantity"></td>
+                                    <td data-th="數量" class="align-middle p-4"><input type="text" class="form-control text-center quantity" value="@item.fQuantity" id="@item.fProductID"></td>
                                     <td data-th="小計" class="text-right font-weight-semibold align-middle p-4">$@String.Format("{0:0}", total)</td>
                                     <td data-th="清空" class="text-center align-middle px-0"><a class="remove-from-cart" href="@Url.Action("Delete", "ShoppingCart", new { id =item.fCartID })" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
                                 </tr>
@@ -149,5 +149,23 @@
         })
         }
         );
+        $('.quantity').change(function () {
+            let quantity = $(this).val();
+            let productID = $(this).attr('id');
+            $.ajax({
+                url: "@Url.Action("ChangeQuantity", "ShoppingCart")",
+                type: 'post',
+                data: {
+                    productID: productID,
+                    quantity: quantity
+                },
+                async: true,
+                success: function (data) {
+                    if (data == "success") {
+                        location.reload(true);
+                    }
+                }
+            });
+        });
     });
 </script>
