@@ -180,7 +180,7 @@
                             <td><img src="~/Content/img/Product/@item.fImgPath" style="height:50px;width:50px;"></td>
                             <td>@item.fProductName</td>
                             <td><input type="text" name="ProductPrice@(count)" value="@String.Format("{0:0}", item.fPrice)" placeholder="@String.Format("{0:0}", item.fPrice)" /></td>
-                            <td><input type="text" name="ProductQuantity@(count)" value="3" placeholder="輸入購買數量" /></td>
+                            <td><input type="text" name="ProductQuantity@(count)" value="@item.fQuantity" placeholder="輸入購買數量" /></td>
                             <td><input type="text" name="ProductNote@(count)" value="n/a" placeholder="EX:寄送事宜" /></td>
                             <td><button onclick="wishdelete(@item.fProductID)" class="btn jq-delete"><img src="https://image.flaticon.com/icons/png/512/3096/3096673.png" style="height:20px;width:20px"></button></td>
                         </tr>
