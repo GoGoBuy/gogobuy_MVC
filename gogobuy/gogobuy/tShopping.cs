@@ -24,6 +24,7 @@ namespace gogobuy
         public Nullable<int> fMemberID { get; set; }
         public Nullable<int> fProductID { get; set; }
         public Nullable<int> fQuantity { get; set; }
+        public string fShoppingNote { get; set; }
     
         public virtual tMembership tMembership { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
