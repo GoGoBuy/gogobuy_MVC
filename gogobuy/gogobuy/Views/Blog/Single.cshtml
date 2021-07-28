@@ -3,6 +3,15 @@
     ViewBag.Title = "Single";
 }
 
+
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
+
+
+
 <body>
 
     <!-- Preloader Start -->
@@ -21,7 +30,7 @@
 
                         <div class="my-pic">
                             <img src="~/Content/img/Blog/images/pic/my_pic_head.jpg" alt="">
-                            <a href="javascript:void(0)"
+                            <!--<a href="javascript:void(0)"
                                class="collapsed"
                                data-target="#menu"
                                data-toggle="collapse">
@@ -31,21 +40,27 @@
                             <div id="menu" class="collapse">
                                 <ul class="menu-link">
                                     <li>
-                                        <a href="about.html">關於我</a>
-                                    </li>
+                                        <a href="~/Blog/About">關於我</a>
+                                    </li>-->
                                     <!-- <li><a href="work.html">Work</a></li> -->
-                                    <li>
-                                        <a href="contact.html">聯絡我</a>
+                                    <!--<li>
+                                        <a href="~/Blog/Contact">聯絡我</a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div class="my-detail">
 
                             <div class="white-spacing">
-                                <h1>比爾陳</h1>
-                                <span>GoGo Buy</span>
+                                <a href="~/Blog/Index">
+                                    <h1 style="color:black">比爾陳</h1>
+                                </a>
+
+                                <span>
+                                    <a href="~/Blog/About">關於我</a>
+                                    <a href="~/Blog/Contact">聯絡我</a>
+                                </span>
                             </div>
 
                             <ul class="social-icon">
@@ -77,7 +92,7 @@
                 <!-- Blog Post (Right Sidebar) Start -->
                 <div class="col-md-9">
                     <div class="col-md-12 page-body">
-                        <div class="row">
+                        <div class="row" style="margin: auto; padding: 20px">
 
                             <div class="sub-title">
                                 <h2>日本旅遊好好買</h2>
